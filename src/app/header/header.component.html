@@ -1,0 +1,26 @@
+<header>
+  <nav id="mainNavbar" class="navbar navbar-expand-md navbar-dark fixed-top bg- bg-primary">
+    <a class="navbar-brand" routerLink="/">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngIf="authService.isLoggedIn">
+          <a class="nav-link"  (click)="authService.logout()" >Logout</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-primary" ngbDropdownToggle>Drop me</button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button ngbDropdownItem>One</button>
+                  <button ngbDropdownItem>Two</button>
+                  <button ngbDropdownItem>Four!</button>
+                </div>
+              </div>
+            </li> -->
+      </ul>
+    </div>
+  </nav>
+</header>

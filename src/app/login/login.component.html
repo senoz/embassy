@@ -1,0 +1,52 @@
+<main class="login-form">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div *ngIf="failureMsg" class="alert alert-danger alert-dismissible fade show">
+            <strong>Error!</strong> Login failed.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <div class="card">
+          <div class="card-header">Login</div>
+          <div class="card-body">
+            <form [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
+              <div class="form-group row">
+                <label for="userName" class="col-md-4 col-form-label text-md-right">Mobile Number</label>
+                <div class="col-md-6">
+                  <input type="number" minlength= "10" maxlength= "10" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" id="userName" class="form-control" formControlName="userName" required autofocus>
+                  <!-- <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                      <div *ngIf="f.userName.errors">Mobile Number not valid</div>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                <div class="col-md-6">
+                  <input type="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="password" class="form-control" formControlName="password" required>
+                </div>
+              </div>
+              <div class="col">
+                <button role='button' class="btn btn-primary pointer float-right">
+                  Log in
+                </button>
+              </div>
+            </form>
+          </div>
+          <ul class="clearfix list-group list-group-flush">
+            <li class="list-group-item">
+              <a routerLink="/registration" class="btn btn-link text-center">
+                Register
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a routerLink="/forgetPassword" class="btn btn-link text-center">
+                Forgot Your Password?
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
