@@ -36,7 +36,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     productId: '',
     isPaid: false,
     isDelivered: false,
-    paymentType: 'cod'
+    paymentType: 'cod',
+    total: 30
   };
 
   productId: string;
@@ -203,6 +204,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.model.quantity--;
     }
+    this.model.total = (this.model.quantity * 30);
   }
 
   manageReturn(type) {

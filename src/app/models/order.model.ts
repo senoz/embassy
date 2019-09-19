@@ -5,6 +5,7 @@ export class Order {
     isPaid: boolean;
     isDelivered: boolean;
     paymentType: string;
+    total: number;
     address: {
         id: any;
         userId: string;
