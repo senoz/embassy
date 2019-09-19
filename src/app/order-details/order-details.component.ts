@@ -11,17 +11,19 @@ import { AddressService } from '../services/address.service';
 import { Address } from '../models/address.model';
 import { OrderService } from '../services/order.service';
 import { Order } from '../models/order.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.css']
+  styleUrls: ['./order-details.component.css'],
+  providers: [DatePipe]
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
   addresses: AngularFirestoreCollection<Address>[] = [];
   products$: AngularFirestoreCollection<Products>;
-
   private subscription: Subscription;
+  myDate = new Date();
 
   model: any = {
     userId: JSON.parse(sessionStorage.getItem('currentUser')).id,
@@ -37,7 +39,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     isPaid: false,
     isDelivered: false,
     paymentType: 'cod',
-    total: 30
+    total: 30,
+    date: this.datePipe.transform(this.myDate, 'MM-dd-YYYY')
   };
 
   productId: string;
@@ -62,7 +65,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private order: OrderService,
     private router: Router,
     private alert: AlertService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {

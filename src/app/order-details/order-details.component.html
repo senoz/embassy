@@ -123,7 +123,7 @@
                         <div class="custom-control custom-radio custom-control-inline">
                           <input type="radio" value="cod" (click)="changePayment($event['target']['value'])" [checked]="model.paymentType === 'cod'"
                             id="cod" checked name="payment" class="custom-control-input">
-                          <label class="custom-control-label" for="cod">COD</label> <span class="pl-1">(<strong>{{ model.total | currency : 'INR' }}</strong>)</span>
+                          <label class="custom-control-label" for="cod">COD</label> <span class="pl-2">(<strong>{{ model.total | currency : 'INR' }}</strong>)</span>
                         </div>
                       </div>
                       <div class="w-100 padding-10"></div>
@@ -131,7 +131,7 @@
                         <div class="custom-control custom-radio custom-control-inline">
                           <input type="radio" value="gpay" (click)="changePayment($event['target']['value'])" [checked]="model.paymentType === 'gpay'"
                             id="gpay" name="payment" class="custom-control-input">
-                          <label class="custom-control-label" for="gpay">Google Pay (9659392919)</label> <span class="pl-1">(<strong>{{ model.total | currency : 'INR' }}</strong>)</span>
+                          <label class="custom-control-label" for="gpay">Google Pay (9659392919)</label> <span class="pl-2">(<strong>{{ model.total | currency : 'INR' }}</strong>)</span>
                         </div>
                       </div>
                       <div class="w-100 padding-10"></div>
