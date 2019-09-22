@@ -12,6 +12,8 @@ import { Address } from '../models/address.model';
 import { OrderService } from '../services/order.service';
 import { Order } from '../models/order.model';
 import { DatePipe } from '@angular/common';
+import { ConstantsService } from '../services/constants.service';
+import { Coupon } from '../models/coupon.model';
 
 @Component({
   selector: 'app-order-details',
@@ -20,11 +22,14 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
-  addresses: AngularFirestoreCollection<Address>[] = [];
+  invalidCoupon: boolean;
+  isCouponApplied: boolean;
+  gpayNumber;
+  isCoupon = false;
+  addresses: Address;
   products$: AngularFirestoreCollection<Products>;
   private subscription: Subscription;
   myDate = new Date();
-
   model: any = {
     userId: JSON.parse(sessionStorage.getItem('currentUser')).id,
     quantity: 1,
@@ -40,7 +45,9 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     isDelivered: false,
     paymentType: 'cod',
     total: 30,
-    date: this.datePipe.transform(this.myDate, 'MM-dd-YYYY')
+    isCancelled: false,
+    isPromotionApplied: false,
+    promotionCode: ''
   };
 
   productId: string;
@@ -50,10 +57,15 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   userAddress: any;
   showAddress = false;
   addressRef: any;
-  showOrders = false;
+  showOrders = true;
   orders: any;
   orderRef: any;
-  product: Products;
+  product = {
+    name: '',
+    description: '',
+    url: '',
+    price: 0
+  };
   products: any;
   orderId: string;
 
@@ -66,19 +78,22 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private alert: AlertService,
     private afs: AngularFirestore,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private globals: ConstantsService
   ) { }
 
   ngOnInit() {
     this.getApartmentDetails();
     this.getCurrentUserAddress();
     this.getOrderDetails();
+    this.gpayNumber = this.globals.gpayNumber;
   }
+
 
   onSubmit() {
     const address = this.model.address;
     address.userId = JSON.parse(sessionStorage.getItem('currentUser')).id;
-    if (!this.addresses.length) {
+    if (!this.addresses) {
       this.addAddress(address);
     } else {
       this.updateAddress(address);
@@ -92,11 +107,11 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
       this.router.navigate(['/']);
-   }, 2000);
+    }, 2000);
   }
 
   editAdddress() {
-    this.model.address = this.addresses[0];
+    this.model.address = this.addresses;
     this.blockChange(this.model.address.block);
     this.showAddress = true;
   }
@@ -130,12 +145,13 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.alert.success('Order has cancelled successfully');
     setTimeout(() => {
       this.router.navigate(['/']);
-   }, 2000);
+    }, 2000);
   }
 
   getOrderDetails() {
     this.subscription = this.order.getUnDeliveredOrders().subscribe(order => {
       if (order.length) {
+        this.showOrders = false;
         this.orders = order[0].payload.doc.data() as Order;
         this.orderRef = order[0].payload.doc.ref;
         this.orderId = order[0].payload.doc.id;
@@ -145,7 +161,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
         this.model.productId = this.route.snapshot.params.id;
       } else {
         this.model = this.orders;
-        this.showOrders = false;
       }
       this.products = this.productsService.getProductsById(this.model.productId);
       this.products.subscribe(product => {
@@ -157,17 +172,17 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserAddress() {
-    this.subscription = this.addressService.getAddresses().subscribe(data => {
-      this.addresses = data.map(a => {
-        const address = a.payload.doc.data() as Address;
-        this.addressRef = a.payload.doc.ref;
-        address.userId = JSON.parse(sessionStorage.getItem('currentUser')).id;
-        return address;
-      });
-      if (this.addresses.length === 0) {
+    const userId = JSON.parse(sessionStorage.getItem('currentUser')).id;
+    this.subscription = this.addressService.getAddresses(userId).subscribe(data => {
+      if (data.length) {
+        this.addresses = data[0].payload.doc.data() as Address;
+        this.addressRef = data[0].payload.doc.ref;
+      }
+      
+      if (!this.addresses) {
         this.showAddress = true;
       } else {
-        this.model.address = this.addresses[0];
+        this.model.address = this.addresses;
         this.showAddress = false;
       }
     });
@@ -202,13 +217,42 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  applyCoupon(promo) {
+    this.isCouponApplied = true;
+    if (promo) {
+      this.order.checkValidPromotion(promo).subscribe(coupon => {
+        if (!coupon.length) {
+          this.invalidCoupon = true;
+          setTimeout(() => {
+            this.invalidCoupon = false;
+            this.model.promotionCode = '';
+          }, 2000);
+        } else {
+          this.invalidCoupon = false;
+          this.model.isPromotionApplied = true;
+          const promotion = coupon[0].payload.doc.data() as Coupon;
+          this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+          this.model.promotionCode = promotion.couponCode;
+        }
+      });
+    }
+  }
+
+  checkPromo(val) {
+    this.isCoupon = !val;
+    if (!this.isCoupon) {
+      this.model.total = (this.model.quantity * this.product.price);
+      this.model.isPromotionApplied = false;
+    }
+  }
+
   manageQuantity(type) {
     if (type) {
       this.model.quantity++;
     } else {
       this.model.quantity--;
     }
-    this.model.total = (this.model.quantity * 30);
+    this.model.total = (this.model.quantity * this.product.price);
   }
 
   manageReturn(type) {

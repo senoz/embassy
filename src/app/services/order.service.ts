@@ -19,17 +19,27 @@ export class OrderService {
 
   getUnDeliveredOrders() {
     return this.firestore.collection('orderDetails',
-    ref => ref.where('isDelivered', '==', false).limit(1))
+    ref => ref.where('isDelivered', '==', false)
+    .where('isCancelled', '==', false)
+    .limit(1))
     .snapshotChanges();
   }
 
   newOrder(order: Order) {
+    order.date = firebase.firestore.FieldValue.serverTimestamp()
     return this.order$.add(order);
   }
 
   cancelOrder(orderId) {
     return this.order$
     .doc(orderId)
-    .delete();
+    .set({ isCancelled: true }, { merge: true });
+  }
+
+  checkValidPromotion(promo) {
+    return this.firestore.collection('promotion',
+    ref => ref.where('couponCode', '==', promo)
+    .limit(1))
+    .snapshotChanges();
   }
 }

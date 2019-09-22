@@ -6,7 +6,10 @@ export class Order {
     isDelivered: boolean;
     paymentType: string;
     total: number;
-    date: string;
+    date: any;
+    isCancelled: boolean;
+    isPromotionApplied: boolean;
+    promotionCode: string;
     address: {
         id: any;
         userId: string;

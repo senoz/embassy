@@ -13,8 +13,11 @@ export class AddressService {
     this.address$ = this.firestore.collection('address');
   }
 
-  getAddresses() {
-    return this.address$.snapshotChanges();
+  getAddresses(userId) {
+    return this.firestore.collection('address',
+    ref => ref.where('userId', '==', userId)
+    .limit(1))
+    .snapshotChanges();
   }
 
   addAddress(address: Address) {

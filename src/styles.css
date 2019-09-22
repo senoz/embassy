@@ -6,3 +6,6 @@ body{
 .pointer {
     cursor: pointer !important;
 }
+.clearfix{
+    clear: both;
+}
