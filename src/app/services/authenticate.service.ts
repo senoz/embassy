@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Users } from '../models/users.model';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { User } from '../../../node_modules/firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -36,17 +37,15 @@ export class AuthenticateService {
   }
 
   validateLogin(data) {
-    let user;
-    for (const key in this.users) {
-      if (data.userName == this.users[key].userName
-        && data.password == this.users[key].password) {
-          sessionStorage.setItem('currentUser', JSON.stringify(this.users[key]));
-          this.isLoggedIn = true;
-          this.currentUserSubject.next(this.users[key]);
-          user = this.users[key];
-        }
-    }
-    return user;
+    let userData;
+    this.userService.checkValidUser(data.userName, data.password).subscribe(users => {
+      if (users.length) {
+        userData = users[0].payload.doc.data() as Users;
+        this.userService.user = userData;
+        this.isLoggedIn = true;
+        this.currentUserSubject.next(userData);
+      }
+    });
   }
 
   logout() {
@@ -60,10 +59,13 @@ export class AuthenticateService {
   createUser(user: Users) {
     const newUser = this.userService.addUser(user);
     if (newUser) {
-      sessionStorage.setItem('currentUser', JSON.stringify(user));
+      this.userService.user = user;
       this.isLoggedIn = true;
     }
     return newUser;
   }
 
+  isUserExists(userName) {
+    return this.userService.isUserExists(userName);
+  }
 }

@@ -35,4 +35,8 @@ export class AlertService {
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }
+
+    blurMessage() {
+        this.subject.next({text: ''});
+    }
 }

@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 })
 export class UsersService {
   user$: AngularFirestoreCollection<Users>;
-
+  user: any;
   constructor(private firestore: AngularFirestore) {
     this.user$ = this.firestore.collection('users');
   }
@@ -17,7 +17,22 @@ export class UsersService {
     return this.user$.snapshotChanges();
   }
 
+  checkValidUser(userName, password) {
+    return this.firestore.collection('users',
+    ref => ref.where('userName', '==', userName)
+    .where('password', '==', password)
+    .limit(1))
+    .snapshotChanges();
+  }
+
   addUser(user: Users) {
     return this.user$.add(user);
+  }
+
+  isUserExists(userName) {
+    return this.firestore.collection('users',
+    ref => ref.where('userName', '==', userName)
+    .limit(1))
+    .snapshotChanges();
   }
 }

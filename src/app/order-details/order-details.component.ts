@@ -178,7 +178,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
         this.addresses = data[0].payload.doc.data() as Address;
         this.addressRef = data[0].payload.doc.ref;
       }
-      
       if (!this.addresses) {
         this.showAddress = true;
       } else {

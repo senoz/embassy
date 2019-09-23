@@ -1,5 +1,5 @@
-import {first} from 'rxjs/internal/operators';
-import {pipe, Subscription} from 'rxjs';
+import { mergeMap, switchMap, first } from 'rxjs/internal/operators';
+import { pipe, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Users } from '../models/users.model';
@@ -16,7 +16,6 @@ import { AlertService } from '../services/alert.service';
 export class LoginComponent implements OnInit {
   submitted = false;
   loginForm;
-  failureMsg = false;
   private subscription: Subscription;
 
   constructor(
@@ -40,22 +39,26 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    this.failureMsg = false;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
-        return;
+      return;
     }
-    const validate = this.authService.validateLogin(this.loginForm.value);
-    this.subscription = this.authService.currentUser
-    .subscribe(
+    this.authService.validateLogin(this.loginForm.value);
+    this.authService.currentUser.subscribe(
         data => {
+          if (data) {
             this.router.navigate(['/dashboard']);
+            return;
+          }
         },
         error => {
-            this.alertService.error(error);
-            this.failureMsg = true;
-            this.submitted = false;
-            this.router.navigate(['/login']);
+          this.alertService.error('Login Failed');
+          setTimeout(() => {
+            this.alertService.blurMessage();
+          }, 2000);
+          this.submitted = false;
+          this.router.navigate(['/login']);
+          return;
         });
   }
 
