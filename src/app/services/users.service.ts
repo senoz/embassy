@@ -17,6 +17,12 @@ export class UsersService {
     return this.user$.snapshotChanges();
   }
 
+  getUserById(id) {
+   return this.firestore.collection('users',
+    ref => ref.where(firebase.firestore.FieldPath.documentId(), '==', id).limit(1))
+    .snapshotChanges();
+  }
+
   checkValidUser(userName, password) {
     return this.firestore.collection('users',
     ref => ref.where('userName', '==', userName)

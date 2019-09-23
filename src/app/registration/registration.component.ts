@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
     private alertService: AlertService,
     private router: Router
   ) {
-    if (this.authService.currentUserValue) {
+    if (this.authService.isLoggedIn) {
       this.router.navigate(['/']);
     }
   }
@@ -50,21 +50,11 @@ export class RegistrationComponent implements OnInit {
 
     this.authService.isUserExists(this.RegisterForm.value.userName).subscribe(data => {
       if (!data.length) {
-        this.registerUser(this.RegisterForm.value);
-        this.subscription = this.authService.currentUser.pipe(first())
-          .subscribe(
-            userdata => {
-              this.router.navigate(['/dashboard']);
-            },
-            error => {
-              this.alertService.error('Registration failed');
-              setTimeout(() => {
-                this.alertService.blurMessage();
-              }, 2000);
-              this.router.navigate(['/registration']);
-            });
+        if (this.registerUser(this.RegisterForm.value)) {
+          this.router.navigate(['/dashboard']);
+        }
       } else {
-        this.alertService.error('Mobile number has already registered');
+        this.alertService.error('Mobile number has already exists');
         setTimeout(() => {
           this.alertService.blurMessage();
         }, 2000);

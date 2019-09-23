@@ -5,6 +5,7 @@ import { Users } from '../models/users.model';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { User } from '../../../node_modules/firebase';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,9 @@ export class AuthenticateService {
   isLoggedIn = false;
   users: Users[];
 
-  private currentUserSubject: BehaviorSubject<Users> = new BehaviorSubject<Users>(JSON.parse(localStorage.getItem('currentUser')));
-  public currentUser: Observable<Users>;
-
   constructor(
     private userService: UsersService,
+    private alertService: AlertService,
     private router: Router
   ) {
     this.userService.getUsers().subscribe(data => {
@@ -29,11 +28,6 @@ export class AuthenticateService {
         } as Users;
       });
     });
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): Users {
-    return this.currentUserSubject.value;
   }
 
   validateLogin(data) {
@@ -41,18 +35,25 @@ export class AuthenticateService {
     this.userService.checkValidUser(data.userName, data.password).subscribe(users => {
       if (users.length) {
         userData = users[0].payload.doc.data() as Users;
+        userData.id = users[0].payload.doc.id;
         this.userService.user = userData;
         this.isLoggedIn = true;
-        this.currentUserSubject.next(userData);
+        localStorage.setItem('userId', userData.id);
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.isLoggedIn = false;
+        this.alertService.error('Login Failed');
+        setTimeout(() => {
+          this.alertService.blurMessage();
+        }, 2000);
+        this.router.navigate(['/login']);
       }
     });
   }
 
   logout() {
     // remove user from local storage to log user out
-    sessionStorage.removeItem('currentUser');
     this.isLoggedIn = false;
-    this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
@@ -60,6 +61,7 @@ export class AuthenticateService {
     const newUser = this.userService.addUser(user);
     if (newUser) {
       this.userService.user = user;
+      localStorage.setItem('userId', user.id);
       this.isLoggedIn = true;
     }
     return newUser;

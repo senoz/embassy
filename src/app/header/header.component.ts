@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticateService } from '../services/authenticate.service';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,10 +7,9 @@ import { AuthenticateService } from '../services/authenticate.service';
 })
 export class HeaderComponent implements OnInit {
   collapsed = false;
-
+  isLoggedIn = localStorage.getItem('userId');
   constructor(
     private router: Router,
-    public authService: AuthenticateService
   ) { }
 
   toggleCollapsed(): void {

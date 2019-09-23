@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private router: Router
   ) {
-    if (this.authService.currentUserValue) {
+    if (this.authService.isLoggedIn) {
       this.router.navigate(['/']);
     }
   }
@@ -44,22 +44,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.validateLogin(this.loginForm.value);
-    this.authService.currentUser.subscribe(
-        data => {
-          if (data) {
-            this.router.navigate(['/dashboard']);
-            return;
-          }
-        },
-        error => {
-          this.alertService.error('Login Failed');
-          setTimeout(() => {
-            this.alertService.blurMessage();
-          }, 2000);
-          this.submitted = false;
-          this.router.navigate(['/login']);
-          return;
-        });
   }
 
   // convenience getter for easy access to form fields
