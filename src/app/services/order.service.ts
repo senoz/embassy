@@ -27,7 +27,8 @@ export class OrderService {
 
   getOrdersByUserId(id) {
     return this.firestore.collection('orderDetails',
-    ref => ref.where('userId', '==', id))
+    ref => ref.where('userId', '==', id)
+    .orderBy('date', 'desc'))
     .snapshotChanges();
   }
 

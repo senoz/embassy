@@ -1,4 +1,5 @@
-<table class="table">
+<div class="table-responsive-sm">
+<table class="table table-striped">
   <thead class="thead-light">
     <tr>
       <th scope="col">Date</th>
@@ -12,7 +13,8 @@
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
       <td>{{ getProductById(order.productId) }}</td>
       <td>{{ getOrderStatus(order) }}</td>
-      <td><a routerLink="/" *ngIf="!order.isDelivered">Edit</a></td>
+      <td><a routerLink="/" *ngIf="!order.isDelivered && !order.isCancelled">Edit</a></td>
     </tr>
   </tbody>
 </table>
+</div>
