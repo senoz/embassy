@@ -25,6 +25,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { UniqueValuesPipe } from './_pipes/unique-values.pipe';
 import { ValidationsDirective } from './_directives/validations.directive';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ValidationsDirective } from './_directives/validations.directive';
     OrderDetailsComponent,
     UniqueValuesPipe,
     ValidationsDirective,
+    MyOrdersComponent,
   ],
   imports: [
     NgbModule.forRoot(),

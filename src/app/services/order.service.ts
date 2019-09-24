@@ -25,8 +25,14 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getOrdersByUserId(id) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', id))
+    .snapshotChanges();
+  }
+
   newOrder(order: Order) {
-    order.date = firebase.firestore.FieldValue.serverTimestamp()
+    order.date = firebase.firestore.FieldValue.serverTimestamp();
     return this.order$.add(order);
   }
 

@@ -28,7 +28,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     description: '',
     url: '',
     price: 0
-  } as Products; 
+  } as Products;
   invalidCoupon: boolean;
   isCouponApplied: boolean;
   gpayNumber;

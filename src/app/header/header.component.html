@@ -6,9 +6,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
-      <ul class="navbar-nav mr-auto" *ngIf="isLoggedIn">
+      <ul class="navbar-nav mr-auto" *ngIf="authService.isLoggedIn">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/myorders" routerLinkActive="active">My Orders</a>
+          <a class="nav-link" routerLink="/myorders" (click)="toggleCollapsed()" routerLinkActive="active">My Orders</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="authService.logout()" >Logout</a>

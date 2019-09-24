@@ -6,6 +6,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 const routes: Routes = [
 
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'order-details/:id',
     component: OrderDetailsComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'myorders',
+    component: MyOrdersComponent,
     canActivate: [AuthGuardService]
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

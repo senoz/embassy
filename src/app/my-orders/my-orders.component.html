@@ -1,0 +1,18 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Product</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+      <td>{{ getProductById(order.productId) }}</td>
+      <td>{{ getOrderStatus(order) }}</td>
+      <td><a routerLink="/" *ngIf="!order.isDelivered">Edit</a></td>
+    </tr>
+  </tbody>
+</table>
