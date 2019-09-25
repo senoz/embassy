@@ -1,5 +1,8 @@
 .table {
-    font-size: 12px;   
+    font-size: 10px;
+}
+.table td, .table th {
+    width: 35%;
 }
 th {
     text-transform: uppercase;

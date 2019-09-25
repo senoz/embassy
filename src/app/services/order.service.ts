@@ -25,6 +25,12 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getOrderById(id) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where(firebase.firestore.FieldPath.documentId(), '==', id).limit(1))
+    .snapshotChanges();
+  }
+
   getOrdersByUserId(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)

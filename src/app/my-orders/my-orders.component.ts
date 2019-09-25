@@ -16,12 +16,12 @@ export class MyOrdersComponent implements OnInit {
   constructor(
     private order: OrderService,
     private productsService: ProductsService
-  ) { 
+  ) {
     this.productsService.getProducts().subscribe(product => {
       if (product.length) {
         for (const key in product) {
           if (product[key]) {
-            let prod = product[key].payload.doc.data() as Products;
+            const prod = product[key].payload.doc.data() as Products;
             prod.id = product[key].payload.doc.id;
             this.product.push(prod);
           }

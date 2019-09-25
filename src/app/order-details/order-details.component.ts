@@ -75,7 +75,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private apartmentDetailsService: ApartmentDetailsService,
     private addressService: AddressService,
-    private order: OrderService,
+    private orderService: OrderService,
     private router: Router,
     private alert: AlertService,
     private afs: AngularFirestore,
@@ -93,7 +93,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getApartmentDetails();
     this.getCurrentUserAddress();
-    this.getOrderDetails();
     this.gpayNumber = this.globals.gpayNumber;
   }
 
@@ -106,11 +105,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.updateAddress(address);
     }
-    if (!this.orders) {
-      this.order.newOrder(this.model);
-    } else {
-      this.updateOrder(this.model);
-    }
+    this.orderService.newOrder(this.model);
 
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
@@ -126,10 +121,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
   updateAddress(address: Address) {
     return this.addressRef.update(address);
-  }
-
-  updateOrder(order: Order) {
-    return this.orderRef.update(order);
   }
 
   addAddress(address: Address) {
@@ -149,29 +140,13 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   cancelYourOrder() {
-    this.order.cancelOrder(this.orderId);
+    this.orderService.cancelOrder(this.orderId);
     this.alert.success('Order has cancelled successfully');
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 2000);
   }
 
-  getOrderDetails() {
-    this.subscription = this.order.getUnDeliveredOrders().subscribe(order => {
-      if (order.length) {
-        this.showOrders = false;
-        this.orders = order[0].payload.doc.data() as Order;
-        this.orderRef = order[0].payload.doc.ref;
-        this.orderId = order[0].payload.doc.id;
-      }
-      if (!this.orders) {
-        this.showOrders = true;
-        this.model.productId = this.route.snapshot.params.id;
-      } else {
-        this.model = this.orders;
-      }
-    });
-  }
 
   getCurrentUserAddress() {
     const userId = localStorage.getItem('userId');
@@ -221,7 +196,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   applyCoupon(promo) {
     this.isCouponApplied = true;
     if (promo) {
-      this.order.checkValidPromotion(promo).subscribe(coupon => {
+      this.orderService.checkValidPromotion(promo).subscribe(coupon => {
         if (!coupon.length) {
           this.invalidCoupon = true;
           setTimeout(() => {

@@ -7,6 +7,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { AuthGuardService } from './services/auth-guard.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 
 const routes: Routes = [
 
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'myorders',
     component: MyOrdersComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'edit-order/:id',
+    component: EditOrderComponent,
     canActivate: [AuthGuardService]
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

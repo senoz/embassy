@@ -26,6 +26,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { UniqueValuesPipe } from './_pipes/unique-values.pipe';
 import { ValidationsDirective } from './_directives/validations.directive';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     UniqueValuesPipe,
     ValidationsDirective,
     MyOrdersComponent,
+    EditOrderComponent,
   ],
   imports: [
     NgbModule.forRoot(),
@@ -51,7 +54,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NoopAnimationsModule
   ],
   providers: [
     AngularFirestore,

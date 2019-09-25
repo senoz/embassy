@@ -13,7 +13,7 @@
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
       <td>{{ getProductById(order.productId) }}</td>
       <td>{{ getOrderStatus(order) }}</td>
-      <td><a routerLink="/" *ngIf="!order.isDelivered && !order.isCancelled">Edit</a></td>
+      <td><a [routerLink]="['/edit-order', order.id]" class="" *ngIf="!order.isDelivered && !order.isCancelled">Edit</a></td>
     </tr>
   </tbody>
 </table>
