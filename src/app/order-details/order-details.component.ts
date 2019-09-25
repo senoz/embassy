@@ -96,7 +96,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.gpayNumber = this.globals.gpayNumber;
   }
 
-
   onSubmit() {
     const address = this.model.address;
     address.userId = localStorage.getItem('userId');
@@ -134,19 +133,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   changePayment(value) {
     this.model.paymentType = value;
   }
-
-  changeYourOrder() {
-    this.showOrders = true;
-  }
-
-  cancelYourOrder() {
-    this.orderService.cancelOrder(this.orderId);
-    this.alert.success('Order has cancelled successfully');
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 2000);
-  }
-
 
   getCurrentUserAddress() {
     const userId = localStorage.getItem('userId');

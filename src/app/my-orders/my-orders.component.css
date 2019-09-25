@@ -1,9 +1,12 @@
 .table {
-    font-size: 10px;
+    font-size: 11px;
 }
 .table td, .table th {
     width: 35%;
 }
 th {
     text-transform: uppercase;
+}
+.icon-font {
+    font-size: 16px;
 }

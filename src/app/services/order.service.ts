@@ -20,8 +20,7 @@ export class OrderService {
   getUnDeliveredOrders() {
     return this.firestore.collection('orderDetails',
     ref => ref.where('isDelivered', '==', false)
-    .where('isCancelled', '==', false)
-    .limit(1))
+    .where('isCancelled', '==', false))
     .snapshotChanges();
   }
 
@@ -35,6 +34,14 @@ export class OrderService {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)
     .orderBy('date', 'desc'))
+    .snapshotChanges();
+  }
+
+  getOrdersByProductId(id) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('productId', '==', id)
+    .where('isCancelled', '==', false)
+    .where('isDelivered', '==', false))
     .snapshotChanges();
   }
 

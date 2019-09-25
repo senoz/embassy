@@ -3,6 +3,9 @@ import { OrderService } from '../services/order.service';
 import { Order } from '../models/order.model';
 import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
+import { AlertService } from '../services/alert.service';
+import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-orders',
@@ -14,8 +17,10 @@ export class MyOrdersComponent implements OnInit {
   product = [];
 
   constructor(
-    private order: OrderService,
-    private productsService: ProductsService
+    private orderService: OrderService,
+    private productsService: ProductsService,
+    private alert: AlertService,
+    private router: Router
   ) {
     this.productsService.getProducts().subscribe(product => {
       if (product.length) {
@@ -32,7 +37,7 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit() {
     const userId = localStorage.getItem('userId');
-    this.order.getOrdersByUserId(userId).subscribe(data => {
+    this.orderService.getOrdersByUserId(userId).subscribe(data => {
       if (data.length) {
         for (const key in data) {
           if (data[key]) {
@@ -51,6 +56,16 @@ export class MyOrdersComponent implements OnInit {
     }
   }
 
+  cancelOrder(orderId) {
+    if (confirm('Are you sure to cancel order?')) {
+      this.orderService.cancelOrder(orderId);
+      this.alert.success('Order has cancelled successfully');
+      setTimeout(() => {
+        this.router.navigate(['/myorders']);
+      }, 2000);
+    }
+  }
+
   getOrderStatus(order: Order) {
     if (order.isDelivered) {
       return 'Delivered';
@@ -59,6 +74,5 @@ export class MyOrdersComponent implements OnInit {
     } else {
       return 'In Progress';
     }
-
   }
 }

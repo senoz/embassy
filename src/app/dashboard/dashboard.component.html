@@ -13,8 +13,15 @@
     <h5 class="card-text">
       {{product.price | currency : 'INR'}}
     </h5>
-    <a routerLink="/order-details/{{product.id}}" class="btn btn-outline-primary float-right pointer">
-      Buy
-    </a>
+    <ng-container *ngIf="getOrderByProdId(product.id); else buyProduct">
+        <a routerLink="/edit-order/getOrderByProdId(product.id)" class="btn btn-outline-primary float-right pointer">
+          Modify
+        </a>
+    </ng-container>
+    <ng-template #buyProduct>
+      <a routerLink="/order-details/{{product.id}}" class="btn btn-outline-primary float-right pointer">
+        Buy
+      </a>
+    </ng-template>
   </div>
 </div>

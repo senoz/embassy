@@ -6,6 +6,7 @@
       <th scope="col">Product</th>
       <th scope="col">Status</th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -13,7 +14,12 @@
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
       <td>{{ getProductById(order.productId) }}</td>
       <td>{{ getOrderStatus(order) }}</td>
-      <td><a [routerLink]="['/edit-order', order.id]" class="" *ngIf="!order.isDelivered && !order.isCancelled">Edit</a></td>
+      <td><a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
+        <i class="fa fa-edit icon-font"></i>
+      </a></td>
+      <td><a title="Cancel Order" (click)="cancelOrder()" *ngIf="!order.isDelivered && !order.isCancelled">
+          <i class="fa fa-times-circle icon-font"></i>
+      </a></td>
     </tr>
   </tbody>
 </table>
