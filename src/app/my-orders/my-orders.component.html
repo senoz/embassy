@@ -17,7 +17,7 @@
       <td><a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
         <i class="fa fa-edit icon-font"></i>
       </a></td>
-      <td><a title="Cancel Order" (click)="cancelOrder()" *ngIf="!order.isDelivered && !order.isCancelled">
+      <td><a title="Cancel Order" (click)="cancelOrder(order.id)" *ngIf="!order.isDelivered && !order.isCancelled">
           <i class="fa fa-times-circle icon-font"></i>
       </a></td>
     </tr>

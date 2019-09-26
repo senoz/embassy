@@ -24,6 +24,14 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getPendingOrdersByUserId(id) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', id)
+    .where('isDelivered', '==', false)
+    .where('isCancelled', '==', false))
+    .snapshotChanges();
+  }
+
   getOrderById(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where(firebase.firestore.FieldPath.documentId(), '==', id).limit(1))

@@ -5,7 +5,6 @@ import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
 import { AlertService } from '../services/alert.service';
 import { Router } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-orders',
@@ -39,9 +38,12 @@ export class MyOrdersComponent implements OnInit {
     const userId = localStorage.getItem('userId');
     this.orderService.getOrdersByUserId(userId).subscribe(data => {
       if (data.length) {
+        this.orders = [];
         for (const key in data) {
           if (data[key]) {
-            this.orders.push(data[key].payload.doc.data() as Order);
+            const order = data[key].payload.doc.data() as Order;
+            order.id = data[key].payload.doc.id;
+            this.orders.push(order);
           }
         }
       }
@@ -61,7 +63,7 @@ export class MyOrdersComponent implements OnInit {
       this.orderService.cancelOrder(orderId);
       this.alert.success('Order has cancelled successfully');
       setTimeout(() => {
-        this.router.navigate(['/myorders']);
+        
       }, 2000);
     }
   }

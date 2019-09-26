@@ -1,3 +1,4 @@
+<section class="container">
 <div class="card split" *ngFor="let product of products">
   <div class="view overlay">
     <img src="../../assets/images/{{product.url}}" class="card-img-top">
@@ -14,9 +15,7 @@
       {{product.price | currency : 'INR'}}
     </h5>
     <ng-container *ngIf="getOrderByProdId(product.id); else buyProduct">
-        <a routerLink="/edit-order/getOrderByProdId(product.id)" class="btn btn-outline-primary float-right pointer">
-          Modify
-        </a>
+        <span class="float-right"><em>Your Order In Progress</em></span>
     </ng-container>
     <ng-template #buyProduct>
       <a routerLink="/order-details/{{product.id}}" class="btn btn-outline-primary float-right pointer">
@@ -25,3 +24,4 @@
     </ng-template>
   </div>
 </div>
+</section>

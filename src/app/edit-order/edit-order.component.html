@@ -1,4 +1,4 @@
-<section>
+  <section>
     <div class="card">
       <div class="view overlay">
         <img *ngIf="product.url" src="../../assets/images/{{product.url}}" class="card-img-top">
@@ -60,7 +60,7 @@
               <div class="w-100 padding-10"></div>
               <fieldset class="scheduler-border" *ngIf="showAddress; else existingAddress">
                 <legend class="scheduler-border">Address:</legend>
-                <div class="float-right" *ngIf="addresses">
+                <div class="float-right">
                   <button type="button" (click)="hideAddress()" class="btn btn-light pointer">Hide</button>
                   <div class="w-100 padding-10"></div>
                 </div>
@@ -95,7 +95,7 @@
               <ng-template #existingAddress>
                 <fieldset class="scheduler-border">
                   <legend class="scheduler-border">Address:</legend>
-                  <div class="float-right" *ngIf="addresses">
+                  <div class="float-right">
                     <button type="button" (click)="editAdddress()" class="btn btn-link pointer">Edit</button>
                   </div>
                   <div class="input-group col">
@@ -136,22 +136,6 @@
           </div>
         </div>
         <div class="row">
-            <div class="col promo">
-              <div class="custom-control custom-checkbox coupon-check">
-                <input type="checkbox"
-                  id="isCoupon" [checked]="isCoupon" (change)="checkPromo(isCoupon)" name="isCoupon" class="custom-control-input ">
-                <label class="custom-control-label" for="isCoupon">Promo Code</label>
-              </div>
-              <ng-container *ngIf="isCoupon && !model.isPromotionApplied">
-                <input type="text" name="coupon" ngModel #couponCode="ngModel"
-                 [ngClass]="{ 'is-invalid': isCouponApplied && couponCode.invalid }" required class="form-control coupon border-top-0 border-right-0 border-left-0" placeholder="Enter Promo" />
-                <button type="button" (click)="applyCoupon(couponCode.value)" class="btn btn-sm btn-outline-primary float-right pointer">Ok</button>
-                <div class="mt-5 clearfix text-center alert-danger" *ngIf="invalidCoupon">Invalid Promo Code</div>
-              </ng-container>
-              <span *ngIf="isCoupon && model.isPromotionApplied" class="alert-success">
-                Applied Successfully
-              </span>
-            </div>
             <div class="w-100"></div>
             <div class="col margin-15">
                 <label >Total: </label> <strong> {{ model.total | currency : 'INR' }}</strong>
@@ -163,53 +147,3 @@
       </div>
     </form>
   </section>
-<!-- <ng-template #changeOrder>
-  <div class="alert alert-warning" role="alert">
-    <p>You have already placed the order. </p>
-    <p>Do you want to change?</p>
-  </div>
-  <fieldset class="scheduler-border">
-    <legend class="scheduler-border">Order Details:</legend>
-    <div class="input-group col">
-      <div class="col input-group" *ngIf="product">
-        Product Name:
-      </div>
-      <div class="col-7 input-group" *ngIf="product">
-        {{product.name}}
-      </div>
-      <div class="w-100 padding-10"></div>
-      <div class="col input-group">
-        Quantity:
-      </div>
-      <div class="col-7 input-group">
-        {{model.quantity}}
-      </div>
-      <div class="w-100 padding-10"></div>
-      <div class="col input-group">
-        Return Empty:
-      </div>
-      <div class="col-7 input-group">
-        {{model.return}}
-      </div>
-      <div class="w-100 padding-10"></div>
-      <div class="col input-group">
-        Total:
-      </div>
-      <div class="col-7 input-group">
-        {{ model.total | currency : 'INR' }}
-      </div>
-      <div class="w-100 padding-10"></div>
-    </div>
-  </fieldset>
-  <section class="container">
-    <div class="row mt-5">
-      <div class="w-100"></div>
-      <div class="col">
-        <button type="button" (click)="changeYourOrder()" class="btn btn-outline-secondary pointer">Change Order</button>
-      </div>
-      <div class="col">
-        <button type="button" (click)="cancelYourOrder()" class="btn btn-outline-danger pointer">Cancel Order</button>
-      </div>
-    </div>
-  </section>
-</ng-template> -->

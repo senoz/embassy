@@ -1,5 +1,5 @@
 import {Subscription} from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -12,15 +12,18 @@ import { Order } from '../models/order.model';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent {
   currentOrder = [];
+  orderedProducts = [];
   products: AngularFirestoreCollection<Products>;
   private subscription: Subscription;
-  private orderSubscription : Subscription;
+  private orderSubscription: Subscription;
+  userId: string;
   constructor(
     private orderService: OrderService,
     private productsServices: ProductsService
   ) {
+    this.userId = localStorage.getItem('userId');
     this.subscription = this.productsServices.getProducts().subscribe(data => {
       this.products = data.map(e => {
         return {
@@ -28,7 +31,7 @@ export class DashboardComponent implements OnDestroy {
           ...e.payload.doc.data()
         } as Products;
       });
-      this.orderSubscription = this.orderService.getUnDeliveredOrders()
+      this.orderSubscription = this.orderService.getPendingOrdersByUserId(this.userId)
       .subscribe(orders => {
         if (orders.length) {
           for (const key in orders) {
@@ -42,19 +45,14 @@ export class DashboardComponent implements OnDestroy {
       });
     });
   }
-  
+
   getOrderByProdId(id) {
     for (const key in this.currentOrder) {
       if (this.currentOrder[key].productId === id) {
-        return this.currentOrder[key].id;
+        return true;
       }
     }
     return false;
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.orderSubscription.unsubscribe();
   }
 
 }

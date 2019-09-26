@@ -2,6 +2,8 @@ export class Order {
     id: any;
     userId: string;
     productId: string;
+    quantity: number;
+    return: number;
     isPaid: boolean;
     isDelivered: boolean;
     paymentType: string;

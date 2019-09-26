@@ -47,7 +47,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       block: '',
       floor: '',
     },
-    productId: '',
+    productId: this.route.snapshot.params.id,
     isPaid: false,
     isDelivered: false,
     paymentType: 'cod',
@@ -69,6 +69,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   orderRef: any;
   products: any;
   orderId: string;
+  wallet: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -193,11 +194,21 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
           this.invalidCoupon = false;
           this.model.isPromotionApplied = true;
           const promotion = coupon[0].payload.doc.data() as Coupon;
-          this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+          switch (promotion.type) {
+            case 1:
+              this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+              break;
+            case 2:
+              this.model.total = (this.model.total - promotion.discount);
+              break;
+            default:
+              this.wallet = (this.wallet + promotion.discount);
+          }
           this.model.promotionCode = promotion.couponCode;
         }
       });
     }
+    return this.model.total;
   }
 
   checkPromo(val) {
@@ -205,6 +216,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     if (!this.isCoupon) {
       this.model.total = (this.model.quantity * this.product.price);
       this.model.isPromotionApplied = false;
+      this.model.promotionCode = '';
     }
   }
 
