@@ -1,6 +1,6 @@
 import { first } from 'rxjs/internal/operators';
 import { Subscription, pipe } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Users } from '../models/users.model';
 import { UsersService } from '../services/users.service';
@@ -13,7 +13,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   submitted = false;
   RegisterForm;
@@ -48,10 +48,11 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.authService.isUserExists(this.RegisterForm.value.userName).subscribe(data => {
+    this.subscription = this.authService.isUserExists(this.RegisterForm.value.userName).subscribe(data => {
       if (!data.length) {
         if (this.registerUser(this.RegisterForm.value)) {
           this.router.navigate(['/dashboard']);
+          return;
         }
       } else {
         this.alertService.error('Mobile number has already exists');
@@ -72,4 +73,7 @@ export class RegistrationComponent implements OnInit {
     return this.authService.createUser(data);
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

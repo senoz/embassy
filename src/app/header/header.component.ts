@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   collapsed = false;
   constructor(
     private router: Router,
-    private authService: AuthenticateService
+    public authService: AuthenticateService
   ) { }
 
   toggleCollapsed(): void {
