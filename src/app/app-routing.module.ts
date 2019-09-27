@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'order-details/:id',
     component: OrderDetailsComponent,
@@ -32,7 +32,6 @@ const routes: Routes = [
     component: EditOrderComponent,
     canActivate: [AuthGuardService]
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
   {
     path: '**',
