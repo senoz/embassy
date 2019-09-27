@@ -1,6 +1,6 @@
 <header>
   <nav id="mainNavbar" class="navbar navbar-expand-md navbar-dark fixed-top bg- bg-primary">
-    <a class="navbar-brand" (click)="toggleCollapsed()" routerLink="/"><img class="img-responsive" src="../../assets/images/logo.png"></a>
+    <a class="navbar-brand" (click)="collapsed=true" routerLink="/"><img class="img-responsive" src="../../assets/images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
       <span class="navbar-toggler-icon"></span>
@@ -9,6 +9,9 @@
       <ul class="navbar-nav mr-auto" *ngIf="authService.isLoggedIn">
         <li class="nav-item">
           <a class="nav-link" routerLink="/myorders" (click)="toggleCollapsed()" routerLinkActive="active">My Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="whatsapp://send?text={{url}}?referral={{userId}}">Share</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="authService.logout()" >Logout</a>

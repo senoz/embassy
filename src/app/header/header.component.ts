@@ -7,11 +7,16 @@ import { AuthenticateService } from '../services/authenticate.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  userId: string;
+  url: any;
   collapsed = false;
   constructor(
     private router: Router,
     public authService: AuthenticateService
-  ) { }
+  ) { 
+    this.url = location.host;
+    this.userId = localStorage.getItem('userId');
+  }
 
   toggleCollapsed(): void {
     this.collapsed = !this.collapsed;

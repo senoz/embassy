@@ -1,9 +1,12 @@
 <div class="table-responsive-sm">
+  <h6>My Orders</h6>
 <table class="table table-striped">
   <thead class="thead-light">
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Product</th>
+      <th scope="col">Qty</th>
+      <th scope="col">Total</th>
       <th scope="col">Status</th>
       <th scope="col"></th>
       <th scope="col"></th>
@@ -13,6 +16,8 @@
     <tr *ngFor="let order of orders">
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
       <td>{{ getProductById(order.productId) }}</td>
+      <td>{{ order.quantity }}</td>
+      <td>{{ order.total | currency : 'INR' }}</td>
       <td>{{ getOrderStatus(order) }}</td>
       <td><a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
         <i class="fa fa-edit icon-font"></i>

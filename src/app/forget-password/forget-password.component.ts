@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Twilio } from 'twilio';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
