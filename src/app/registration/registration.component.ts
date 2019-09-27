@@ -13,7 +13,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnInit {
 
   submitted = false;
   RegisterForm;
@@ -71,9 +71,5 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   registerUser(data) {
     return this.authService.createUser(data);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

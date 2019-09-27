@@ -25,7 +25,11 @@ export class ForgetPasswordComponent implements OnInit {
     if (this.forgetPasswordForm.invalid) {
         return;
     }
-}
+  }
+    // convenience getter for easy access to form fields
+  get f() {
+    return this.forgetPasswordForm.controls;
+  }
 }
 // twilio.ts
 /**
