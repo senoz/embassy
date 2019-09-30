@@ -67,6 +67,7 @@ export class OrderService {
   checkValidPromotion(promo) {
     return this.firestore.collection('promotion',
     ref => ref.where('couponCode', '==', promo)
+    .where('isActive', '==', true)
     .limit(1))
     .snapshotChanges();
   }
