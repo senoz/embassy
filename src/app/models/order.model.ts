@@ -3,7 +3,7 @@ export class Order {
     userId: string;
     productId: string;
     quantity: number;
-    return: number;
+    received: number;
     isPaid: boolean;
     isDelivered: boolean;
     paymentType: string;

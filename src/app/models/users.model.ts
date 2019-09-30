@@ -4,5 +4,7 @@ export class Users {
     userName: string;
     password: string;
     isAdmin: boolean;
+    wallet: number;
+    refferedBy: string;
     token?: string;
 }

@@ -11,4 +11,6 @@ export class ConstantsService {
   twilioNumber = GlobalVariables.twilioNumber;
   accountSid = GlobalVariables.accountSid;
   authToken = GlobalVariables.authToken;
+  whatsappGroup = GlobalVariables.whatsappGroup;
+  whatsappContent = GlobalVariables.whatsappContent;
 }

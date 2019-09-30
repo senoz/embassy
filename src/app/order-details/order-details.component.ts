@@ -40,7 +40,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   model: any = {
     userId: localStorage.getItem('userId'),
     quantity: 1,
-    return: 0,
+    received: 0,
     address: {
       apartmentName: 'Embassy Residency',
       doorNumber: '',
@@ -109,7 +109,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/my-orders']);
     }, 2000);
   }
 
@@ -227,14 +227,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       this.model.quantity--;
     }
     this.model.total = (this.model.quantity * this.product.price);
-  }
-
-  manageReturn(type) {
-    if (type) {
-      this.model.return++;
-    } else {
-      this.model.return--;
-    }
   }
 
   ngOnDestroy() {

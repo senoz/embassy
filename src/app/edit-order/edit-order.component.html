@@ -19,7 +19,7 @@
             <div class="row">
               <div class="col">Quantity</div>
               <div class="col-7">
-                <div class="input-group">
+                <div class="input-group w-75">
                   <span class="input-group-btn">
                     <button type="button" [disabled]="model.quantity <= 1" [ngClass]="{'disabled': model.quantity <= 1 }" (click)="manageQuantity(0)"
                       class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
@@ -30,28 +30,6 @@
                     value="1" min="1" max="10">
                   <span class="input-group-btn">
                     <button type="button" (click)="manageQuantity(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
-                      <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="w-100 padding-10"></div>
-              <div class="col">
-                Return Empty
-              </div>
-              <div class="col-7">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                    <button type="button" (click)="manageReturn(0)" [disabled]="model.return <= 0" [ngClass]="{'disabled': model.return <= 0 }"
-                      class="btn btn-outline-primary btn-sm disabled" data-type="minus" data-field="">
-                      <i class="fa fa-minus" aria-hidden="true"></i>
-                    </button>
-                  </span>
-                  <input type="text" id="return" [readonly]=true [(ngModel)]="model.return" name="return" class="center increasebutton form-control disabled"
-                    value="1" min="1" max="10">
-                  <span class="input-group-btn">
-                    <button type="button" [disabled]="model.quantity <= model.return" [ngClass]="{'disabled': model.quantity <= model.return}"
-                      (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
                       <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                   </span>
@@ -141,7 +119,7 @@
                 <label >Total: </label> <strong> {{ model.total | currency : 'INR' }}</strong>
               </div>
             <div class="col margin-15">
-              <button class="btn btn-outline-primary float-right pointer">Place Order</button>
+              <button class="btn btn-outline-primary float-right pointer">Update</button>
             </div>
         </div>
       </div>

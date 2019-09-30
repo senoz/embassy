@@ -59,6 +59,9 @@ export class AuthenticateService {
   }
 
   createUser(user: Users) {
+    user.wallet = 0;
+    user.isAdmin = false;
+    user.refferedBy = localStorage.getItem('refferedBy') ? localStorage.getItem('refferedBy') : '';
     const newUser = this.userService.addUser(user);
     if (newUser) {
       this.userService.user = user;

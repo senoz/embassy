@@ -28,6 +28,7 @@ import { ValidationsDirective } from './_directives/validations.directive';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EditOrderComponent } from './edit-order/edit-order.component';
+import { MyDetailsComponent } from './my-details/my-details.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
     ValidationsDirective,
     MyOrdersComponent,
     EditOrderComponent,
+    MyDetailsComponent,
   ],
   imports: [
     NgbModule.forRoot(),

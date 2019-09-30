@@ -8,10 +8,14 @@
     <div id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
       <ul class="navbar-nav mr-auto" *ngIf="authService.isLoggedIn">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/myorders" (click)="toggleCollapsed()" routerLinkActive="active">My Orders</a>
+          <a class="nav-link" routerLink="/my-orders" (click)="toggleCollapsed()" routerLinkActive="active">My Orders</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" action="share/whatsapp/share" target="_blank" href="whatsapp://send?text={{url}}?referral={{userId}}">Share</a>
+          <a class="nav-link" routerLink="/my-details" (click)="toggleCollapsed()" routerLinkActive="active">My Wallet & Pendings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-action="share/whatsapp/share" target="_blank"
+           href="{{whatsappShare}}">Share & Earn</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="authService.logout()" >Logout</a>

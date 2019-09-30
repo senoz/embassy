@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Users } from '../models/users.model';
 import { UsersService } from '../services/users.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AlertService } from '../services/alert.service';
 
@@ -25,14 +25,19 @@ export class RegistrationComponent implements OnInit {
     private userService: UsersService,
     private authService: AuthenticateService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     if (this.authService.isLoggedIn) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
     }
   }
 
   ngOnInit() {
+    const refferedBy = this.route.snapshot.params.id;
+    if (refferedBy) {
+      localStorage.setItem('refferedBy', refferedBy);
+    }
     this.RegisterForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       userName: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],

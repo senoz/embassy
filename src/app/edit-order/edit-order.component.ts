@@ -80,7 +80,7 @@ export class EditOrderComponent implements OnInit {
     this.updateOrder(this.model);
     this.alert.success('Your order has updated successfully');
     setTimeout(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/my-orders']);
     }, 2000);
   }
 
@@ -199,14 +199,6 @@ export class EditOrderComponent implements OnInit {
       this.model.total = this.applyCoupon(this.model.promotionCode);
     } else {
       this.model.total = (this.model.quantity * this.product.price);
-    }
-  }
-
-  manageReturn(type) {
-    if (type) {
-      this.model.return++;
-    } else {
-      this.model.return--;
     }
   }
 }

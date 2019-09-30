@@ -8,6 +8,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
+import { MyDetailsComponent } from './my-details/my-details.component';
 
 const routes: Routes = [
 
@@ -15,7 +16,14 @@ const routes: Routes = [
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'referral/:id',
+    component: RegistrationComponent
+  },
+  { path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuardService]
+  },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'order-details/:id',
@@ -23,8 +31,13 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'myorders',
+    path: 'my-orders',
     component: MyOrdersComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'my-details',
+    component: MyDetailsComponent,
     canActivate: [AuthGuardService]
   },
   {
@@ -32,7 +45,6 @@ const routes: Routes = [
     component: EditOrderComponent,
     canActivate: [AuthGuardService]
   },
-
   {
     path: '**',
     redirectTo: '',
