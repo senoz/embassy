@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-orders.component.css']
 })
 export class MyOrdersComponent implements OnInit {
-  orders = [];
+  orders: Array<any> = [];
   product = [];
-
+  cols: { field: string; header: string; }[];
   constructor(
     private orderService: OrderService,
     private productsService: ProductsService,
@@ -48,6 +48,15 @@ export class MyOrdersComponent implements OnInit {
         }
       }
     });
+    this.cols = [
+      { field: 'Date', header: 'Date' },
+      { field: 'Product', header: 'Product' },
+      { field: 'Qty', header: 'Qty' },
+      { field: 'Total', header: 'Total' },
+      { field: 'Status', header: 'Status' },
+      { field: '', header: '' },
+      { field: '', header: '' }
+    ];
   }
 
   getProductById(productId) {
@@ -63,7 +72,7 @@ export class MyOrdersComponent implements OnInit {
       this.orderService.cancelOrder(orderId);
       this.alert.success('Order has cancelled successfully');
       setTimeout(() => {
-        
+        this.alert.blurMessage();
       }, 2000);
     }
   }

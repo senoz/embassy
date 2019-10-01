@@ -13,6 +13,7 @@ import { AlertService } from './alert.service';
 export class AuthenticateService {
 
   isLoggedIn = false;
+  isAdminLoggedIn = false;
   users: Users[];
 
   constructor(
@@ -37,9 +38,15 @@ export class AuthenticateService {
         userData = users[0].payload.doc.data() as Users;
         userData.id = users[0].payload.doc.id;
         this.userService.user = userData;
-        this.isLoggedIn = true;
-        localStorage.setItem('userId', userData.id);
-        this.router.navigate(['/dashboard']);
+        if (!userData.isAdmin) {
+          this.isLoggedIn = true;
+          localStorage.setItem('userId', userData.id);
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.isAdminLoggedIn = true;
+          this.router.navigate(['/admin-dashboard']);
+        }
+
       } else {
         this.isLoggedIn = false;
         this.alertService.error('Login Failed');

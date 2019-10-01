@@ -1,7 +1,33 @@
 <div class="table-responsive-sm">
   <h6>My Orders</h6>
+<!-- <p-table class="table table-striped" #dt [value]="orders" [paginator]="true"
+ [rows]="10" [columns]="cols"  [customSort]="true" sortField="Date">
+    <ng-template class="thead-light" pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-columns="columns">
+        <tr *ngFor="let order of orders">
+            <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+            <td>{{ getProductById(order.productId) }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.total | currency : 'INR' }}</td>
+            <td>{{ getOrderStatus(order) }}</td>
+            <td><a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
+              <i class="fa fa-edit icon-font"></i>
+            </a></td>
+            <td><a title="Cancel Order" (click)="cancelOrder(order.id)" *ngIf="!order.isDelivered && !order.isCancelled">
+                <i class="fa fa-times-circle icon-font"></i>
+            </a></td>
+          </tr>
+    </ng-template>
+</p-table> -->
 <table class="table table-striped">
   <thead class="thead-light">
+    
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Product</th>
@@ -28,5 +54,4 @@
     </tr>
   </tbody>
 </table>
-<p-paginator [rows]="10" [totalRecords]="orders.length"></p-paginator>
 </div>

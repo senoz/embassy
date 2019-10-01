@@ -35,5 +35,14 @@ export class HeaderComponent implements OnInit {
     this.toggleCollapsed();
   }
 
+  goToDashboard() {
+    this.collapsed = true;
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    } 
+    if (this.authService.isAdminLoggedIn) {
+      this.router.navigate(['/admin-dashboard']);
+    }
+  }
 
 }

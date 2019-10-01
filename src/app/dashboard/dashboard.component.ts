@@ -55,4 +55,7 @@ export class DashboardComponent {
     return false;
   }
 
+  ngOnDestoy() {
+    this.orderSubscription.unsubscribe();
+  }
 }

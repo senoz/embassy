@@ -1,0 +1,371 @@
+[debug] [2019-09-30T13:32:10.129Z] ----------------------------------------------------------------------
+[debug] [2019-09-30T13:32:10.133Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-09-30T13:32:10.133Z] CLI Version:   7.4.0
+[debug] [2019-09-30T13:32:10.133Z] Platform:      win32
+[debug] [2019-09-30T13:32:10.133Z] Node Version:  v8.11.3
+[debug] [2019-09-30T13:32:10.133Z] Time:          Mon Sep 30 2019 19:02:10 GMT+0530 (India Standard Time)
+[debug] [2019-09-30T13:32:10.134Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-09-30T13:32:10.163Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-09-30T13:32:10.163Z] > authorizing via signed-in user
+[debug] [2019-09-30T13:32:10.163Z] [iam] checking project embassypdw for permissions ["firebase.projects.get"]
+[debug] [2019-09-30T13:32:10.166Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/embassypdw:testIamPermissions  
+
+[debug] [2019-09-30T13:32:13.299Z] <<< HTTP RESPONSE 200
+[debug] [2019-09-30T13:32:13.301Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw  
+ 
+[debug] [2019-09-30T13:32:14.153Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\shenozdss\ANGULAR\EPDW\epdw'...
+[info] 
+[debug] [2019-09-30T13:32:14.161Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw/webApps/-/config  
+ 
+[info] +  functions: Using node@8 from host.
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-09-30T13:32:15.481Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/epdw
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-09-30T13:32:16.735Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:32:16.736Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:32:16.771Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:32:16.774Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:32:16.776Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:32:48.197Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:32:50.250Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:32:50.250Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:32:50.257Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:32:50.260Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:32:50.261Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:32:57.626Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:32:57.912Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:32:58.111Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:33:00.137Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:33:00.137Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:33:00.142Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:33:00.146Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:33:00.147Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[debug] [2019-09-30T13:33:07.882Z] ----------------------------------------------------------------------
+[debug] [2019-09-30T13:33:07.902Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-09-30T13:33:07.903Z] CLI Version:   7.4.0
+[debug] [2019-09-30T13:33:07.903Z] Platform:      win32
+[debug] [2019-09-30T13:33:07.903Z] Node Version:  v8.11.3
+[debug] [2019-09-30T13:33:07.903Z] Time:          Mon Sep 30 2019 19:03:07 GMT+0530 (India Standard Time)
+[debug] [2019-09-30T13:33:07.903Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-09-30T13:33:07.927Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-09-30T13:33:07.927Z] > authorizing via signed-in user
+[debug] [2019-09-30T13:33:07.928Z] [iam] checking project embassypdw for permissions ["firebase.projects.get"]
+[debug] [2019-09-30T13:33:07.930Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/embassypdw:testIamPermissions  
+
+[debug] [2019-09-30T13:33:10.543Z] <<< HTTP RESPONSE 200
+[debug] [2019-09-30T13:33:10.546Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw  
+ 
+[debug] [2019-09-30T13:33:11.060Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\shenozdss\ANGULAR\EPDW\epdw'...
+[info] 
+[debug] [2019-09-30T13:33:11.068Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw/webApps/-/config  
+ 
+[info] +  functions: Using node@8 from host.
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-09-30T13:33:12.378Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/epdw
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-09-30T13:33:13.339Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:33:13.339Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:33:13.342Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:33:13.346Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:33:13.347Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:22.914Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:24.952Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:24.952Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:24.957Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:24.960Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:24.961Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:26.523Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:28.483Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:28.484Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:28.489Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:28.492Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:28.493Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:28.997Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:31.080Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:31.080Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:31.085Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:31.088Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:31.090Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:42.825Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:44.388Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:44.953Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:44.953Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:44.957Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:44.961Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:44.962Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:46.288Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:46.288Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:46.294Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:46.297Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:46.299Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:50.475Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:50.783Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:34:52.768Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:52.769Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:52.774Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:52.777Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:52.779Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:52.868Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:34:54.750Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:34:54.751Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:34:54.755Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:34:54.757Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:34:54.758Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:35:03.168Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:35:05.072Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:35:05.073Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:35:05.078Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:35:05.080Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:35:05.081Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  ReferenceError: alert is not defined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:2:1)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:35:19.841Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:35:21.851Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:35:21.851Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:35:21.858Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:35:21.864Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:35:21.865Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  TypeError: Cannot read property 'sid' of undefined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:15:42)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:35:50.715Z] ----------------------------------------------------------------------
+[debug] [2019-09-30T13:35:50.719Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-09-30T13:35:50.719Z] CLI Version:   7.4.0
+[debug] [2019-09-30T13:35:50.720Z] Platform:      win32
+[debug] [2019-09-30T13:35:50.720Z] Node Version:  v8.11.3
+[debug] [2019-09-30T13:35:50.720Z] Time:          Mon Sep 30 2019 19:05:50 GMT+0530 (India Standard Time)
+[debug] [2019-09-30T13:35:50.720Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-09-30T13:35:50.735Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-09-30T13:35:50.735Z] > authorizing via signed-in user
+[debug] [2019-09-30T13:35:50.736Z] [iam] checking project embassypdw for permissions ["firebase.projects.get"]
+[debug] [2019-09-30T13:35:50.738Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/embassypdw:testIamPermissions  
+
+[debug] [2019-09-30T13:35:53.387Z] <<< HTTP RESPONSE 200
+[debug] [2019-09-30T13:35:53.390Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw  
+ 
+[debug] [2019-09-30T13:35:54.011Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\shenozdss\ANGULAR\EPDW\epdw'...
+[info] 
+[debug] [2019-09-30T13:35:54.020Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/embassypdw/webApps/-/config  
+ 
+[info] +  functions: Using node@8 from host.
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-09-30T13:35:55.304Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/epdw
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-09-30T13:35:56.300Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:35:56.300Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:35:56.304Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:35:56.306Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:35:56.308Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  TypeError: Cannot read property 'sid' of undefined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:15:42)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:36:34.401Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[debug] [2019-09-30T13:36:36.377Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:36:36.378Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:36:36.383Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:36:36.386Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:36:36.387Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:36:36.653Z] File C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js changed, reloading triggers
+[warn] !  TypeError: Cannot read property 'sid' of undefined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:15:42)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-30T13:36:38.527Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions","node_version":"8.11.3"}
+[debug] [2019-09-30T13:36:38.528Z] [runtime-status] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true} {}
+[debug] [2019-09-30T13:36:38.532Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.6.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-30T13:36:38.534Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-30T13:36:38.536Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\shenozdss\\ANGULAR\\EPDW\\epdw\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[warn] !  TypeError: Cannot read property 'sid' of undefined
+    at Object.<anonymous> (C:\Users\shenozdss\ANGULAR\EPDW\epdw\functions\index.js:15:42)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at C:\Users\shenozdss\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+[warn] !  We were unable to load your functions code. (see above)

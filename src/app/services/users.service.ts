@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 })
 export class UsersService {
   user$: AngularFirestoreCollection<Users>;
-  user: any;
+  user = { isAdmin: false } as Users;
   constructor(private firestore: AngularFirestore) {
     this.user$ = this.firestore.collection('users');
   }

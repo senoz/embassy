@@ -1,4 +1,4 @@
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -20,7 +20,13 @@ const routes: Routes = [
     path: 'referral/:id',
     component: RegistrationComponent
   },
-  { path: 'dashboard',
+  {
+    path: 'admin-dashboard',
+    loadChildren: './admin/admin.module#AdminModule',
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuardService]
   },

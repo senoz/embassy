@@ -17,8 +17,13 @@ export class AuthGuardService implements CanActivate {
   ) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<boolean> | Promise<boolean> | boolean {
-      if (localStorage.getItem('userId')) {
+      if (this.usersService.user && localStorage.getItem('userId')
+       && !this.usersService.user.isAdmin) {
         this.authService.isLoggedIn = true;
+        return true;
+      }
+      if (this.usersService.user.isAdmin) {
+        this.authService.isAdminLoggedIn = true;
         return true;
       }
       return this.router.navigate(['/login']);

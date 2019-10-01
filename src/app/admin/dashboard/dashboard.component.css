@@ -1,0 +1,24 @@
+.table {
+    font-size: 12px;
+}
+.table td, .table th {
+    width: 25%;
+    padding: .50rem;
+    vertical-align: text-bottom;
+}
+.header {
+    background-color: #007bff!important;
+    color: #fff;
+}
+.deliverLink {
+    font-size: 14px;
+}
+.modal-dialog {
+    top: 25%;
+}
+.card-body {
+    font-size: 12px;
+}
+.increasebutton {
+    height: 30px;
+}

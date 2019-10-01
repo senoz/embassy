@@ -1,6 +1,8 @@
 <header>
   <nav id="mainNavbar" class="navbar navbar-expand-md navbar-dark fixed-top bg- bg-primary">
-    <a class="navbar-brand" (click)="collapsed=true" routerLink="/"><img class="img-responsive" src="../../assets/images/logo.png"></a>
+    <a class="navbar-brand" (click)="goToDashboard();">
+      <img class="img-responsive" src="../../assets/images/logo.png">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
       <span class="navbar-toggler-icon"></span>
@@ -14,11 +16,18 @@
           <a class="nav-link" routerLink="/my-details" (click)="toggleCollapsed()" routerLinkActive="active">My Wallet & Pendings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-action="share/whatsapp/share" target="_blank"
-           href="{{whatsappShare}}">Share & Earn</a>
+          <a class="nav-link" data-action="share/whatsapp/share" target="_blank" href="{{whatsappShare}}">Share & Earn</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="authService.logout()" >Logout</a>
+          <a class="nav-link" (click)="authService.logout()">Logout</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mr-auto" *ngIf="authService.isAdminLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" data-action="share/whatsapp/share" target="_blank" href="{{whatsappShare}}">Share & Earn</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="authService.logout()">Logout</a>
         </li>
         <!-- <li class="nav-item dropdown">
               <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">

@@ -30,7 +30,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 import { MyDetailsComponent } from './my-details/my-details.component';
 
-import {PaginatorModule} from 'primeng/paginator';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,7 @@ import {PaginatorModule} from 'primeng/paginator';
     AngularFireAuthModule,
     AngularFirestoreModule,
     NoopAnimationsModule,
-    PaginatorModule
+    TableModule
   ],
   providers: [
     AngularFirestore,
