@@ -1,8 +1,10 @@
 export class Order {
     id: any;
+    ref: any;
     userId: string;
     productId: string;
     quantity: number;
+    return: number;
     received: number;
     isPaid: boolean;
     isDelivered: boolean;
@@ -12,6 +14,7 @@ export class Order {
     isCancelled: boolean;
     isPromotionApplied: boolean;
     promotionCode: string;
+    updateAt: any;
     address: {
         id: any;
         userId: string;

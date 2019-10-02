@@ -22,12 +22,13 @@ export class MyDetailsComponent implements OnInit {
     private productsService: ProductsService,
     private userService: UsersService
   ) {
-    this.productsService.getProducts().subscribe(product => {
-      if (product.length) {
-        for (const key in product) {
-          if (product[key]) {
-            const prod = product[key].payload.doc.data() as Products;
-            prod.id = product[key].payload.doc.id;
+    this.productsService.getProducts().subscribe(productData => {
+      this.product = [];
+      if (productData.length) {
+        for (const key in productData) {
+          if (productData[key]) {
+            const prod = productData[key].payload.doc.data() as Products;
+            prod.id = productData[key].payload.doc.id;
             this.product.push(prod);
           }
         }
@@ -44,8 +45,8 @@ export class MyDetailsComponent implements OnInit {
       }
     });
     this.orderService.getOrdersByUserId(userId).subscribe(data => {
+      this.orders = [];
       if (data.length) {
-        this.orders = [];
         for (const key in data) {
           if (data[key]) {
             const order = data[key].payload.doc.data() as Order;
@@ -84,7 +85,7 @@ export class MyDetailsComponent implements OnInit {
     for (const key in this.orders) {
       if (this.orders[key].userId === userId) {
         totalQty += this.orders[key].quantity;
-        totalReceived += this.orders[key].received;
+        totalReceived += this.orders[key].return;
       }
     }
     return (totalQty - totalReceived);

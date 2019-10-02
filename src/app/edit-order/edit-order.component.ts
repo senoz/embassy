@@ -41,7 +41,7 @@ export class EditOrderComponent implements OnInit {
     quantity: 1,
     return: 0,
     address: {
-      apartmentName: 'Embassy Residency',
+      apartmentName: this.globals.defaultApartment,
       doorNumber: '',
       block: '',
       floor: '',

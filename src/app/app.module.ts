@@ -31,6 +31,7 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
 import { MyDetailsComponent } from './my-details/my-details.component';
 
 import {TableModule} from 'primeng/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {TableModule} from 'primeng/table';
     AngularFireAuthModule,
     AngularFirestoreModule,
     NoopAnimationsModule,
+    BrowserAnimationsModule,
     TableModule
   ],
   providers: [

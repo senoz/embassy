@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
 import { HttpParameterCodec } from "@angular/common/http";
 import { ConstantsService } from '../services/constants.service';
+import { OrderService } from '../services/order.service';
+import { Coupon } from '../models/coupon.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,13 +18,27 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthenticateService,
-    private globals: ConstantsService
+    private globals: ConstantsService,
+    private orderService: OrderService
   ) { 
     const urlhost = location.host;
     const userId = localStorage.getItem('userId');
     const group = globals.whatsappGroup;
     const content = globals.whatsappContent;
-    const url = `${content}\n\nPlace Order: http://${urlhost}/referral/${userId}\n\n\n${group}`;
+    let promotion, promoLink = '';
+    this.orderService.getPromoCode().subscribe(data => {
+      if (data.length) {
+        promotion = data[0].payload.doc.data() as Coupon;
+      }
+    });
+    if (promotion) {
+      promoLink = `\n\nPromo Code: *${promotion.couponCode}*`;
+    }
+    let referral = '/';
+    if (authService.isLoggedIn) {
+      referral = `/referral/${userId}`;
+    }
+    const url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n\n${group}${promoLink}`;
     const urlEncode = encodeURIComponent(url);
     this.whatsappShare = `https://api.whatsapp.com/send?text=${urlEncode}`;
   }

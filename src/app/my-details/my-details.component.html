@@ -27,7 +27,7 @@
       <th scope="col">Amount</th>
       <th scope="col">Qty</th>
       <th scope="col">Paid</th>
-      <th scope="col">Can Received</th>
+      <th scope="col">Return Empty</th>
     </tr>
   </thead>
   <tbody>
@@ -40,7 +40,7 @@
         <ng-container *ngIf="(order.isPaid === true);else notPaid">Yes</ng-container>
         <ng-template #notPaid>No</ng-template>
       </td>
-      <td>{{ order.received }}</td>
+      <td>{{ order.return }}</td>
     </tr>
   </tbody>
 </table>

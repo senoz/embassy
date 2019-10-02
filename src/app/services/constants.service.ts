@@ -8,6 +8,7 @@ export class ConstantsService {
 
   constructor() { }
   gpayNumber = GlobalVariables.gpayNumber;
+  defaultApartment = GlobalVariables.defaultApartment;
   twilioNumber = GlobalVariables.twilioNumber;
   accountSid = GlobalVariables.accountSid;
   authToken = GlobalVariables.authToken;

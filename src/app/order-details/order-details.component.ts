@@ -42,7 +42,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     quantity: 1,
     received: 0,
     address: {
-      apartmentName: 'Embassy Residency',
+      apartmentName: this.globals.defaultApartment,
       doorNumber: '',
       block: '',
       floor: '',

@@ -21,12 +21,13 @@ export class MyOrdersComponent implements OnInit {
     private alert: AlertService,
     private router: Router
   ) {
-    this.productsService.getProducts().subscribe(product => {
-      if (product.length) {
-        for (const key in product) {
-          if (product[key]) {
-            const prod = product[key].payload.doc.data() as Products;
-            prod.id = product[key].payload.doc.id;
+    this.productsService.getProducts().subscribe(productData => {
+      this.product = [];
+      if (productData.length) {
+        for (const key in productData) {
+          if (productData[key]) {
+            const prod = productData[key].payload.doc.data() as Products;
+            prod.id = productData[key].payload.doc.id;
             this.product.push(prod);
           }
         }
@@ -37,8 +38,8 @@ export class MyOrdersComponent implements OnInit {
   ngOnInit() {
     const userId = localStorage.getItem('userId');
     this.orderService.getOrdersByUserId(userId).subscribe(data => {
+      this.orders = [];
       if (data.length) {
-        this.orders = [];
         for (const key in data) {
           if (data[key]) {
             const order = data[key].payload.doc.data() as Order;

@@ -33,6 +33,7 @@ export class DashboardComponent {
       });
       this.orderSubscription = this.orderService.getPendingOrdersByUserId(this.userId)
       .subscribe(orders => {
+        this.currentOrder = [];
         if (orders.length) {
           for (const key in orders) {
             if (orders[key]) {

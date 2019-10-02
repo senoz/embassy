@@ -1,23 +1,36 @@
 <div class="table-responsive-sm">
   <h6>Pending Orders</h6>
+  <ng-container *ngIf="orders.length > 0">
+    <button type="button" class="btn btn-primary mb-2 float-right" (click)="downloadFile()">Download</button>
+  </ng-container>
   <table class="table table-striped">
     <thead class="thead-light">
       <tr>
         <th scope="col">Date</th>
+        <th scope="col">Name</th>
         <th scope="col">Product</th>
         <th scope="col">Qty</th>
         <th scope="col">Total</th>
+        <th scope="col"></th>
         <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let order of orders">
         <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+        <td>{{ getUserFirstNameById(order.userId) }}</td>
         <td>{{ getProductById(order.productId) }}</td>
         <td>{{ order.quantity }}</td>
         <td>{{ order.total | currency : 'INR' }}</td>
         <td>
-          <button type="button" (click)="open(content)" class="btn btn-link pointer deliverLink">Delivered</button>
+          <a title="Edit Order" (click)="open(content, order.id)">
+            <i class="fa fa-edit icon-font"></i>
+          </a>
+        </td>
+        <td>
+          <a title="Cancel Order" (click)="cancelOrder(order.id)">
+            <i class="fa fa-times-circle icon-font"></i>
+          </a>
         </td>
       </tr>
     </tbody>
@@ -37,6 +50,23 @@
             <div class="card-body">
               <div class="container">
                 <div class="row">
+                  <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Address:</legend>
+                    <div class="input-group col">
+                      <div class="col input-group">
+                        {{getUserFirstNameById(model.userId)}}
+                      </div>
+                      <div class="w-100 pt-2"></div>
+                      <div class="col input-group">
+                        {{model.address.doorNumber}}, {{model.address.block}} Block
+                      </div>
+                      <div class="w-100 pt-2"></div>
+                      <div class="col input-group">
+                        {{model.address.apartmentName}}
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div class="w-100 pt-3"></div>
                   <div class="col">Quantity</div>
                   <div class="col-7">
                     <div class="input-group w-75">
@@ -74,6 +104,18 @@
                       </span>
                     </div>
                   </div>
+                  <div class="w-100 pt-2"></div>
+                  <div class="col">Payment</div>
+                  <div class="col-7">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="paid" name="payment" [(ngModel)]="model.isPaid" [value]="true" class="custom-control-input">
+                      <label class="custom-control-label" for="paid">Paid</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="notPaid" name="payment" [(ngModel)]="model.isPaid" [value]="false" class="custom-control-input">
+                      <label class="custom-control-label" for="notPaid">Not Paid</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -82,7 +124,7 @@
         </section>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Save</button>
+        <button class="btn btn-outline-primary">Save</button>
       </div>
     </form>
   </ng-template>

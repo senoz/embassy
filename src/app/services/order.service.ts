@@ -20,7 +20,8 @@ export class OrderService {
   getUnDeliveredOrders() {
     return this.firestore.collection('orderDetails',
     ref => ref.where('isDelivered', '==', false)
-    .where('isCancelled', '==', false))
+    .where('isCancelled', '==', false)
+    .orderBy('date', 'desc'))
     .snapshotChanges();
   }
 
@@ -28,7 +29,8 @@ export class OrderService {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)
     .where('isDelivered', '==', false)
-    .where('isCancelled', '==', false))
+    .where('isCancelled', '==', false)
+    .orderBy('date', 'desc'))
     .snapshotChanges();
   }
 
@@ -64,10 +66,29 @@ export class OrderService {
     .set({ isCancelled: true }, { merge: true });
   }
 
+  deliverOrder(order) {
+    const updateAt = firebase.firestore.FieldValue.serverTimestamp();
+    return this.order$
+    .doc(order.id)
+    .set({ isDelivered: true,
+       quantity: order.quantity,
+       return: order.return,
+       isPaid: order.isPaid,
+       updateAt: updateAt
+       }, { merge: true });
+  }
+
   checkValidPromotion(promo) {
     return this.firestore.collection('promotion',
     ref => ref.where('couponCode', '==', promo)
     .where('isActive', '==', true)
+    .limit(1))
+    .snapshotChanges();
+  }
+
+  getPromoCode() {
+    return this.firestore.collection('promotion',
+    ref => ref.where('isActive', '==', true)
     .limit(1))
     .snapshotChanges();
   }
