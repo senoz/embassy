@@ -10,7 +10,7 @@
         <th scope="col">Name</th>
         <th scope="col">Product</th>
         <th scope="col">Qty</th>
-        <th scope="col">Total</th>
+        <th scope="col">Amount</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -18,8 +18,8 @@
     <tbody>
       <tr *ngFor="let order of orders">
         <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
-        <td>{{ getUserFirstNameById(order.userId) }}</td>
-        <td>{{ getProductById(order.productId) }}</td>
+        <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
+        <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
         <td>{{ order.quantity }}</td>
         <td>{{ order.total | currency : 'INR' }}</td>
         <td>
@@ -28,7 +28,7 @@
           </a>
         </td>
         <td>
-          <a title="Cancel Order" (click)="cancelOrder(order.id)">
+          <a title="Cancel Order" (click)="genericService.cancelOrder(order.id)">
             <i class="fa fa-times-circle icon-font"></i>
           </a>
         </td>
@@ -54,7 +54,7 @@
                     <legend class="scheduler-border">Address:</legend>
                     <div class="input-group col">
                       <div class="col input-group">
-                        {{getUserFirstNameById(model.userId)}}
+                        {{genericService.getUserFirstNameById(model.userId)}}
                       </div>
                       <div class="w-100 pt-2"></div>
                       <div class="col input-group">

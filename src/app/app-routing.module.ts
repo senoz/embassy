@@ -21,16 +21,19 @@ const routes: Routes = [
     component: RegistrationComponent
   },
   {
-    path: 'admin-dashboard',
+    path: 'admin',
+    // canLoad: [AuthGuardService],
     loadChildren: './admin/admin.module#AdminModule',
-    // canActivate: [AuthGuardService]
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuardService]
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
   {
     path: 'order-details/:id',
     component: OrderDetailsComponent,

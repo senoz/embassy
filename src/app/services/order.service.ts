@@ -25,6 +25,14 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getPendingAmountOrders() {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('isDelivered', '==', true)
+    .where('isPaid', '==', false)
+    .orderBy('date', 'desc'))
+    .snapshotChanges();
+  }
+
   getPendingOrdersByUserId(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)
@@ -64,6 +72,17 @@ export class OrderService {
     return this.order$
     .doc(orderId)
     .set({ isCancelled: true }, { merge: true });
+  }
+
+  setPaidUser(userId) {
+    this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', userId))
+    .get().toPromise().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
+        OrderRef.set({ isPaid: true }, { merge: true });
+      });
+    });
   }
 
   deliverOrder(order) {

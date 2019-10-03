@@ -17,6 +17,18 @@ export class ProductsService {
     private router: Router
   ) {
     this.products$ = this.firestore.collection('products');
+    this.getProducts().subscribe(product => {
+      this.product = [];
+      if (product.length) {
+        for (const key in product) {
+          if (product[key]) {
+            const prod = product[key].payload.doc.data() as Products;
+            prod.id = product[key].payload.doc.id;
+            this.product.push(prod);
+          }
+        }
+      }
+    });
   }
 
   getProducts() {

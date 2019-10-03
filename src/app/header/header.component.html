@@ -24,6 +24,15 @@
       </ul>
       <ul class="navbar-nav mr-auto" *ngIf="authService.isAdminLoggedIn">
         <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/pending-amount" (click)="toggleCollapsed()" routerLinkActive="active">Pending Amount</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/pending-can" (click)="toggleCollapsed()" routerLinkActive="active">Pending Cans</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/all-orders" (click)="toggleCollapsed()" routerLinkActive="active">All Orders</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" data-action="share/whatsapp/share" target="_blank" href="{{whatsappShare}}">Share & Earn</a>
         </li>
         <li class="nav-item">

@@ -44,7 +44,7 @@ export class AuthenticateService {
           this.router.navigate(['/dashboard']);
         } else {
           this.isAdminLoggedIn = true;
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/admin/dashboard']);
         }
 
       } else {

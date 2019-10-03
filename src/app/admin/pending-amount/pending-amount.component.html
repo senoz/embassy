@@ -1,0 +1,27 @@
+<div class="table-responsive-sm">
+    <h6>Pending Amount</h6>
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Name</th>
+          <th scope="col">Product</th>
+          <th scope="col">Amount</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+          <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
+          <td>{{ genericService.getProductById(order.productId, this.productsService.product) }}</td>
+          <td>{{ order.total | currency : 'INR' }}</td>
+          <td>
+            <a title="Edit Order" (click)="paidAmount(order.userId)">
+              <i class="fa fa-thumbs-up icon-font"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
