@@ -33,7 +33,7 @@
   <tbody>
     <tr *ngFor="let order of orders">
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
-      <td>{{ getProductById(order.productId) }}</td>
+      <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
       <td>{{ order.total | currency : 'INR' }}</td>
       <td>{{ order.quantity }}</td>
       <td>

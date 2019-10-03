@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { ConstantsService } from '../services/constants.service';
 import { Coupon } from '../models/coupon.model';
 import { UsersService } from '../services/users.service';
+import { Users } from '../models/users.model';
 
 @Component({
   selector: 'app-order-details',
@@ -23,6 +24,10 @@ import { UsersService } from '../services/users.service';
   providers: [DatePipe]
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
+  isWallet = false;
+  user = { 
+    wallet: 0
+  } as Users;
   product = {
     name: '',
     description: '',
@@ -54,7 +59,9 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     total: 30,
     isCancelled: false,
     isPromotionApplied: false,
-    promotionCode: ''
+    promotionCode: '',
+    walletUsed: 0,
+    walletPending: 0
   };
 
   productId: string;
@@ -81,8 +88,14 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private afs: AngularFirestore,
     private datePipe: DatePipe,
-    private globals: ConstantsService
+    private globals: ConstantsService,
+    private userService: UsersService
   ) {
+    this.userService.getUserById(this.model.userId).subscribe(data => {
+      if (data.length) {
+        this.user = data[0].payload.doc.data() as Users;
+      }
+    });
     this.products = this.productsService.getProductsById(this.route.snapshot.params.id);
     this.products.subscribe(product => {
       if (product.length) {
@@ -106,7 +119,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       this.updateAddress(address);
     }
     this.orderService.newOrder(this.model);
-
+    this.userService.setWalletAmount(this.model.userId, this.wallet);
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
       this.router.navigate(['/my-orders']);
@@ -196,13 +209,15 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
           const promotion = coupon[0].payload.doc.data() as Coupon;
           switch (promotion.type) {
             case 1:
+              this.model.walletPending = 0;
               this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
               break;
             case 2:
+              this.model.walletPending = 0;
               this.model.total = (this.model.total - promotion.discount);
               break;
             default:
-              this.wallet = (this.wallet + promotion.discount);
+              this.model.walletPending = promotion.discount;
           }
           this.model.promotionCode = promotion.couponCode;
         }
@@ -212,11 +227,37 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   checkPromo(val) {
+    this.isWallet = false;
+    this.model.total = (this.model.quantity * this.product.price);
     this.isCoupon = !val;
     if (!this.isCoupon) {
       this.model.total = (this.model.quantity * this.product.price);
       this.model.isPromotionApplied = false;
       this.model.promotionCode = '';
+      this.model.walletPending = 0;
+    }
+  }
+
+  applyWallet(val) {
+    this.isCoupon = false;
+    if (!this.isCoupon) {
+      this.model.total = (this.model.quantity * this.product.price);
+      this.model.isPromotionApplied = false;
+      this.model.promotionCode = '';
+    }
+    this.isWallet = !val;
+    let mywallet = Object.assign(this.user.wallet, {});
+    if (this.isWallet) {
+      if (this.model.total > mywallet) {
+        this.model.total -= mywallet; 
+        mywallet = 0;
+      } else {
+        mywallet -= this.model.total;
+        this.model.total = 0;
+      }
+     // this.userService.setWalletAmount(this.model.userId, mywallet);
+    } else {
+      this.model.total = (this.model.quantity * this.product.price);
     }
   }
 

@@ -41,14 +41,14 @@
   <tbody>
     <tr *ngFor="let order of orders">
       <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
-      <td>{{ getProductById(order.productId) }}</td>
+      <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
       <td>{{ order.quantity }}</td>
       <td>{{ order.total | currency : 'INR' }}</td>
       <td>{{ getOrderStatus(order) }}</td>
       <td><a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
         <i class="fa fa-edit icon-font"></i>
       </a></td>
-      <td><a title="Cancel Order" (click)="cancelOrder(order.id)" *ngIf="!order.isDelivered && !order.isCancelled">
+      <td><a title="Cancel Order" (click)="genericService.cancelOrder(order.id)" *ngIf="!order.isDelivered && !order.isCancelled">
           <i class="fa fa-times-circle icon-font"></i>
       </a></td>
     </tr>

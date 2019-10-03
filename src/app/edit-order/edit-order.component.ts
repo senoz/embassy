@@ -12,6 +12,7 @@ import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
 import { ConstantsService } from '../services/constants.service';
 import { Coupon } from '../models/coupon.model';
+import { GenericService } from '../services/generic.service';
 
 @Component({
   selector: 'app-edit-order',
@@ -64,7 +65,8 @@ export class EditOrderComponent implements OnInit {
     private addressService: AddressService,
     private apartmentDetailsService: ApartmentDetailsService,
     private router: Router,
-    private globals: ConstantsService
+    private globals: ConstantsService,
+    private genericService: GenericService
   ) { }
 
   ngOnInit() {
@@ -105,16 +107,8 @@ export class EditOrderComponent implements OnInit {
         this.model = order[0].payload.doc.data() as Order;
         this.orderRef = order[0].payload.doc.ref;
         this.orderId = order[0].payload.doc.id;
-        this.getProductById(this.model.productId);
+        this.genericService.getProductById(this.model.productId, this.productsService.product);
         this.getApartmentDetails();
-      }
-    });
-  }
-
-  getProductById(productId) {
-    this.productsService.getProductsById(productId).subscribe(product => {
-      if (product.length) {
-        this.product = product[0].payload.doc.data() as Products;
       }
     });
   }

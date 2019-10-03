@@ -5,6 +5,7 @@ import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
 import { AlertService } from '../services/alert.service';
 import { Router } from '@angular/router';
+import { GenericService } from '../services/generic.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -13,27 +14,14 @@ import { Router } from '@angular/router';
 })
 export class MyOrdersComponent implements OnInit {
   orders: Array<any> = [];
-  product = [];
   cols: { field: string; header: string; }[];
   constructor(
     private orderService: OrderService,
     private productsService: ProductsService,
     private alert: AlertService,
-    private router: Router
-  ) {
-    this.productsService.getProducts().subscribe(productData => {
-      this.product = [];
-      if (productData.length) {
-        for (const key in productData) {
-          if (productData[key]) {
-            const prod = productData[key].payload.doc.data() as Products;
-            prod.id = productData[key].payload.doc.id;
-            this.product.push(prod);
-          }
-        }
-      }
-    });
-  }
+    private router: Router,
+    private genericService: GenericService,
+  ) { }
 
   ngOnInit() {
     const userId = localStorage.getItem('userId');
@@ -58,24 +46,6 @@ export class MyOrdersComponent implements OnInit {
       { field: '', header: '' },
       { field: '', header: '' }
     ];
-  }
-
-  getProductById(productId) {
-    for (const key in this.product) {
-      if (this.product[key].id === productId) {
-        return this.product[key].name;
-      }
-    }
-  }
-
-  cancelOrder(orderId) {
-    if (confirm('Are you sure to cancel order?')) {
-      this.orderService.cancelOrder(orderId);
-      this.alert.success('Order has cancelled successfully');
-      setTimeout(() => {
-        this.alert.blurMessage();
-      }, 2000);
-    }
   }
 
   getOrderStatus(order: Order) {

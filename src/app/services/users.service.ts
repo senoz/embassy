@@ -22,6 +22,12 @@ export class UsersService {
     ref => ref.where(firebase.firestore.FieldPath.documentId(), '==', id).limit(1))
     .snapshotChanges();
   }
+  
+  setWalletAmount(userId, walletAmount) {
+    return this.user$
+    .doc(userId)
+    .set({ wallet: walletAmount }, { merge: true });
+  }
 
   checkValidUser(userName, password) {
     return this.firestore.collection('users',

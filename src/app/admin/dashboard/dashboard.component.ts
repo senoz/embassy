@@ -7,6 +7,8 @@ import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-boo
 import { AlertService } from '../../services/alert.service';
 import { GenericService } from '../../services/generic.service';
 import { ConstantsService } from '../../services/constants.service';
+import { UsersService } from '../../services/users.service';
+import { Users } from '../../models/users.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -55,7 +57,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private genericService: GenericService,
     private alert: AlertService,
-    private globals: ConstantsService
+    private globals: ConstantsService,
+    private userService: UsersService
   ) {
   }
 
@@ -128,7 +131,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    let isNewCustomer, isAddressExists;
+    this.orderService.isOrderExists(this.model.userId).subscribe(data =>{
+      isNewCustomer = data.length;
+    });
+    this.orderService.isAdressExists(this.model.address).subscribe(data =>{
+      isAddressExists = data.length;
+    });
     this.orderService.deliverOrder(this.model);
+    this.userService.getUserById(this.model.userId).subscribe(data => {
+      if (data.length) {
+        const user = data[0].payload.doc.data() as Users;
+        if (user.refferedBy && !isNewCustomer && !isAddressExists) {
+          const walletAmount = user.wallet + 10;
+          this.userService.setWalletAmount(user.refferedBy, walletAmount);
+        }
+        if (this.model.walletPending) {
+          const walletAmount = user.wallet + this.model.walletPending;
+          this.userService.setWalletAmount(user.refferedBy, walletAmount);  
+        }
+      }
+    });
     this.alert.success('Order has delivered successfully');
     setTimeout(() => {
       this.alert.blurMessage();

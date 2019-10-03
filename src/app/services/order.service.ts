@@ -55,6 +55,16 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  isOrderExists(userId) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', userId)).snapshotChanges();
+  }
+
+  isAdressExists(address) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('address', '==', address)).snapshotChanges();
+  }
+
   getOrdersByProductId(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('productId', '==', id)
