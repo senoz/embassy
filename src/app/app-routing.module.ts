@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    // canLoad: [AuthGuardService],
+    canLoad: [AuthGuardService],
     loadChildren: './admin/admin.module#AdminModule',
   },
   {

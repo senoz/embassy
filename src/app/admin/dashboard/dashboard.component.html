@@ -1,14 +1,15 @@
 <div class="table-responsive-sm">
-  <h6>Pending Orders</h6>
+  <h6>Current Orders</h6>
   <ng-container *ngIf="orders.length > 0">
     <button type="button" class="btn btn-primary mb-2 float-right" (click)="downloadFile()">Download</button>
   </ng-container>
   <table class="table table-striped">
     <thead class="thead-light">
       <tr>
-        <th scope="col">Date</th>
         <th scope="col">Name</th>
         <th scope="col">Product</th>
+        <th scope="col">Block</th>
+        <th scope="col">Door.No</th>
         <th scope="col">Qty</th>
         <th scope="col">Amount</th>
         <th scope="col"></th>
@@ -17,9 +18,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let order of orders">
-        <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
         <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
         <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
+        <td>{{ order.address.block }}</td>
+        <td>{{ order.address.doorNumber }}</td>
         <td>{{ order.quantity }}</td>
         <td>{{ order.total | currency : 'INR' }}</td>
         <td>

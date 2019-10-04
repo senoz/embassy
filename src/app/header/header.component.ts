@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
-import { HttpParameterCodec } from "@angular/common/http";
 import { ConstantsService } from '../services/constants.service';
 import { OrderService } from '../services/order.service';
 import { Coupon } from '../models/coupon.model';
@@ -20,12 +19,13 @@ export class HeaderComponent implements OnInit {
     public authService: AuthenticateService,
     private globals: ConstantsService,
     private orderService: OrderService
-  ) { 
+  ) {
     const urlhost = location.host;
     const userId = localStorage.getItem('userId');
     const group = globals.whatsappGroup;
     const content = globals.whatsappContent;
-    let promotion, promoLink = '';
+    let promotion;
+    let promoLink = '';
     this.orderService.getPromoCode().subscribe(data => {
       if (data.length) {
         promotion = data[0].payload.doc.data() as Coupon;
@@ -55,9 +55,9 @@ export class HeaderComponent implements OnInit {
     this.collapsed = true;
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/dashboard']);
-    } 
+    }
     if (this.authService.isAdminLoggedIn) {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     }
   }
 

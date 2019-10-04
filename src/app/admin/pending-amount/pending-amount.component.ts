@@ -67,9 +67,9 @@ export class PendingAmountComponent implements OnInit, OnDestroy {
       });
   }
 
-  paidAmount(orderId) {
+  paidAmount(userId) {
     if (confirm('Is he paid?')) {
-      this.orderService.setPaidUser(orderId);
+      this.orderService.setPaidUser(userId);
     }
   }
 

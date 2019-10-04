@@ -1,7 +1,7 @@
 import { AuthenticateService } from './authenticate.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { RouterStateSnapshot, ActivatedRouteSnapshot,  CanActivate} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot,  CanActivate, Route} from '@angular/router';
 import { UsersService } from './users.service';
 import { Router } from '@angular/router';
 
@@ -22,10 +22,14 @@ export class AuthGuardService implements CanActivate {
         this.authService.isLoggedIn = true;
         return true;
       }
-      if (this.usersService.user.isAdmin) {
-        this.authService.isAdminLoggedIn = true;
-        return true;
-      }
       return this.router.navigate(['/login']);
+  }
+
+  canLoad(route: Route) {
+    if (this.usersService.user.isAdmin) {
+      this.authService.isAdminLoggedIn = true;
+      return true;
+    }
+    return this.router.navigate(['/login']);
   }
 }

@@ -21,25 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   download = [];
   orders = [];
   product = [];
-  model: any = {
-    userId: localStorage.getItem('userId'),
-    quantity: 1,
-    return: 0,
-    address: {
-      apartmentName: this.globals.defaultApartment,
-      doorNumber: '',
-      block: '',
-      floor: '',
-    },
-    productId: '',
-    isPaid: false,
-    isDelivered: false,
-    paymentType: 'cod',
-    total: 30,
-    isCancelled: false,
-    isPromotionApplied: false,
-    promotionCode: ''
-  };
+  model: any = {};
   downloadType = {
     product: '',
     qty: 0,
@@ -131,7 +113,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let isNewCustomer, isAddressExists;
+    let isNewCustomer;
+    let isAddressExists;
     this.orderService.isOrderExists(this.model.userId).subscribe(data =>{
       isNewCustomer = data.length;
     });
@@ -148,7 +131,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
         if (this.model.walletPending) {
           const walletAmount = user.wallet + this.model.walletPending;
-          this.userService.setWalletAmount(user.refferedBy, walletAmount);  
+          this.userService.setWalletAmount(user.refferedBy, walletAmount);
         }
       }
     });

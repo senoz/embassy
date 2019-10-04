@@ -25,7 +25,7 @@ import { Users } from '../models/users.model';
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
   isWallet = false;
-  user = { 
+  user = {
     wallet: 0
   } as Users;
   product = {
@@ -76,7 +76,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   orderRef: any;
   products: any;
   orderId: string;
-  wallet: any;
+  mywallet = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -94,6 +94,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.userService.getUserById(this.model.userId).subscribe(data => {
       if (data.length) {
         this.user = data[0].payload.doc.data() as Users;
+        this.mywallet = this.user.wallet;
       }
     });
     this.products = this.productsService.getProductsById(this.route.snapshot.params.id);
@@ -119,7 +120,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       this.updateAddress(address);
     }
     this.orderService.newOrder(this.model);
-    this.userService.setWalletAmount(this.model.userId, this.wallet);
+    this.userService.setWalletAmount(this.model.userId, this.mywallet);
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
       this.router.navigate(['/my-orders']);
@@ -228,6 +229,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
   checkPromo(val) {
     this.isWallet = false;
+    this.mywallet = this.user.wallet;
     this.model.total = (this.model.quantity * this.product.price);
     this.isCoupon = !val;
     if (!this.isCoupon) {
@@ -246,17 +248,16 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       this.model.promotionCode = '';
     }
     this.isWallet = !val;
-    let mywallet = Object.assign(this.user.wallet, {});
     if (this.isWallet) {
-      if (this.model.total > mywallet) {
-        this.model.total -= mywallet; 
-        mywallet = 0;
+      if (this.model.total > this.mywallet) {
+        this.model.total -= this.mywallet;
+        this.mywallet = 0;
       } else {
-        mywallet -= this.model.total;
+        this.mywallet -= this.model.total;
         this.model.total = 0;
       }
-     // this.userService.setWalletAmount(this.model.userId, mywallet);
     } else {
+      this.mywallet = this.user.wallet;
       this.model.total = (this.model.quantity * this.product.price);
     }
   }

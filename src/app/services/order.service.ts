@@ -33,6 +33,13 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getDeliveredOrders() {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('isDelivered', '==', true)
+    .orderBy('date', 'desc'))
+    .snapshotChanges();
+  }
+
   getPendingOrdersByUserId(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)
@@ -91,6 +98,19 @@ export class OrderService {
       querySnapshot.forEach(doc => {
         const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
         OrderRef.set({ isPaid: true }, { merge: true });
+      });
+    });
+  }
+
+  setReceivedCanUser(userId, ReturnItem) {
+    this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', userId)
+    .where('isDelivered', '==', true)
+    .limit(1))
+    .get().toPromise().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
+        OrderRef.set({ return: ReturnItem }, { merge: true });
       });
     });
   }

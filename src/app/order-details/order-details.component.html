@@ -100,7 +100,7 @@
                     <label class="custom-control-label" for="cod">COD</label>
                   </div>
                 </div>
-                <div class="w-100 padding-10"></div>
+                <div class="w-100 pt-1"></div>
                 <div class="col">
                   <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" value="gpay" (click)="changePayment($event['target']['value'])" [checked]="model.paymentType === 'gpay'"
@@ -117,7 +117,7 @@
         <div class="col promo">
           <div class="custom-control custom-checkbox coupon-check">
             <input type="checkbox" id="isWallet" [checked]="isWallet" (change)="applyWallet(isWallet)" name="isWallet" class="custom-control-input ">
-            <label class="custom-control-label" for="isWallet">Wallet Amount {{user.wallet | currency : 'INR' }}</label>
+            <label class="custom-control-label" for="isWallet">Wallet Amount: <strong>{{mywallet | currency : 'INR' }}</strong></label>
           </div>
         </div>
         <div class="w-100"></div>
