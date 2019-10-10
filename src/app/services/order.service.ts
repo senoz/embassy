@@ -102,19 +102,18 @@ export class OrderService {
     });
   }
 
-  setReceivedCanUser(userId, ReturnItem) {
-    this.firestore.collection('orderDetails',
+  getReceivedCanUser(userId) {
+    return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', userId)
     .where('isDelivered', '==', true)
-    .limit(1))
-    .get().toPromise().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
-        OrderRef.set({ return: ReturnItem }, { merge: true });
-      });
-    });
+    .limit(1)).snapshotChanges();
   }
 
+  setReceivedCanUser(id, ReturnItem) {
+    return this.firestore.collection('orderDetails').doc(id)
+        .set({ return: ReturnItem }, { merge: true });
+  }
+  
   deliverOrder(order) {
     const updateAt = firebase.firestore.FieldValue.serverTimestamp();
     return this.order$

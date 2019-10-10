@@ -89,12 +89,21 @@ export class PendingCanComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.orderService.setReceivedCanUser(this.model.userId, this.model.return);
-    this.alert.success('updated successfully');
-    setTimeout(() => {
-      this.alert.blurMessage();
-      this.modalReference.close();
-    }, 1000);
+    this.subscription = this.orderService.getReceivedCanUser(this.model.userId).subscribe( data => {
+      if (data.length) {
+        const order = data[0].payload.doc.data() as Order;
+        const orderId = data[0].payload.doc.id;
+        const returnCan = order.return + this.model.return;
+        if (this.orderService.setReceivedCanUser(orderId, returnCan)) {
+          this.subscription.unsubscribe();
+       }
+        this.alert.success('Updated successfully');
+        setTimeout(() => {
+          this.alert.blurMessage();
+          this.modalReference.close();
+        }, 1000);
+      }
+    });
   }
 
   ngOnDestroy() {

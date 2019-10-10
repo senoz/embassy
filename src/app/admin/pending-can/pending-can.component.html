@@ -3,6 +3,7 @@
     <table class="table table-striped">
       <thead class="thead-light">
         <tr>
+          <th scope="col">Date</th>
           <th scope="col">Name</th>
           <th scope="col">Block</th>
           <th scope="col">Door.No</th>
@@ -13,15 +14,16 @@
       <tbody>
         <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <ng-container *ngIf="getPendingCan(order.userId)">
+          <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
           <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
           <td>{{ order.address.block }}</td>
           <td>{{ order.address.doorNumber }}</td>
           <td>{{ getPendingCan(order.userId) }}</td>
           <td>
-              <a title="Edit Order" (click)="open(content, getPendingCan(order.userId), order.userId)">
-                  <i class="fa fa-edit icon-font"></i>
-                </a>
-            </td>
+            <a title="Edit Order" (click)="open(content, getPendingCan(order.userId), order.userId)">
+              <i class="fa fa-edit icon-font"></i>
+            </a>
+          </td>
           </ng-container>
         </tr>
       </tbody>

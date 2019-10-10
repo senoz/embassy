@@ -5,7 +5,8 @@
         <tr>
           <th scope="col">Date</th>
           <th scope="col">Name</th>
-          <th scope="col">Product</th>
+          <th scope="col">Block</th>
+          <th scope="col">Door.No</th>
           <th scope="col">Amount</th>
           <th scope="col"></th>
         </tr>
@@ -14,7 +15,8 @@
         <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
           <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
-          <td>{{ genericService.getProductById(order.productId, this.productsService.product) }}</td>
+          <td>{{ order.address.block }}</td>
+          <td>{{ order.address.doorNumber }}</td>
           <td>{{ order.total | currency : 'INR' }}</td>
           <td>
             <a title="Edit Order" (click)="paidAmount(order.userId)">
