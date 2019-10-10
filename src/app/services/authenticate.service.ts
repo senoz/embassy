@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { User } from '../../../node_modules/firebase';
 import { AlertService } from './alert.service';
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class AuthenticateService {
   constructor(
     private userService: UsersService,
     private alertService: AlertService,
+    public afAuth: AngularFireAuth,
     private router: Router
   ) {
     this.userService.getUsers().subscribe(data => {
@@ -29,6 +32,12 @@ export class AuthenticateService {
         } as Users;
       });
     });
+    // afAuth.authState.subscribe(x => {
+    //   this.isLoggedIn = true;
+    //   console.log(x);
+    //  // localStorage.setItem('userId', x);
+    //   this.router.navigate(['/dashboard']);
+    // });
   }
 
   validateLogin(data) {
@@ -61,6 +70,8 @@ export class AuthenticateService {
   logout() {
     // remove user from local storage to log user out
     this.isLoggedIn = false;
+    this.isAdminLoggedIn = false;
+   // this.afAuth.auth.signOut();
     localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
@@ -80,5 +91,9 @@ export class AuthenticateService {
 
   isUserExists(userName) {
     return this.userService.isUserExists(userName);
+  }
+
+  async loginWithGoogle() {
+    const result = await this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
   }
 }

@@ -9,3 +9,7 @@ body{
 .clearfix{
     clear: both;
 }
+.display_table_center {
+    display: table;
+    margin: 0 auto;
+}

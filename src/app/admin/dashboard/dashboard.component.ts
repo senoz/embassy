@@ -18,6 +18,8 @@ import { Users } from '../../models/users.model';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   modalReference: NgbModalRef;
+  page = 1;
+  pageSize = 10;
   download = [];
   orders = [];
   product = [];

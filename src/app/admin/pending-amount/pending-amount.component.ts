@@ -15,7 +15,9 @@ import { AlertService } from '../../services/alert.service';
 })
 export class PendingAmountComponent implements OnInit, OnDestroy {
   modalReference: NgbModalRef;
-  orders: any[];
+  orders: any[] = [];
+  page = 1;
+  pageSize = 10;
   private subscription: Subscription;
   model: any = {
     userId: localStorage.getItem('userId'),

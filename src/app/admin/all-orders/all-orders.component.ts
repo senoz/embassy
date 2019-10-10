@@ -12,7 +12,9 @@ import { Order } from '../../models/order.model';
 })
 export class AllOrdersComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  orders: any[];
+  orders: any[] = [];
+  page = 1;
+  pageSize = 10;
   constructor(
     private orderService: OrderService,
     private productsService: ProductsService,

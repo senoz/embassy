@@ -13,6 +13,8 @@ import { GenericService } from '../services/generic.service';
   styleUrls: ['./my-orders.component.css']
 })
 export class MyOrdersComponent implements OnInit {
+  page = 1;
+  pageSize = 10;
   orders: Array<any> = [];
   cols: { field: string; header: string; }[];
   constructor(

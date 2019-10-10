@@ -15,10 +15,13 @@ import { AlertService } from '../../services/alert.service';
 export class PendingCanComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   modalReference: NgbModalRef;
-  orders: any[];
+  orders: any[] = [];
+  page = 1;
+  pageSize = 10;
   model: any = {
     return: 0
   };
+  isPendingCan = false;
   constructor(
     private orderService: OrderService,
     private productsService: ProductsService,
@@ -76,7 +79,11 @@ export class PendingCanComponent implements OnInit, OnDestroy {
   getPendingCan(userId) {
     for (const key in this.orders) {
       if (this.orders[key].userId === userId) {
-        return this.orders[key].quantity - this.orders[key].return;
+        const pendingcount = this.orders[key].quantity - this.orders[key].return;
+        if (pendingcount) {
+          this.isPendingCan = true;
+        }
+        return pendingcount;
       }
     }
   }

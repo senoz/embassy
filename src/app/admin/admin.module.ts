@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { PendingAmountComponent } from './pending-amount/pending-amount.component';
 import { PendingCanComponent } from './pending-can/pending-can.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,7 @@ export const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgbModule.forRoot(),
     RouterModule.forChild(routes)
   ]
 })

@@ -9,11 +9,11 @@ import { Coupon } from '../models/coupon.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   whatsappShare: any;
   userId: string;
   url: any;
-  collapsed = false;
+  collapsed = true;
   constructor(
     private router: Router,
     public authService: AuthenticateService,
@@ -47,8 +47,9 @@ export class HeaderComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
-  ngOnInit() {
-    this.toggleCollapsed();
+  logout() {
+    this.collapsed = true;
+    this.authService.logout();
   }
 
   goToDashboard() {
