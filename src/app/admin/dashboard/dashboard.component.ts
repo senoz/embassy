@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { OrderService } from '../../services/order.service';
-import { Subscription } from '../../../../node_modules/rxjs';
-import { Order } from '../../models/order.model';
-import { ProductsService } from '../../services/products.service';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from '../../../../node_modules/rxjs';
+
+import { ProductsService } from '../../services/products.service';
 import { AlertService } from '../../services/alert.service';
 import { GenericService } from '../../services/generic.service';
 import { ConstantsService } from '../../services/constants.service';
 import { UsersService } from '../../services/users.service';
+import { OrderService } from '../../services/order.service';
+
 import { Users } from '../../models/users.model';
+import { Order } from '../../models/order.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -102,16 +104,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.model = this.genericService.getOrderById(orderId, this.orders);
     this.model.return = this.model.quantity;
     this.modalReference = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   onSubmit() {

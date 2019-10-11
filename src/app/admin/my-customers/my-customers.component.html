@@ -1,0 +1,34 @@
+<div class="table-responsive-sm">
+  <h6>My Customers</h6>
+  <div class=mb-2>
+    <input id="typeahead-basic" placeholder="Search" type="text" 
+    class="form-control" #key (input)="filterUser(key.value)"/>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Block</th>
+        <th scope="col">Door.No</th>
+        <th scope="col">Phone.No</th>
+        <th scope="col">Wallet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filterUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <td>{{ user.name }}</td>
+        <td>{{ getAddressByUserId(user.id).block }}</td>
+        <td>{{ getAddressByUserId(user.id).doorNumber }}</td>
+        <td><a href="tel: {{user.userName}}">{{user.userName}}</a></td>
+        <td>{{ user.wallet | currency : 'INR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="display_table_center" *ngIf="filterUsers.length">
+      <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="filterUsers.length"></ngb-pagination>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { PendingAmountComponent } from './pending-amount/pending-amount.componen
 import { PendingCanComponent } from './pending-can/pending-can.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyCustomersComponent } from './my-customers/my-customers.component';
 
 export const routes: Routes = [
   {
@@ -28,12 +29,22 @@ export const routes: Routes = [
         path: 'all-orders',
         component: AllOrdersComponent
       },
+      {
+        path: 'my-customers',
+        component: MyCustomersComponent
+      },
     ]
   },
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, PendingAmountComponent, PendingCanComponent, AllOrdersComponent],
+  declarations: [
+    DashboardComponent,
+    PendingAmountComponent,
+    PendingCanComponent,
+    AllOrdersComponent,
+    MyCustomersComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

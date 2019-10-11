@@ -56,7 +56,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     isPaid: false,
     isDelivered: false,
     paymentType: 'cod',
-    total: 30,
+    total: this.product.price,
     isCancelled: false,
     isPromotionApplied: false,
     promotionCode: '',
@@ -101,6 +101,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.products.subscribe(product => {
       if (product.length) {
         this.product = product[0].payload.doc.data() as Products;
+        this.model.total = (this.model.quantity * this.product.price);
       }
     });
    }

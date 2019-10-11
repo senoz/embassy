@@ -16,6 +16,7 @@ export class AuthenticateService {
 
   isLoggedIn = false;
   isAdminLoggedIn = false;
+  isSuperAdminLoggedIn = false;
   users: Users[];
 
   constructor(
@@ -51,11 +52,14 @@ export class AuthenticateService {
           this.isLoggedIn = true;
           localStorage.setItem('userId', userData.id);
           this.router.navigate(['/dashboard']);
+        } else if (userData.isSuperAdmin) {
+          this.isSuperAdminLoggedIn = true;
+          this.isAdminLoggedIn = true;
+          this.router.navigate(['/admin/dashboard']);
         } else {
           this.isAdminLoggedIn = true;
           this.router.navigate(['/admin/dashboard']);
         }
-
       } else {
         this.isLoggedIn = false;
         this.alertService.error('Login Failed');
@@ -71,6 +75,7 @@ export class AuthenticateService {
     // remove user from local storage to log user out
     this.isLoggedIn = false;
     this.isAdminLoggedIn = false;
+    this.isSuperAdminLoggedIn = false;
    // this.afAuth.auth.signOut();
     localStorage.removeItem('userId');
     this.router.navigate(['/login']);

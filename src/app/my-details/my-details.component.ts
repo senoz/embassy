@@ -13,6 +13,8 @@ import { GenericService } from '../services/generic.service';
   styleUrls: ['./my-details.component.css']
 })
 export class MyDetailsComponent implements OnInit {
+  page = 1;
+  pageSize = 10;
   currentUser = {
     name: ''
   } as Users;
@@ -32,7 +34,7 @@ export class MyDetailsComponent implements OnInit {
         this.currentUser = data[0].payload.doc.data() as Users;
       }
     });
-    this.orderService.getOrdersByUserId(userId).subscribe(data => {
+    this.orderService.getDeliveredNotCancelledOrdersByUserId(userId).subscribe(data => {
       this.orders = [];
       if (data.length) {
         for (const key in data) {
@@ -64,8 +66,9 @@ export class MyDetailsComponent implements OnInit {
     let totalReceived = 0;
     for (const key in this.orders) {
       if (this.orders[key].userId === userId) {
+        const returnCount = this.orders[key].return ? this.orders[key].return : 0;
         totalQty += this.orders[key].quantity;
-        totalReceived += this.orders[key].return;
+        totalReceived += returnCount;
       }
     }
     return (totalQty - totalReceived);

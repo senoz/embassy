@@ -58,16 +58,6 @@ export class PendingCanComponent implements OnInit, OnDestroy {
     this.modalReference = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
   manageReturn(type) {
     if (type) {
       this.model.return++;

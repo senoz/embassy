@@ -14,6 +14,7 @@ export class HeaderComponent {
   userId: string;
   url: any;
   collapsed = true;
+  contactUs: string;
   constructor(
     private router: Router,
     public authService: AuthenticateService,
@@ -41,6 +42,7 @@ export class HeaderComponent {
     const url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n\n${group}${promoLink}`;
     const urlEncode = encodeURIComponent(url);
     this.whatsappShare = `https://api.whatsapp.com/send?text=${urlEncode}`;
+    this.contactUs = `https://api.whatsapp.com/send?phone=${globals.gpayNumber}`;
   }
 
   toggleCollapsed(): void {

@@ -62,6 +62,15 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getDeliveredNotCancelledOrdersByUserId(id) {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('userId', '==', id)
+    .where('isDelivered', '==', true)
+    .where('isCancelled', '==', false)
+    .orderBy('date', 'desc'))
+    .snapshotChanges();
+  }
+
   isOrderExists(userId) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', userId)).snapshotChanges();
@@ -106,14 +115,15 @@ export class OrderService {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', userId)
     .where('isDelivered', '==', true)
+    .orderBy('date', 'desc')
     .limit(1)).snapshotChanges();
   }
 
   setReceivedCanUser(id, ReturnItem) {
     return this.firestore.collection('orderDetails').doc(id)
-        .set({ return: ReturnItem }, { merge: true });
+    .set({ return: ReturnItem }, { merge: true });
   }
-  
+
   deliverOrder(order) {
     const updateAt = firebase.firestore.FieldValue.serverTimestamp();
     return this.order$

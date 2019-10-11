@@ -20,6 +20,11 @@ export class AddressService {
     .snapshotChanges();
   }
 
+  getAllAddresses() {
+    return this.firestore.collection('address')
+    .snapshotChanges();
+  }
+
   addAddress(address: Address) {
     return this.address$.add(address);
   }
