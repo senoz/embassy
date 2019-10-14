@@ -35,7 +35,15 @@ export class MyCustomersComponent {
   }
 
   getAddressByUserId(userId) {
-    return this.address.filter(add => add.userId === userId)[0];
+    let address = {
+      apartment: '',
+      block: '',
+      doorNumber: ''
+    };
+    if (this.address) {
+      address = this.address.filter(add => add.userId === userId)[0];
+    }
+    return address;
   }
 
   filterUser(key) {

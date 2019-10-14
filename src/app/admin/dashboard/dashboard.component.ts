@@ -86,13 +86,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
               const order = orders[key].payload.doc.data() as Order;
               order.id = orders[key].payload.doc.id;
               this.orders.push(order);
-              this.downloadType.product = this.genericService.getProductById(order.productId, this.productsService.product);
-              this.downloadType.qty = order.quantity;
-              this.downloadType.apartment = order.address.apartmentName;
-              this.downloadType.block = order.address.block;
-              this.downloadType.doorNumber = order.address.doorNumber;
-              this.downloadType.floor = order.address.floor;
-              this.downloadType.total = order.total;
+              this.downloadType = {
+                product: this.genericService.getProductById(order.productId, this.productsService.product),
+                qty: order.quantity,
+                apartment: order.address.apartmentName,
+                block:  order.address.block,
+                doorNumber: order.address.doorNumber,
+                floor: order.address.floor,
+                total: order.total
+              };
               this.download.push(this.downloadType);
             }
           }

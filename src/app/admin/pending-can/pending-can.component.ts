@@ -13,6 +13,7 @@ import { AlertService } from '../../services/alert.service';
   styleUrls: ['./pending-can.component.css']
 })
 export class PendingCanComponent implements OnInit, OnDestroy {
+  totalReturn: any;
   private subscription: Subscription;
   modalReference: NgbModalRef;
   orders: any[] = [];
@@ -53,6 +54,7 @@ export class PendingCanComponent implements OnInit, OnDestroy {
   }
 
   open(content, returnItem, userId) {
+    this.totalReturn = returnItem;
     this.model.return = returnItem;
     this.model.userId = userId;
     this.modalReference = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });

@@ -54,19 +54,16 @@ export class RegistrationComponent implements OnInit {
     }
 
     this.subscription = this.authService.isUserExists(this.RegisterForm.value.userName).subscribe(data => {
-      if (!data.length) {
-        if (this.registerUser(this.RegisterForm.value)) {
-          this.router.navigate(['/dashboard']);
-          return;
-        }
-      } else {
+      if (data.length) {
         this.alertService.error('Mobile number has already exists');
         setTimeout(() => {
           this.alertService.blurMessage();
         }, 2000);
+      } else {
+        this.authService.createUser(this.RegisterForm.value)
       }
+      this.subscription.unsubscribe();
     });
-
   }
 
   // convenience getter for easy access to form fields
@@ -74,7 +71,9 @@ export class RegistrationComponent implements OnInit {
     return this.RegisterForm.controls;
   }
 
-  registerUser(data) {
-    return this.authService.createUser(data);
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

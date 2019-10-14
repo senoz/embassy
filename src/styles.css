@@ -13,3 +13,6 @@ body{
     display: table;
     margin: 0 auto;
 }
+.pd-lr-5 {
+    padding: 0 5px !important;
+}

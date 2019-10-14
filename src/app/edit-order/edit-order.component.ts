@@ -20,6 +20,7 @@ import { GenericService } from '../services/generic.service';
   styleUrls: ['./edit-order.component.css'],
 })
 export class EditOrderComponent implements OnInit {
+  products: any;
   private subscription: Subscription;
   orders: any;
   orderRef: firebase.firestore.DocumentReference;
@@ -51,7 +52,7 @@ export class EditOrderComponent implements OnInit {
     isPaid: false,
     isDelivered: false,
     paymentType: 'cod',
-    total: 30,
+    total: this.product.price,
     isCancelled: false,
     isPromotionApplied: false,
     promotionCode: ''
@@ -106,8 +107,14 @@ export class EditOrderComponent implements OnInit {
       if (order.length) {
         this.model = order[0].payload.doc.data() as Order;
         this.orderRef = order[0].payload.doc.ref;
-        this.orderId = order[0].payload.doc.id;
-        this.genericService.getProductById(this.model.productId, this.productsService.product);
+        this.orderId = order[0].payload.doc.id;        
+        this.products = this.productsService.getProductsById(this.model.productId);
+        this.products.subscribe(product => {
+          if (product.length) {
+            this.product = product[0].payload.doc.data() as Products;
+          }
+        });
+        // this.genericService.getProductById(this.model.productId, this.productsService.product);
         this.getApartmentDetails();
       }
     });

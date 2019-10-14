@@ -85,13 +85,13 @@ export class AuthenticateService {
     user.wallet = 0;
     user.isAdmin = false;
     user.refferedBy = localStorage.getItem('refferedBy') ? localStorage.getItem('refferedBy') : '';
-    const newUser = this.userService.addUser(user);
-    if (newUser) {
+    const userId = this.userService.addUser(user)
+    .then(docRef => {
       this.userService.user = user;
-      localStorage.setItem('userId', user.id);
+      localStorage.setItem('userId', docRef.id);
       this.isLoggedIn = true;
-    }
-    return newUser;
+      this.router.navigate(['/dashboard']);
+    });
   }
 
   isUserExists(userName) {

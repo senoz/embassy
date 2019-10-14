@@ -17,11 +17,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of filterUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <td>{{ user.name }}</td>
-        <td>{{ getAddressByUserId(user.id).block }}</td>
-        <td>{{ getAddressByUserId(user.id).doorNumber }}</td>
-        <td><a href="tel: {{user.userName}}">{{user.userName}}</a></td>
-        <td>{{ user.wallet | currency : 'INR' }}</td>
+        <ng-container *ngIf="getAddressByUserId(user.id)">
+          <td>{{ user.name }}</td>
+          <td>{{ getAddressByUserId(user.id).block }}</td>
+          <td>{{ getAddressByUserId(user.id).doorNumber }}</td>
+          <td><a href="tel: {{user.userName}}">{{user.userName}}</a></td>
+          <td>{{ user.wallet | currency : 'INR' }}</td>
+        </ng-container>
       </tr>
     </tbody>
   </table>
