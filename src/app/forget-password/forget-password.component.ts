@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-forget-password',
@@ -10,7 +11,10 @@ export class ForgetPasswordComponent implements OnInit {
     forgetPasswordForm: any;
     submitted: boolean;
 
-  constructor( private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.forgetPasswordForm = this.formBuilder.group({
@@ -22,8 +26,22 @@ export class ForgetPasswordComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.forgetPasswordForm.invalid) {
-        return;
+      return;
     }
+    const url = 'https://us-central1-embassypdw.cloudfunctions.net/forgotPassword';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+      })
+     };
+    this.http.post('http://localhost:5000/embassypdw/us-central1/forgotPassword',
+    this.forgetPasswordForm.value.userName, httpOptions)
+    .subscribe(email => {
+      console.log(email);
+    });
   }
     // convenience getter for easy access to form fields
   get f() {

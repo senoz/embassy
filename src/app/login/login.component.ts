@@ -2,8 +2,6 @@ import { mergeMap, switchMap, first } from 'rxjs/internal/operators';
 import { pipe, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Users } from '../models/users.model';
-import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AlertService } from '../services/alert.service';
@@ -20,7 +18,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UsersService,
     private authService: AuthenticateService,
     private alertService: AlertService,
     private router: Router

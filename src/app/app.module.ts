@@ -32,6 +32,7 @@ import { MyDetailsComponent } from './my-details/my-details.component';
 
 import {TableModule} from 'primeng/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -61,13 +62,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,
-    TableModule
+    TableModule,
+    HttpClientModule
   ],
   providers: [
     AngularFirestore,
-    FakeBackendInterceptor,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // FakeBackendInterceptor,
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

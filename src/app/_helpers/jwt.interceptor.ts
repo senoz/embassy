@@ -8,8 +8,10 @@ import { Users } from '../models/users.model';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthenticateService,
-        private userService: UsersService) { }
+    constructor(
+        private authService: AuthenticateService,
+        private userService: UsersService
+    ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const userId = localStorage.getItem('userId');

@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 
+
 //to make it work you need gmail account
 const gmailEmail = 'embassymineralwater@gmail.com'; //functions.config().gmail.login;
 const gmailPassword = '$hen0zEmbassy'; // functions.config().gmail.pass;
@@ -43,13 +44,32 @@ var goMail = function (message) {
     transporter.sendMail(mailOptions, getDeliveryStatus);
 };
 
-//.onDataAdded is watches for changes in database
-exports.onDataAdded = functions.database.ref('/users').onCreate(function (snap, context) {
+exports.forgotPassword = functions.https.onRequest((request, response) => {
+    const cors = require('cors')({origin: true});
 
-    //here we catch a new data, added to firebase database, it stored in a snap variable
-    const createdData = snap.val();
-    var text = createdData.mail;
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
+    response.set('Access-Control-Allow-Headers', '*');
+    // Check for POST request
+    if (request.method !== "POST") {
+        response.status(400).send('Please send a POST request');
+        return;
+    }
+    let data = request.body;
+//    alert(data);
+    console.log('req:', data);
+    // response.status(200).send('Please send a POST request');return;
+    admin.firestore().collection('users').where('userName', '==', '9659392919').get()
+        .then(snapshot => {
+            snapshot.forEach(doc => {
+                const createdData = doc;
+                var text = createdData.password;
 
-    //here we send new data using function for sending emails
-    goMail(text);
+                //here we send new data using function for sending emails
+                goMail(text);
+            });
+        })
+        .catch(err => {
+            console.log("Error in Cloud function", err);
+        });
 });
