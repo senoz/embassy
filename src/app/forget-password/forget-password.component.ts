@@ -31,10 +31,7 @@ export class ForgetPasswordComponent implements OnInit {
     const url = 'https://us-central1-embassypdw.cloudfunctions.net/forgotPassword';
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+        'Content-Type':  'application/x-www-form-urlencoded'
       })
      };
     this.http.post('http://localhost:5000/embassypdw/us-central1/forgotPassword',
