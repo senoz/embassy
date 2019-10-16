@@ -62,6 +62,7 @@ export class HeaderComponent {
     if (this.authService.isAdminLoggedIn) {
       this.router.navigate(['/admin/dashboard']);
     }
+    this.router.navigate(['/login']);
   }
 
 }
