@@ -31,11 +31,11 @@ export class ForgetPasswordComponent implements OnInit {
     const url = 'https://us-central1-embassypdw.cloudfunctions.net/forgotPassword';
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
+        'Content-Type':  'text/plain'
       })
      };
     this.http.post('http://localhost:5000/embassypdw/us-central1/forgotPassword',
-    this.forgetPasswordForm.value.userName, httpOptions)
+    this.forgetPasswordForm.value, httpOptions)
     .subscribe(email => {
       console.log(email);
     });

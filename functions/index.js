@@ -2,7 +2,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 
-
 //to make it work you need gmail account
 const gmailEmail = 'embassymineralwater@gmail.com'; //functions.config().gmail.login;
 const gmailPassword = '$hen0zEmbassy'; // functions.config().gmail.pass;
@@ -29,8 +28,7 @@ var goMail = function (message) {
     const mailOptions = {
         from: gmailEmail, // sender address
         to: 'senozmca@gmail.com', // list of receivers
-        subject: 'Hello ✔', // Subject line
-        text: '!' + message, // plain text body
+        subject: 'SHENOZ EMBASSY', // Subject line
         html: '!' + message // html body
     };
 
@@ -60,31 +58,20 @@ exports.forgotPassword = functions.https.onRequest((request, response) => {
         response.status(400).send('Please send a POST request');
         return;
     }
-    let data = JSON.stringify(JSON.parse(JSON.stringify(request.body    )));
-   // console.log('---', JSON.stringify(JSON.parse(JSON.stringify(data))));
-   
+    let data = JSON.parse(request.body);
+    console.log('UserName:', data.userName);
     // response.status(200).send('Please send a POST request');return;
     admin.firestore().collection('users').get()
         .then(snapshot => {
+            console.log('---', snapshot);
             snapshot.forEach(doc => {
               const userData = doc.data();
-              console.log('---', userData.userName);
-              console.log('---', data);
-              goMail('help');
-            //   if (userData.userName == data) {
+              console.log('---', userData);
+            //   if (userData.userName == data.userName) {
             //     console.log('---', userData.password);
-            //     goMail(userData.password);
+            //     // goMail(userData.password);
             //   }
             });
-            // snapshot.forEach(doc => {
-                
-            //     console.log('goMail:', doc.data());
-            //     const createdData = doc.data();
-            //     var text = createdData.password;
-            //     console.log('goMail:', text);
-            //     //here we send new data using function for sending emails
-            //     goMail(text);
-            // });
         })
         .catch(err => {
             console.log("Error in Cloud function", err);

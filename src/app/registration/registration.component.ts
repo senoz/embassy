@@ -13,7 +13,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   submitted = false;
   RegisterForm;
