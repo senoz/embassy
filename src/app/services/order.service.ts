@@ -106,7 +106,7 @@ export class OrderService {
     .get().toPromise().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
-        OrderRef.set({ isPaid: true }, { merge: true });
+        OrderRef.set({ isPaid: true, amountReceivedBy: localStorage.getItem('adminUser') }, { merge: true });
       });
     });
   }

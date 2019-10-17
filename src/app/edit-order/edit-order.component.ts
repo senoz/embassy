@@ -55,7 +55,9 @@ export class EditOrderComponent implements OnInit {
     total: this.product.price,
     isCancelled: false,
     isPromotionApplied: false,
-    promotionCode: ''
+    promotionCode: '',
+    isAdvancePaid: false,
+    advanceCan: 0
   };
   gpayNumber: number;
   constructor(
@@ -107,7 +109,7 @@ export class EditOrderComponent implements OnInit {
       if (order.length) {
         this.model = order[0].payload.doc.data() as Order;
         this.orderRef = order[0].payload.doc.ref;
-        this.orderId = order[0].payload.doc.id;        
+        this.orderId = order[0].payload.doc.id;
         this.products = this.productsService.getProductsById(this.model.productId);
         this.products.subscribe(product => {
           if (product.length) {

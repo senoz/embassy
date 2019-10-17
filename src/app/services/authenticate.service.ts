@@ -55,9 +55,11 @@ export class AuthenticateService {
         } else if (userData.isSuperAdmin) {
           this.isSuperAdminLoggedIn = true;
           this.isAdminLoggedIn = true;
+          localStorage.setItem('adminUser', userData.id);
           this.router.navigate(['/admin/dashboard']);
         } else {
           this.isAdminLoggedIn = true;
+          localStorage.setItem('adminUser', userData.id);
           this.router.navigate(['/admin/dashboard']);
         }
       } else {
@@ -78,6 +80,7 @@ export class AuthenticateService {
     this.isSuperAdminLoggedIn = false;
    // this.afAuth.auth.signOut();
     localStorage.removeItem('userId');
+    localStorage.removeItem('adminUser');
     this.router.navigate(['/login']);
   }
 

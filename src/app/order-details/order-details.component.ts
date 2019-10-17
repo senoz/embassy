@@ -61,7 +61,9 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     isPromotionApplied: false,
     promotionCode: '',
     walletUsed: 0,
-    walletPending: 0
+    walletPending: 0,
+    isAdvancePaid: false,
+    advanceCan: 0
   };
 
   productId: string;

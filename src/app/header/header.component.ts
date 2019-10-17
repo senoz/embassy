@@ -58,11 +58,11 @@ export class HeaderComponent {
     this.collapsed = true;
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/dashboard']);
-    }
-    if (this.authService.isAdminLoggedIn) {
+    } else if (this.authService.isAdminLoggedIn || this.authService.isSuperAdminLoggedIn) {
       this.router.navigate(['/admin/dashboard']);
+    } else {
+      this.router.navigate(['/login']);
     }
-    this.router.navigate(['/login']);
   }
 
 }

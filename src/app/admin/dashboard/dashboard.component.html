@@ -12,6 +12,7 @@
         <th scope="col">Door.No</th>
         <th scope="col">Qty</th>
         <th scope="col">Amount</th>
+        <th scope="col">Type</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -24,6 +25,7 @@
         <td>{{ order.address.doorNumber }}</td>
         <td>{{ order.quantity }}</td>
         <td>{{ order.total | currency : 'INR' }}</td>
+        <td>{{ order.paymentType }}</td>
         <td>
           <a title="Edit Order" (click)="open(content, order.id)">
             <i class="fa fa-edit icon-font"></i>
@@ -38,10 +40,7 @@
     </tbody>
   </table>
   <div class="display_table_center" *ngIf="orders.length">
-      <ngb-pagination
-      [(page)]="page"
-      [pageSize]="pageSize"
-      [collectionSize]="orders.length"></ngb-pagination>
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="orders.length"></ngb-pagination>
   </div>
   <ng-template #content let-modal>
     <div class="modal-header header">
@@ -105,7 +104,7 @@
                       <input type="text" id="return" [readonly]=true [(ngModel)]="model.return" name="return" class="center increasebutton form-control disabled"
                         value="0">
                       <span class="input-group-btn">
-                        <button type="button" (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                        <button type="button" [disabled]="model.isAdvancePaid" [ngClass]="{'disabled': model.isAdvancePaid}" (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
                           <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                       </span>
@@ -123,11 +122,43 @@
                       <label class="custom-control-label" for="notPaid">Not Paid</label>
                     </div>
                   </div>
+                  <div class="w-100 pt-2"></div>
+                  <div class="col">Is Advance Paid</div>
+                  <div class="col-7">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="isAdvancePaid" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="true" class="custom-control-input">
+                      <label class="custom-control-label" for="isAdvancePaid">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="isAdvanceNotPaid" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="false" class="custom-control-input">
+                      <label class="custom-control-label" for="isAdvanceNotPaid">No</label>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="model.isAdvancePaid">
+                    <div class="w-100 pt-2"></div>
+                    <div class="col">How Many Cans</div>
+                    <div class="col-7">
+                      <div class="input-group w-75">
+                        <span class="input-group-btn">
+                          <button type="button" [disabled]="model.advanceCan <= 0" [ngClass]="{'disabled': model.advanceCan <= 1 }" (click)="manageAdvanceCan(0)"
+                            class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                        <input type="text" id="advanceCan" [readonly]=true [(ngModel)]="model.advanceCan" name="advanceCan" class="center increasebutton form-control disabled"
+                          value="0">
+                        <span class="input-group-btn">
+                          <button type="button" [disabled]="model.advanceCan >= model.quantity" [ngClass]="{'disabled': model.advanceCan >= model.quantity}" (click)="manageAdvanceCan(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </div>
           </div>
-
         </section>
       </div>
       <div class="modal-footer">

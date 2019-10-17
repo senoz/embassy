@@ -15,6 +15,9 @@ export class Order {
     isPromotionApplied: boolean;
     promotionCode: string;
     updateAt: any;
+    amountReceivedBy: any;
+    isAdvancePaid: boolean;
+    advanceCan: number;
     address: {
         id: any;
         userId: string;

@@ -33,7 +33,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     block: '',
     doorNumber: '',
     floor: 0,
-    total: 0
+    total: 0,
+    paymentType: ''
   };
   closeResult: string;
   private subscription: Subscription;
@@ -90,10 +91,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 product: this.genericService.getProductById(order.productId, this.productsService.product),
                 qty: order.quantity,
                 apartment: order.address.apartmentName,
-                block:  order.address.block,
+                block: order.address.block,
                 doorNumber: order.address.doorNumber,
                 floor: order.address.floor,
-                total: order.total
+                total: order.total,
+                paymentType: order.paymentType,
               };
               this.download.push(this.downloadType);
             }
@@ -111,12 +113,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onSubmit() {
     let isNewCustomer;
     let isAddressExists;
-    this.orderService.isOrderExists(this.model.userId).subscribe(data =>{
+    this.orderService.isOrderExists(this.model.userId).subscribe(data => {
       isNewCustomer = data.length;
     });
-    this.orderService.isAdressExists(this.model.address).subscribe(data =>{
+    this.orderService.isAdressExists(this.model.address).subscribe(data => {
       isAddressExists = data.length;
     });
+    if (this.model.isPaid) {
+      this.model.amountReceivedBy = localStorage.getItem('adminUser');
+    }
     this.orderService.deliverOrder(this.model);
     this.userService.getUserById(this.model.userId).subscribe(data => {
       if (data.length) {
@@ -152,6 +157,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.model.return--;
     }
+  }
+
+  manageAdvanceCan(type) {
+    if (!this.model.advanceCan) {
+      this.model.advanceCan = 0;
+    }
+    if (type) {
+      this.model.advanceCan++;
+    } else {
+      this.model.advanceCan--;
+    }
+    this.model.return = (this.model.quantity - this.model.advanceCan);
   }
 
   ngOnDestroy() {

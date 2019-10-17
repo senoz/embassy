@@ -75,15 +75,6 @@ export class PendingAmountComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
-    this.orderService.deliverOrder(this.model);
-    this.alert.success('Order has delivered successfully');
-    setTimeout(() => {
-      this.alert.blurMessage();
-      this.modalReference.close();
-    }, 1000);
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
