@@ -102,7 +102,9 @@ export class OrderService {
 
   setPaidUser(userId) {
     this.firestore.collection('orderDetails',
-    ref => ref.where('userId', '==', userId))
+    ref => ref.where('userId', '==', userId)
+    .where('isPaid', '==', false)
+    .where('isDelivered', '==', true))
     .get().toPromise().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);

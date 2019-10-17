@@ -8,6 +8,7 @@ import { PendingCanComponent } from './pending-can/pending-can.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyCustomersComponent } from './my-customers/my-customers.component';
+import { AdvanceCommissionComponent } from './advance-commission/advance-commission.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
         path: 'my-customers',
         component: MyCustomersComponent
       },
+      {
+        path: 'advance-commission',
+        component: AdvanceCommissionComponent
+      },
     ]
   },
 ];
@@ -43,7 +48,8 @@ export const routes: Routes = [
     PendingAmountComponent,
     PendingCanComponent,
     AllOrdersComponent,
-    MyCustomersComponent
+    MyCustomersComponent,
+    AdvanceCommissionComponent
   ],
   imports: [
     CommonModule,

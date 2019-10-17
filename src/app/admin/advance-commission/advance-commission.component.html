@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row border-card">
+    <div class="col">
+      Commission Amount:
+    </div>
+    <div class="col">
+      {{ currentUser.wallet | currency : 'INR' }}
+    </div>
+    <div class="w-100"></div>
+    <div class="col">Total Cans:</div>
+    <div class="col"></div>
+    <div class="w-100"></div>
+    <div class="col">Amount Received By Admin:</div>
+    <div class="col">{{getTotalPendingAmount() | currency : 'INR' }}</div>
+    <div class="w-100"></div>
+    <div class="col">Amount Due:</div>
+    <div class="col">{{getTotalPendingAmount() | currency : 'INR' }}</div>
+  </div>
+</div>
+<div class="table-responsive-sm mt-3">
+  <h6>Adnvance Received Users:</h6>
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Apartment</th>
+        <th scope="col">Block</th>
+        <th scope="col">Door.No</th>
+        <th scope="col">Cans</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <td>{{ user.name }}</td>
+        <td>{{ getAddressByUserId(user.id).apartment }}</td>
+        <td>{{ getAddressByUserId(user.id).block }}</td>
+        <td>{{ getAddressByUserId(user.id).doorNumber }}</td>
+        <td>{ user.advance }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="display_table_center" *ngIf="users.length">
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
+  </div>
+</div>

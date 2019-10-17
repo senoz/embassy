@@ -108,6 +108,8 @@ export class EditOrderComponent implements OnInit {
     .subscribe(order => {
       if (order.length) {
         this.model = order[0].payload.doc.data() as Order;
+        this.model.isAdvancePaid = false;
+        this.model.advanceCan = 0;
         this.orderRef = order[0].payload.doc.ref;
         this.orderId = order[0].payload.doc.id;
         this.products = this.productsService.getProductsById(this.model.productId);
