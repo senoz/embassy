@@ -57,7 +57,8 @@ export class EditOrderComponent implements OnInit {
     isPromotionApplied: false,
     promotionCode: '',
     isAdvancePaid: false,
-    advanceCan: 0
+    advanceCan: 0,
+    isCommissionPaid: false
   };
   gpayNumber: number;
   constructor(
@@ -110,6 +111,7 @@ export class EditOrderComponent implements OnInit {
         this.model = order[0].payload.doc.data() as Order;
         this.model.isAdvancePaid = false;
         this.model.advanceCan = 0;
+        this.model.isCommissionPaid = false;
         this.orderRef = order[0].payload.doc.ref;
         this.orderId = order[0].payload.doc.id;
         this.products = this.productsService.getProductsById(this.model.productId);

@@ -40,6 +40,12 @@ export class OrderService {
     .snapshotChanges();
   }
 
+  getAdvancePaidOrders() {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('isAdvancePaid', '==', true))
+    .snapshotChanges();
+  }
+
   getPendingOrdersByUserId(id) {
     return this.firestore.collection('orderDetails',
     ref => ref.where('userId', '==', id)
@@ -151,5 +157,14 @@ export class OrderService {
     ref => ref.where('isActive', '==', true)
     .limit(1))
     .snapshotChanges();
+  }
+
+  getCommissionAmount() {
+    return this.firestore.collection('commission').snapshotChanges();
+  }
+
+  getCommissionNotPaidOrders() {
+    return this.firestore.collection('orderDetails',
+    ref => ref.where('isCommissionPaid', '==', false)).snapshotChanges();
   }
 }

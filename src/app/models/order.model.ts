@@ -18,6 +18,7 @@ export class Order {
     amountReceivedBy: any;
     isAdvancePaid: boolean;
     advanceCan: number;
+    isCommissionPaid: boolean;
     address: {
         id: any;
         userId: string;

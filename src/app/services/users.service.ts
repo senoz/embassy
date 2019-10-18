@@ -17,6 +17,12 @@ export class UsersService {
     return this.user$.snapshotChanges();
   }
 
+  getSuperAdminUserId() {
+     return this.firestore.collection('users',
+    ref => ref .where('isSuperAdmin', '==', true).limit(1))
+    .snapshotChanges();
+  }
+
   getUserById(id) {
    return this.firestore.collection('users',
     ref => ref.where(firebase.firestore.FieldPath.documentId(), '==', id).limit(1))

@@ -1,5 +1,5 @@
 import { AlertService } from '../services/alert.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OnDestroy, Component, OnInit } from '@angular/core';
@@ -63,7 +63,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     walletUsed: 0,
     walletPending: 0,
     isAdvancePaid: false,
-    advanceCan: 0
+    advanceCan: 0,
+    isCommissionPaid: false
   };
 
   productId: string;
@@ -89,7 +90,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private alert: AlertService,
     private afs: AngularFirestore,
-    private datePipe: DatePipe,
     private globals: ConstantsService,
     private userService: UsersService
   ) {
