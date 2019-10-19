@@ -20,7 +20,7 @@ export class MyCustomersComponent {
     private authService: AuthenticateService,
     private addressService: AddressService
   ) {
-    this.users = this.authService.users;
+    this.users = this.authService.users.filter(user => user.isSuperAdmin === false || user.isAdmin === false);
     this.filterUsers = Object.assign(this.users, {});
     this.addressService.getAllAddresses()
       .subscribe(addresses => {
@@ -35,7 +35,8 @@ export class MyCustomersComponent {
   }
 
   getAddressByUserId(userId) {
-    let address = {
+    let address;
+    let data = {
       apartment: '',
       block: '',
       doorNumber: ''
@@ -43,7 +44,7 @@ export class MyCustomersComponent {
     if (this.address) {
       address = this.address.filter(add => add.userId === userId)[0];
     }
-    return address;
+    return address ? address : data;
   }
 
   filterUser(key) {

@@ -18,6 +18,8 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
   commission: any;
   totalCount = 0;
   amountRecieved = 0;
+  page = 1;
+  pageSize = 10;
   constructor(
     private orderService: OrderService,
     private userService: UsersService,

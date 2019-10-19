@@ -168,7 +168,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.model.advanceCan--;
     }
-    this.model.return = (this.model.quantity - this.model.advanceCan);
+    this.model.return = this.model.advanceCan;
+  }
+
+  resetAdvance() {
+    this.model.advanceCan = 0;
   }
 
   ngOnDestroy() {

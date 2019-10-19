@@ -60,7 +60,7 @@
                           <input type="text" id="return" [readonly]=true [(ngModel)]="model.return" name="return" class="center increasebutton form-control disabled"
                             value="0">
                           <span class="input-group-btn">
-                            <button type="button" [disabled]="model.return <= totalReturn" (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                            <button type="button" [disabled]="model.return >= totalReturn"  [ngClass]="{'disabled':model.return >= totalReturn }" (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
                               <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
                           </span>

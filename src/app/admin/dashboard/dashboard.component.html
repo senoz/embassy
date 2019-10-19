@@ -92,7 +92,7 @@
                     </div>
                   </div>
                   <div class="w-100 pt-2"></div>
-                  <div class="col">Pending Can</div>
+                  <div class="col">Received Can</div>
                   <div class="col-7">
                     <div class="input-group w-75">
                       <span class="input-group-btn">
@@ -130,7 +130,7 @@
                       <label class="custom-control-label" for="isAdvancePaid">Yes</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="isAdvanceNotPaid" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="false" class="custom-control-input">
+                      <input type="radio" id="isAdvanceNotPaid" (input)="resetAdvance()" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="false" class="custom-control-input">
                       <label class="custom-control-label" for="isAdvanceNotPaid">No</label>
                     </div>
                   </div>

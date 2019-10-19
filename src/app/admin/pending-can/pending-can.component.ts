@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { ProductsService } from '../../services/products.service';
 import { GenericService } from '../../services/generic.service';
@@ -28,6 +28,7 @@ export class PendingCanComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private genericService: GenericService,
     private alert: AlertService,
+    private changeDetector : ChangeDetectorRef,
     private modalService: NgbModal
   ) { }
 
@@ -78,6 +79,10 @@ export class PendingCanComponent implements OnInit, OnDestroy {
         return pendingcount;
       }
     }
+  }
+
+  ngAfterViewChecked(){
+    this.changeDetector.detectChanges();
   }
 
   onSubmit() {
