@@ -165,6 +165,8 @@ export class OrderService {
 
   getCommissionNotPaidOrders() {
     return this.firestore.collection('orderDetails',
-    ref => ref.where('isCommissionPaid', '==', false)).snapshotChanges();
+    ref => ref.where('isCommissionPaid', '==', false)
+    .where('isDelivered', '==', true)
+    .where('isPaid', '==', true)).snapshotChanges();
   }
 }

@@ -16,7 +16,7 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   orders: any[] = [];
   commission: any;
-  totalCount: number;
+  totalCount = 0;
   amountRecieved = 0;
   constructor(
     private orderService: OrderService,
