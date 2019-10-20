@@ -77,6 +77,12 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
     return this.amountRecieved - (this.commission * this.totalCount);
   }
 
+  settlement() {
+    if (confirm('Are you sure')) {
+      this.orderService.settleCommission();
+    }
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

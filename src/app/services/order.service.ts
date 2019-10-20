@@ -140,6 +140,8 @@ export class OrderService {
        quantity: order.quantity,
        return: order.return,
        isPaid: order.isPaid,
+       isAdvancePaid: order.isAdvancePaid,
+       advanceCan: order.advanceCan,
        updateAt: updateAt
        }, { merge: true });
   }
@@ -168,5 +170,18 @@ export class OrderService {
     ref => ref.where('isCommissionPaid', '==', false)
     .where('isDelivered', '==', true)
     .where('isPaid', '==', true)).snapshotChanges();
+  }
+
+  settleCommission() {
+    this.firestore.collection('orderDetails',
+    ref => ref.where('isCommissionPaid', '==', false)
+    .where('isDelivered', '==', true)
+    .where('isPaid', '==', true))
+    .get().toPromise().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const OrderRef = this.firestore.collection('orderDetails').doc(doc.id);
+        OrderRef.set({ isCommissionPaid: true}, { merge: true });
+      });
+    });
   }
 }

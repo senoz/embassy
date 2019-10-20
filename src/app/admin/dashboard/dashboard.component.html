@@ -96,7 +96,7 @@
                   <div class="col-7">
                     <div class="input-group w-75">
                       <span class="input-group-btn">
-                        <button type="button" [disabled]="model.return <= 0" [ngClass]="{'disabled': model.return <= 1 }" (click)="manageReturn(0)"
+                        <button type="button" [disabled]="model.return <= 0 || model.isAdvancePaid" [ngClass]="{'disabled': model.return <= 0 || model.isAdvancePaid }" (click)="manageReturn(0)"
                           class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
                           <i class="fa fa-minus" aria-hidden="true"></i>
                         </button>
