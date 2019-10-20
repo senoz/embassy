@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { ProductsService } from '../../services/products.service';
 import { GenericService } from '../../services/generic.service';
@@ -12,7 +12,7 @@ import { AlertService } from '../../services/alert.service';
   templateUrl: './pending-can.component.html',
   styleUrls: ['./pending-can.component.css']
 })
-export class PendingCanComponent implements OnInit, OnDestroy {
+export class PendingCanComponent implements OnInit, OnDestroy, AfterViewChecked {
   totalReturn: any;
   private subscription: Subscription;
   modalReference: NgbModalRef;

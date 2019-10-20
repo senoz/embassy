@@ -13,6 +13,7 @@ import { GenericService } from '../services/generic.service';
   styleUrls: ['./my-details.component.css']
 })
 export class MyDetailsComponent implements OnInit {
+  totalAdvanceCan = 0;
   page = 1;
   pageSize = 10;
   currentUser = {
@@ -65,12 +66,15 @@ export class MyDetailsComponent implements OnInit {
     let totalQty = 0;
     let totalReceived = 0;
     for (const key in this.orders) {
+      if (this.orders[key].userId === userId && this.orders[key].isAdvancePaid) {
+        this.totalAdvanceCan += this.orders[key].advanceCan;
+      }
       if (this.orders[key].userId === userId) {
         const returnCount = this.orders[key].return ? this.orders[key].return : 0;
         totalQty += this.orders[key].quantity;
         totalReceived += returnCount;
       }
     }
-    return (totalQty - totalReceived);
+    return (totalQty - (totalReceived + this.totalAdvanceCan));
   }
 }

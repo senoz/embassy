@@ -271,7 +271,11 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.model.quantity--;
     }
-    this.model.total = (this.model.quantity * this.product.price);
+    if (this.model.promotionCode) {
+      this.model.total = this.applyCoupon(this.model.promotionCode);
+    } else {
+      this.model.total = (this.model.quantity * this.product.price);
+    }
   }
 
   ngOnDestroy() {

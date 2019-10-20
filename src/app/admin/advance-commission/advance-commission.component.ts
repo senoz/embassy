@@ -36,7 +36,7 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
         const user = users[0].payload.doc.data() as Users;
         this.orderService.getCommissionNotPaidOrders().subscribe(orders => {
           if (orders.length) {
-            this.totalCount = this.orders.length;
+            this.totalCount = orders.length;
             for (const key in orders) {
               if (orders[key]) {
                 const order = orders[key].payload.doc.data() as Order;

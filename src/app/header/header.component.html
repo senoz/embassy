@@ -36,9 +36,6 @@
           <a class="nav-link" routerLink="/admin/pending-can" (click)="toggleCollapsed()" routerLinkActive="active">Pending Cans</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/all-orders" (click)="toggleCollapsed()" routerLinkActive="active">Previous Orders</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" routerLink="/admin/advance-commission" (click)="toggleCollapsed()" routerLinkActive="active">Advance & Commissions</a>
           </li>
         <li class="nav-item" *ngIf="authService.isSuperAdminLoggedIn">
@@ -47,6 +44,9 @@
         <li class="nav-item">
           <a class="nav-link" data-action="share/whatsapp/share" target="_blank" href="{{whatsappShare}}">Share & Earn</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/all-orders" (click)="toggleCollapsed()" routerLinkActive="active">Previous Orders</a>
+          </li>
         <li class="nav-item">
           <a class="nav-link" (click)="logout()">Logout</a>
         </li>
