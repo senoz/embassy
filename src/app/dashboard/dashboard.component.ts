@@ -15,7 +15,7 @@ import { Order } from '../models/order.model';
 export class DashboardComponent {
   currentOrder = [];
   orderedProducts = [];
-  products: AngularFirestoreCollection<Products>;
+  products: any;
   private subscription: Subscription;
   private orderSubscription: Subscription;
   userId: string;

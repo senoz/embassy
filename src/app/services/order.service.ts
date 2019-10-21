@@ -133,7 +133,7 @@ export class OrderService {
   }
 
   deliverOrder(order) {
-    const updateAt = firebase.firestore.FieldValue.serverTimestamp();
+    const updateDate = firebase.firestore.FieldValue.serverTimestamp();
     return this.order$
     .doc(order.id)
     .set({ isDelivered: true,
@@ -142,7 +142,8 @@ export class OrderService {
        isPaid: order.isPaid,
        isAdvancePaid: order.isAdvancePaid,
        advanceCan: order.advanceCan,
-       updateAt: updateAt
+       amountReceivedBy: order.amountReceivedBy,
+       updateAt: updateDate
        }, { merge: true });
   }
 

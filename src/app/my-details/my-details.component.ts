@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { ProductsService } from '../services/products.service';
 import { Products } from '../models/products.model';
@@ -12,7 +12,7 @@ import { GenericService } from '../services/generic.service';
   templateUrl: './my-details.component.html',
   styleUrls: ['./my-details.component.css']
 })
-export class MyDetailsComponent implements OnInit {
+export class MyDetailsComponent implements OnInit, AfterViewInit, AfterViewChecked {
   totalAdvanceCan = 0;
   page = 1;
   pageSize = 10;
@@ -25,6 +25,7 @@ export class MyDetailsComponent implements OnInit {
     private productsService: ProductsService,
     private userService: UsersService,
     private genericService: GenericService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class MyDetailsComponent implements OnInit {
             const order = data[key].payload.doc.data() as Order;
             order.id = data[key].payload.doc.id;
             this.orders.push(order);
+            this.totalAdvanceCan = 0;
           }
         }
       }
@@ -61,10 +63,20 @@ export class MyDetailsComponent implements OnInit {
     return amt;
   }
 
+  ngAfterViewInit() {
+    this.changeDetector.detach();
+  }
+
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
+  }
+
   getTotalPendingCan() {
     const userId = localStorage.getItem('userId');
     let totalQty = 0;
     let totalReceived = 0;
+    this.totalAdvanceCan = 0;
+    // tslint:disable-next-line:forin
     for (const key in this.orders) {
       if (this.orders[key].userId === userId && this.orders[key].isAdvancePaid) {
         this.totalAdvanceCan += this.orders[key].advanceCan;

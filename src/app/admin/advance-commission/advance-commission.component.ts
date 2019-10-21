@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { Subscription } from '../../../../node_modules/rxjs';
 import { Order } from '../../models/order.model';
@@ -26,6 +26,7 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     public authService: AuthenticateService,
     private genericService: GenericService,
+    private ref: ChangeDetectorRef
   ) {
     this.orderService.getCommissionAmount().subscribe(c => {
       if (c.length) {
@@ -33,15 +34,21 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
        this.commission = commission.amount;
       }
     });
+  }
+
+  ngOnInit() {
     this.userService.getSuperAdminUserId().subscribe( users => {
       if (users.length) {
         const user = users[0].payload.doc.data() as Users;
+        user.id = users[0].payload.doc.id;
         this.orderService.getCommissionNotPaidOrders().subscribe(orders => {
+          this.totalCount = 0;
+          this.amountRecieved = 0;
           if (orders.length) {
-            this.totalCount = orders.length;
             for (const key in orders) {
               if (orders[key]) {
                 const order = orders[key].payload.doc.data() as Order;
+                this.totalCount += order.quantity;
                 const userId = order.amountReceivedBy;
                 if (user.id === userId) {
                   this.amountRecieved += order.total;
@@ -49,12 +56,10 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
               }
             }
           }
+          this.ref.detectChanges();
         });
       }
     });
-  }
-
-  ngOnInit() {
     this.subscription = this.orderService.getAdvancePaidOrders()
     .subscribe(orders => {
       this.orders = [];

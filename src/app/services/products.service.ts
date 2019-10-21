@@ -32,7 +32,10 @@ export class ProductsService {
   }
 
   getProducts() {
-    return this.products$.snapshotChanges();
+    return this.firestore.collection('products',
+    ref => ref.where('active', '==', true)
+    .orderBy('pid', 'asc'))
+    .snapshotChanges();
   }
 
   getProductsById(id) {

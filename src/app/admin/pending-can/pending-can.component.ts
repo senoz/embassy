@@ -28,7 +28,7 @@ export class PendingCanComponent implements OnInit, OnDestroy, AfterViewChecked 
     private productsService: ProductsService,
     private genericService: GenericService,
     private alert: AlertService,
-    private changeDetector : ChangeDetectorRef,
+    private changeDetector: ChangeDetectorRef,
     private modalService: NgbModal
   ) { }
 
@@ -45,8 +45,11 @@ export class PendingCanComponent implements OnInit, OnDestroy, AfterViewChecked 
             if (filterOrder.length) {
               filterOrder[0].quantity += order.quantity;
               filterOrder[0].return += order.return;
+              filterOrder[0].advanceCan += order.advanceCan;
             } else {
-              this.orders.push(order);
+              if (!order.isAdvancePaid) {
+                this.orders.push(order);
+              }
             }
           }
         }
@@ -72,7 +75,7 @@ export class PendingCanComponent implements OnInit, OnDestroy, AfterViewChecked 
   getPendingCan(userId) {
     for (const key in this.orders) {
       if (this.orders[key].userId === userId) {
-        const pendingcount = this.orders[key].quantity - this.orders[key].return;
+        const pendingcount = (this.orders[key].quantity - this.orders[key].advanceCan) - this.orders[key].return;
         if (pendingcount) {
           this.isPendingCan = true;
         }
@@ -81,7 +84,7 @@ export class PendingCanComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.changeDetector.detectChanges();
   }
 
