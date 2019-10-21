@@ -6,6 +6,7 @@ import { GenericService } from '../../services/generic.service';
 import { Commission } from '../../models/commission.model';
 import { UsersService } from '../../services/users.service';
 import { Users } from '../../models/users.model';
+import { AuthenticateService } from '../../services/authenticate.service';
 
 @Component({
   selector: 'app-advance-commission',
@@ -23,6 +24,7 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private userService: UsersService,
+    private authService: AuthenticateService,
     private genericService: GenericService,
   ) {
     this.orderService.getCommissionAmount().subscribe(c => {
