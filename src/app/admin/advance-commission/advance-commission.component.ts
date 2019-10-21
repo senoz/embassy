@@ -24,7 +24,7 @@ export class AdvanceCommissionComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private userService: UsersService,
-    private authService: AuthenticateService,
+    public authService: AuthenticateService,
     private genericService: GenericService,
   ) {
     this.orderService.getCommissionAmount().subscribe(c => {
