@@ -76,7 +76,7 @@
                 <div class="float-right" *ngIf="addresses">
                   <button type="button" (click)="editAdddress()" class="btn btn-link pointer">Edit</button>
                 </div>
-                <div class="input-group col">
+                <div class="input-group col" *ngIf="addresses">
                   <div class="col input-group">
                     {{model.address.doorNumber}}, {{model.address.block}} Block
                   </div>
