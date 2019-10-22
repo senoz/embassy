@@ -183,7 +183,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     if (!value) {
       return;
     }
-    this.aprtBlocks = this.apartment.filter(x => x.name === value);
+    this.aprtBlocks = this.apartment.filter(x => x.name === value)
+    .sort((a, b) => (a.block > b.block) ? 1 : ((b.block > a.block) ? -1 : 0) );
     return true;
   }
 
