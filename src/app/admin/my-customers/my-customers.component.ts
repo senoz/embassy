@@ -1,6 +1,6 @@
 import {map, distinctUntilChanged,  debounceTime} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddressService } from '../../services/address.service';
 import { Address } from '../../models/address.model';
 import { AuthenticateService } from '../../services/authenticate.service';
@@ -10,7 +10,7 @@ import { AuthenticateService } from '../../services/authenticate.service';
   templateUrl: './my-customers.component.html',
   styleUrls: ['./my-customers.component.css']
 })
-export class MyCustomersComponent {
+export class MyCustomersComponent implements OnInit {
   page = 1;
   pageSize = 10;
   address = [];
@@ -20,8 +20,6 @@ export class MyCustomersComponent {
     private authService: AuthenticateService,
     private addressService: AddressService
   ) {
-    this.users = this.authService.users.filter(user => user.isSuperAdmin === false || user.isAdmin === false);
-    this.filterUsers = Object.assign(this.users, {});
     this.addressService.getAllAddresses()
       .subscribe(addresses => {
         if (addresses.length) {
@@ -34,9 +32,14 @@ export class MyCustomersComponent {
       });
   }
 
+  ngOnInit() {
+    this.users = this.authService.users.filter(user => user.isSuperAdmin === false && user.isAdmin === false);
+    this.filterUsers = Object.assign(this.users, {});
+  }
+
   getAddressByUserId(userId) {
     let address;
-    let data = {
+    const data = {
       apartment: '',
       block: '',
       doorNumber: ''

@@ -129,7 +129,7 @@
           <ng-container *ngIf="isCoupon && !model.isPromotionApplied">
             <input type="text" name="coupon" ngModel #couponCode="ngModel" [ngClass]="{ 'is-invalid': isCouponApplied && couponCode.invalid }"
               required class="form-control coupon border-top-0 border-right-0 border-left-0" placeholder="Enter Promo" />
-            <button type="button" (click)="applyCoupon(couponCode.value)" class="btn btn-sm btn-outline-primary float-right pointer">Ok</button>
+            <button type="button" (click)="applyCoupon(couponCode.value)" class="btn btn-sm btn-primary float-right pointer">Apply</button>
             <div class="mt-5 clearfix text-center alert-danger" *ngIf="invalidCoupon">Invalid Promo Code</div>
           </ng-container>
           <span *ngIf="isCoupon && model.isPromotionApplied" class="alert-success">

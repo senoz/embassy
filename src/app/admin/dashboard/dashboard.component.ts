@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   };
   closeResult: string;
   private subscription: Subscription;
+  private walletSubscribe: Subscription;
   constructor(
     private modalService: NgbModal,
     private orderService: OrderService,
@@ -112,28 +113,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     let isNewCustomer;
-    let isAddressExists;
+    let isAddressExists = 0;
+    this.orderService.isAddressExists(this.model.address).subscribe(data => {
+      isAddressExists = data.length;
+    });
     this.orderService.isOrderExists(this.model.userId).subscribe(data => {
       isNewCustomer = data.length;
-    });
-    this.orderService.isAdressExists(this.model.address).subscribe(data => {
-      isAddressExists = data.length;
     });
     if (this.model.isPaid) {
       this.model.amountReceivedBy = localStorage.getItem('adminUser');
     }
     this.orderService.deliverOrder(this.model);
-    this.userService.getUserById(this.model.userId).subscribe(data => {
+    this.walletSubscribe = this.userService.getUserById(this.model.userId).subscribe(data => {
       if (data.length) {
         const user = data[0].payload.doc.data() as Users;
-        if (user.refferedBy && !isNewCustomer && !isAddressExists) {
+        user.id = data[0].payload.doc.id;
+        if (user.refferedBy && isNewCustomer <= 1 && isAddressExists === 1) {
           const walletAmount = user.wallet + 10;
           this.userService.setWalletAmount(user.refferedBy, walletAmount);
         }
         if (this.model.walletPending) {
           const walletAmount = user.wallet + this.model.walletPending;
-          this.userService.setWalletAmount(user.refferedBy, walletAmount);
+          this.userService.setWalletAmount(user.id, walletAmount);
         }
+        this.walletSubscribe.unsubscribe();
       }
     });
     this.alert.success('Order has delivered successfully');
