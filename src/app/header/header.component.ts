@@ -30,16 +30,14 @@ export class HeaderComponent {
     this.orderService.getPromoCode().subscribe(data => {
       if (data.length) {
         promotion = data[0].payload.doc.data() as Coupon;
+        promoLink = `\n\nPromo Code: *${promotion.couponCode}*`;
       }
     });
-    if (promotion) {
-      promoLink = `\n\nPromo Code: *${promotion.couponCode}*`;
-    }
     let referral = '/';
     if (authService.isLoggedIn) {
       referral = `/referral/${userId}`;
     }
-    const url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n\n${group}${promoLink}`;
+    const url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n${group}${promoLink}`;
     const urlEncode = encodeURIComponent(url);
     this.whatsappShare = `https://api.whatsapp.com/send?text=${urlEncode}`;
     this.contactUs = `https://api.whatsapp.com/send?phone=${globals.gpayNumber}`;
