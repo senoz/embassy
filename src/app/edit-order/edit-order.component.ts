@@ -13,6 +13,7 @@ import { Products } from '../models/products.model';
 import { ConstantsService } from '../services/constants.service';
 import { Coupon } from '../models/coupon.model';
 import { GenericService } from '../services/generic.service';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-edit-order',
@@ -61,6 +62,7 @@ export class EditOrderComponent implements OnInit {
     isCommissionPaid: false
   };
   gpayNumber: number;
+  mywallet: number;
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
@@ -70,7 +72,8 @@ export class EditOrderComponent implements OnInit {
     private apartmentDetailsService: ApartmentDetailsService,
     private router: Router,
     private globals: ConstantsService,
-    private genericService: GenericService
+    private genericService: GenericService,
+    private userService: UsersService
   ) { }
 
   ngOnInit() {
@@ -84,6 +87,9 @@ export class EditOrderComponent implements OnInit {
     const address = this.model.address;
     this.updateAddress(address);
     this.updateOrder(this.model);
+    if (this.mywallet) {
+      this.userService.setWalletAmount(this.model.userId, this.mywallet);
+    }
     this.alert.success('Your order has updated successfully');
     setTimeout(() => {
       this.router.navigate(['/my-orders']);
@@ -204,6 +210,15 @@ export class EditOrderComponent implements OnInit {
     // this.model.total = (this.model.quantity * this.product.price);
     if (this.model.promotionCode) {
       this.model.total = this.applyCoupon(this.model.promotionCode);
+    } else if (this.model.isWalletApplied) {
+      const walletPending = ((this.model.quantity * this.product.price) - this.model.walletUsed);
+      if (walletPending >= 0) {
+        this.mywallet = 0;
+        this.model.total = walletPending;
+      } else {
+        this.model.total = 0;
+        this.mywallet = (this.model.walletUsed - (this.model.quantity * this.product.price));
+      }
     } else {
       this.model.total = (this.model.quantity * this.product.price);
     }

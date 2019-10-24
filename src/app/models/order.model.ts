@@ -19,6 +19,8 @@ export class Order {
     isAdvancePaid: boolean;
     advanceCan: number;
     isCommissionPaid: boolean;
+    walletUsed: number;
+    isWalletApplied: boolean;
     address: {
         id: any;
         userId: string;

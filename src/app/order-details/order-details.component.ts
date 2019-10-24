@@ -266,6 +266,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   checkPromo(val) {
     this.isWallet = false;
     this.mywallet = this.user.wallet;
+    this.model.walletUsed = 0;
+    this.model.isWalletApplied = false;
     this.model.total = (this.model.quantity * this.product.price);
     this.isCoupon = !val;
     if (!this.isCoupon) {
@@ -283,18 +285,25 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       this.model.isPromotionApplied = false;
       this.model.promotionCode = '';
     }
+    this.mywallet = this.user.wallet;
     this.isWallet = !val;
     if (this.isWallet) {
       if (this.model.total > this.mywallet) {
+        this.model.walletUsed = this.mywallet;
+        this.model.isWalletApplied = true;
         this.model.total -= this.mywallet;
         this.mywallet = 0;
       } else {
+        this.model.walletUsed = this.model.total;
+        this.model.isWalletApplied = true;
         this.mywallet -= this.model.total;
         this.model.total = 0;
       }
     } else {
       this.mywallet = this.user.wallet;
       this.model.total = (this.model.quantity * this.product.price);
+      this.model.walletUsed = 0;
+      this.model.isWalletApplied = false;
     }
   }
 
@@ -306,6 +315,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     }
     if (this.model.promotionCode) {
       this.model.total = this.applyCoupon(this.model.promotionCode);
+    } else if (this.model.isWalletApplied) {
+      this.applyWallet(false);
     } else {
       this.model.total = (this.model.quantity * this.product.price);
     }
