@@ -80,6 +80,9 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   products: any;
   orderId: string;
   mywallet = 0;
+  invalidUser = false;
+  meetsCriteria = false;
+  promoQuantity: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -106,7 +109,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
         this.model.total = (this.model.quantity * this.product.price);
       }
     });
-   }
+  }
 
   ngOnInit() {
     this.getApartmentDetails();
@@ -184,7 +187,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       return;
     }
     this.aprtBlocks = this.apartment.filter(x => x.name === value)
-    .sort((a, b) => (a.block > b.block) ? 1 : ((b.block > a.block) ? -1 : 0) );
+      .sort((a, b) => (a.block > b.block) ? 1 : ((b.block > a.block) ? -1 : 0));
     return true;
   }
 
@@ -209,22 +212,51 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
             this.model.promotionCode = '';
           }, 2000);
         } else {
-          this.invalidCoupon = false;
-          this.model.isPromotionApplied = true;
           const promotion = coupon[0].payload.doc.data() as Coupon;
+          // this.promoQuantity = promotion.quantity;
+          // if (promotion.quantity <= this.model.quantity) {
           switch (promotion.type) {
             case 1:
               this.model.walletPending = 0;
               this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
               break;
             case 2:
               this.model.walletPending = 0;
               this.model.total = (this.model.total - promotion.discount);
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
+              break;
+            case 3:
+              this.model.walletPending = 0;
+              this.orderService.isAddressExists(this.model.address).subscribe(data => {
+                if (data.length === 0) {
+                  this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+                  this.invalidCoupon = false;
+                  this.model.isPromotionApplied = true;
+                } else {
+                  this.invalidUser = true;
+                  setTimeout(() => {
+                    this.invalidUser = false;
+                    this.model.promotionCode = '';
+                  }, 2000);
+                }
+              });
               break;
             default:
               this.model.walletPending = promotion.discount;
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
           }
           this.model.promotionCode = promotion.couponCode;
+          // } else {
+          //   this.meetsCriteria = true;
+          //   setTimeout(() => {
+          //     this.meetsCriteria = false;
+          //     this.model.promotionCode = '';
+          //   }, 2000);
+          // }
         }
       });
     }

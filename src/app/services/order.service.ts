@@ -85,10 +85,10 @@ export class OrderService {
   }
 
   isAddressExists(address) {
-    return this.firestore.collection('address',
-      ref => ref.where('apartmentName', '==', address.apartmentName)
-        .where('block', '==', address.block)
-        .where('doorNumber', '==', address.doorNumber)
+    return this.firestore.collection('orderDetails',
+      ref => ref.where('address.apartmentName', '==', address.apartmentName)
+        .where('address.block', '==', address.block)
+        .where('address.doorNumber', '==', address.doorNumber)
     ).snapshotChanges();
   }
 

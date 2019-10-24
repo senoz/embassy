@@ -27,20 +27,24 @@ export class HeaderComponent {
     const content = globals.whatsappContent;
     let promotion;
     let promoLink = '';
+    let url;
+    let urlEncode;
     this.orderService.getPromoCode().subscribe(data => {
+      let referral = '/';
+      if (authService.isLoggedIn) {
+        referral = `/referral/${userId}`;
+      }
       if (data.length) {
         promotion = data[0].payload.doc.data() as Coupon;
         promoLink = `\n\nPromo Code: *${promotion.couponCode}*`;
+        url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n${group}${promoLink}`;
+      } else {
+        url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n${group}`;
       }
+      urlEncode = encodeURIComponent(url);
+      this.whatsappShare = `https://api.whatsapp.com/send?text=${urlEncode}`;
+      this.contactUs = `https://api.whatsapp.com/send?phone=91${globals.gpayNumber}`;
     });
-    let referral = '/';
-    if (authService.isLoggedIn) {
-      referral = `/referral/${userId}`;
-    }
-    const url = `${content}\n\nPlace Order: http://${urlhost}${referral}\n\n${group}${promoLink}`;
-    const urlEncode = encodeURIComponent(url);
-    this.whatsappShare = `https://api.whatsapp.com/send?text=${urlEncode}`;
-    this.contactUs = `https://api.whatsapp.com/send?phone=${globals.gpayNumber}`;
   }
 
   toggleCollapsed(): void {

@@ -3,5 +3,6 @@ export class Coupon {
     discount: number;
     isActive: boolean;
     type: number;
+    quantity: number;
 }
 

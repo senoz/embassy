@@ -131,6 +131,8 @@
               required class="form-control coupon border-top-0 border-right-0 border-left-0" placeholder="Enter Promo" />
             <button type="button" (click)="applyCoupon(couponCode.value)" class="btn btn-sm btn-primary float-right pointer">Apply</button>
             <div class="mt-5 clearfix text-center alert-danger" *ngIf="invalidCoupon">Invalid Promo Code</div>
+            <div class="mt-5 clearfix text-center alert-danger" *ngIf="invalidUser">Offer only for new customers</div>
+            <!-- <div class="mt-5 clearfix text-center alert-danger" *ngIf="meetsCriteria">Minimum {{promoQuantity}} quantity to apply offer</div> -->
           </ng-container>
           <span *ngIf="isCoupon && model.isPromotionApplied" class="alert-success">
             Applied Successfully

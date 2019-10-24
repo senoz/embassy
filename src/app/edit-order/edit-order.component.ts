@@ -184,7 +184,7 @@ export class EditOrderComponent implements OnInit {
       this.orderService.checkValidPromotion(promo).subscribe(coupon => {
         if (coupon.length) {
           const promotion = coupon[0].payload.doc.data() as Coupon;
-          if (promotion.type === 1) {
+          if (promotion.type === 1 || promotion.type === 3) {
             this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
           } else if (promotion.type === 2) {
             this.model.total = (this.model.total - promotion.discount);
