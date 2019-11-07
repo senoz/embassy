@@ -24,6 +24,7 @@ import { Users } from '../models/users.model';
   providers: [DatePipe]
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
+  submitted = false;
   isWallet = false;
   user = {
     wallet: 0
@@ -118,6 +119,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.submitted = true;
     const address = this.model.address;
     address.userId = localStorage.getItem('userId');
     if (!this.addresses) {

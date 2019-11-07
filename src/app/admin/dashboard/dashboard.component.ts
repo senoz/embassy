@@ -90,12 +90,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
               this.orders.push(order);
               this.downloadType = {
                 product: this.genericService.getProductById(order.productId, this.productsService.product),
-                qty: order.quantity,
                 apartment: order.address.apartmentName,
                 block: order.address.block,
                 doorNumber: order.address.doorNumber,
                 floor: order.address.floor,
                 total: order.total,
+                qty: order.quantity,
                 paymentType: order.paymentType,
               };
               this.download.push(this.downloadType);

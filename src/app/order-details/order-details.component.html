@@ -144,7 +144,7 @@
           <strong> {{ model.total | currency : 'INR' }}</strong>
         </div>
         <div class="col margin-15">
-          <button class="btn btn-outline-primary float-right pointer">Place Order</button>
+          <button [disabled]="submitted" class="btn btn-outline-primary float-right pointer">Place Order</button>
         </div>
       </div>
     </div>

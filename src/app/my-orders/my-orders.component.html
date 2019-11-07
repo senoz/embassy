@@ -15,7 +15,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <ng-container *ngIf="order.date">
+            {{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}
+          </ng-container>
+      </td>
         <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
         <td>{{ order.quantity }}</td>
         <td>{{ order.total | currency : 'INR' }}</td>
