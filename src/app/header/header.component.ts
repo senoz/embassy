@@ -4,6 +4,7 @@ import { AuthenticateService } from '../services/authenticate.service';
 import { ConstantsService } from '../services/constants.service';
 import { OrderService } from '../services/order.service';
 import { Coupon } from '../models/coupon.model';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,6 +16,7 @@ export class HeaderComponent {
   url: any;
   collapsed = true;
   contactUs: string;
+  fileUrl = '../../assets/apk/embassy.apk'; ;
   constructor(
     private router: Router,
     public authService: AuthenticateService,
