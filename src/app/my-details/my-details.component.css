@@ -1,0 +1,18 @@
+.table {
+    font-size: 11px;
+}
+.table td, .table th {
+    width: 20%;
+    padding: .40rem;
+    text-align: center;
+}
+th {
+    text-transform: uppercase;
+}
+.border-card {
+    font-weight: bold;
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    color: #007bff;
+}

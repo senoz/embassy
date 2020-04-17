@@ -1,0 +1,170 @@
+<div class="table-responsive-sm">
+  <h6>Current Orders</h6>
+  <ng-container *ngIf="orders.length > 0">
+    <button type="button" class="btn btn-primary mb-2 float-right" (click)="downloadFile()">Download</button>
+  </ng-container>
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Product</th>
+        <th scope="col">Block</th>
+        <th scope="col">Door.No</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Type</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
+        <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
+        <td>{{ order.address.block }}</td>
+        <td>{{ order.address.doorNumber }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.total | currency : 'INR' }}</td>
+        <td>{{ order.paymentType }}</td>
+        <td>
+          <a title="Edit Order" (click)="open(content, order.id)">
+            <i class="fa fa-edit icon-font"></i>
+          </a>
+        </td>
+        <td>
+          <a title="Cancel Order" (click)="genericService.cancelOrder(order.id)">
+            <i class="fa fa-times-circle icon-font"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="display_table_center" *ngIf="orders.length">
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="orders.length"></ngb-pagination>
+  </div>
+  <ng-template #content let-modal>
+    <div class="modal-header header">
+      <h6 class="modal-title" id="modal-basic-title">Update Delivery</h6>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+      <div class="modal-body">
+        <section class="margin-top-bottom">
+          <div class="card">
+            <div class="card-body">
+              <div class="container">
+                <div class="row">
+                  <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Address:</legend>
+                    <div class="input-group col">
+                      <div class="col input-group">
+                        {{genericService.getUserFirstNameById(model.userId)}}
+                      </div>
+                      <div class="w-100 pt-2"></div>
+                      <div class="col input-group">
+                        {{model.address.doorNumber}}, {{model.address.block}} Block
+                      </div>
+                      <div class="w-100 pt-2"></div>
+                      <div class="col input-group">
+                        {{model.address.apartmentName}}
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div class="w-100 pt-3"></div>
+                  <div class="col">Quantity</div>
+                  <div class="col-7">
+                    <div class="input-group w-75">
+                      <span class="input-group-btn">
+                        <button type="button" [disabled]="model.quantity <= 1" [ngClass]="{'disabled': model.quantity <= 1 }" (click)="manageQuantity(0)"
+                          class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
+                          <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                      <input type="text" id="quantity" [readonly]=true [(ngModel)]="model.quantity" name="quantity" class="center increasebutton form-control disabled"
+                        value="1" min="1" max="10">
+                      <span class="input-group-btn">
+                        <button type="button" (click)="manageQuantity(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="w-100 pt-2"></div>
+                  <div class="col">Empty Can Received</div>
+                  <div class="col-7">
+                    <div class="input-group w-75">
+                      <span class="input-group-btn">
+                        <button type="button" [disabled]="model.return <= 0" [ngClass]="{'disabled': model.return <= 0}" (click)="manageReturn(0)"
+                          class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
+                          <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                      <input type="text" id="return" [readonly]=true [(ngModel)]="model.return" name="return" class="center increasebutton form-control disabled"
+                        value="0">
+                      <span class="input-group-btn">
+                        <button type="button" [disabled]="model.isAdvancePaid" [ngClass]="{'disabled': model.isAdvancePaid}" (click)="manageReturn(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="w-100 pt-2"></div>
+                  <div class="col">Payment</div>
+                  <div class="col-7">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="paid" name="payment" [(ngModel)]="model.isPaid" [value]="true" class="custom-control-input">
+                      <label class="custom-control-label" for="paid">Paid</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="notPaid" name="payment" [(ngModel)]="model.isPaid" [value]="false" class="custom-control-input">
+                      <label class="custom-control-label" for="notPaid">Not Paid</label>
+                    </div>
+                  </div>
+                  <div class="w-100 pt-2"></div>
+                  <div class="col">Is Advance Paid</div>
+                  <div class="col-7">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="isAdvancePaid" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="true" class="custom-control-input">
+                      <label class="custom-control-label" for="isAdvancePaid">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="isAdvanceNotPaid" (input)="resetAdvance()" name="isAdvancePaid" [(ngModel)]="model.isAdvancePaid" [value]="false" class="custom-control-input">
+                      <label class="custom-control-label" for="isAdvanceNotPaid">No</label>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="model.isAdvancePaid">
+                    <div class="w-100 pt-2"></div>
+                    <div class="col">How Many Cans</div>
+                    <div class="col-7">
+                      <div class="input-group w-75">
+                        <span class="input-group-btn">
+                          <button type="button" [disabled]="model.advanceCan <= 0" [ngClass]="{'disabled': model.advanceCan <= 1 }" (click)="manageAdvanceCan(0)"
+                            class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                        <input type="text" id="advanceCan" [readonly]=true [(ngModel)]="model.advanceCan" name="advanceCan" class="center increasebutton form-control disabled"
+                          value="0">
+                        <span class="input-group-btn">
+                          <button type="button" [disabled]="model.advanceCan >= model.quantity" [ngClass]="{'disabled': model.advanceCan >= model.quantity}" (click)="manageAdvanceCan(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-primary">Save</button>
+      </div>
+    </form>
+  </ng-template>
+
+</div>

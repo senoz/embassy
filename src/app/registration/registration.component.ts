@@ -1,10 +1,10 @@
 import { first } from 'rxjs/internal/operators';
-import { Subscription, pipe} from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Subscription, pipe } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Users } from '../models/users.model';
 import { UsersService } from '../services/users.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AlertService } from '../services/alert.service';
 
@@ -13,7 +13,7 @@ import { AlertService } from '../services/alert.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   submitted = false;
   RegisterForm;
@@ -25,18 +25,24 @@ export class RegistrationComponent implements OnInit {
     private userService: UsersService,
     private authService: AuthenticateService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
     }
   }
 
   ngOnInit() {
+    const refferedBy = this.route.snapshot.params.id;
+    if (refferedBy) {
+      localStorage.setItem('refferedBy', refferedBy);
+    }
     this.RegisterForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       userName: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
     });
   }
 
@@ -45,20 +51,20 @@ export class RegistrationComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.RegisterForm.invalid) {
-        return;
+      return;
     }
 
-    this.registerUser(this.RegisterForm.value);
-    this.subscription = this.authService.currentUser.pipe(first())
-    .subscribe(
-      data => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/dashboard']);
-      },
-      error => {
-          this.alertService.error(error);
-          this.router.navigate(['/registration']);
-      });
+    this.subscription = this.authService.isUserExists(this.RegisterForm.value.userName).subscribe(data => {
+      if (data.length) {
+        this.alertService.error('Mobile number has already exists');
+        setTimeout(() => {
+          this.alertService.blurMessage();
+        }, 2000);
+      } else {
+        this.authService.createUser(this.RegisterForm.value)
+      }
+      this.subscription.unsubscribe();
+    });
   }
 
   // convenience getter for easy access to form fields
@@ -66,8 +72,9 @@ export class RegistrationComponent implements OnInit {
     return this.RegisterForm.controls;
   }
 
-  registerUser(data) {
-    return this.authService.createUser(data);
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
-
 }

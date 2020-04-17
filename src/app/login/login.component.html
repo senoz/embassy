@@ -2,10 +2,6 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <div *ngIf="failureMsg" class="alert alert-danger alert-dismissible fade show">
-            <strong>Error!</strong> Login failed.
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
         <div class="card">
           <div class="card-header">Login</div>
           <div class="card-body">
@@ -34,13 +30,19 @@
             </form>
           </div>
           <ul class="clearfix list-group list-group-flush">
+            <!-- <li class="list-group-item">
+                <button type="button" (click)="authService.loginWithGoogle()" 
+                class="btn btn-link">
+                  <i class="fa fa-google">oogle Signin</i>
+                </button>
+            </li> -->
             <li class="list-group-item">
               <a routerLink="/registration" class="btn btn-link text-center">
                 Register
               </a>
             </li>
             <li class="list-group-item">
-              <a routerLink="/forgetPassword" class="btn btn-link text-center">
+              <a routerLink="/forget-password" class="btn btn-link text-center">
                 Forgot Your Password?
               </a>
             </li>

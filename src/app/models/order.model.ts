@@ -1,12 +1,26 @@
 export class Order {
     id: any;
+    ref: any;
     userId: string;
     productId: string;
+    quantity: number;
+    return: number;
+    received: number;
     isPaid: boolean;
     isDelivered: boolean;
     paymentType: string;
     total: number;
-    date: string;
+    date: any;
+    isCancelled: boolean;
+    isPromotionApplied: boolean;
+    promotionCode: string;
+    updateAt: any;
+    amountReceivedBy: any;
+    isAdvancePaid: boolean;
+    advanceCan: number;
+    isCommissionPaid: boolean;
+    walletUsed: number;
+    isWalletApplied: boolean;
     address: {
         id: any;
         userId: string;

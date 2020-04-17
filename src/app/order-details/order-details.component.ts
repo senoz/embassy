@@ -1,5 +1,5 @@
 import { AlertService } from '../services/alert.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OnDestroy, Component, OnInit } from '@angular/core';
@@ -12,6 +12,10 @@ import { Address } from '../models/address.model';
 import { OrderService } from '../services/order.service';
 import { Order } from '../models/order.model';
 import { DatePipe } from '@angular/common';
+import { ConstantsService } from '../services/constants.service';
+import { Coupon } from '../models/coupon.model';
+import { UsersService } from '../services/users.service';
+import { Users } from '../models/users.model';
 
 @Component({
   selector: 'app-order-details',
@@ -20,27 +24,48 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class OrderDetailsComponent implements OnInit, OnDestroy {
-  addresses: AngularFirestoreCollection<Address>[] = [];
+  submitted = false;
+  isWallet = false;
+  user = {
+    wallet: 0
+  } as Users;
+  product = {
+    name: '',
+    description: '',
+    url: '',
+    price: 0
+  } as Products;
+  invalidCoupon: boolean;
+  isCouponApplied: boolean;
+  gpayNumber;
+  isCoupon = false;
+  addresses: Address;
   products$: AngularFirestoreCollection<Products>;
   private subscription: Subscription;
   myDate = new Date();
-
   model: any = {
-    userId: JSON.parse(sessionStorage.getItem('currentUser')).id,
+    userId: localStorage.getItem('userId'),
     quantity: 1,
-    return: 0,
+    received: 0,
     address: {
-      apartmentName: 'Embassy Residency',
+      apartmentName: this.globals.defaultApartment,
       doorNumber: '',
       block: '',
       floor: '',
     },
-    productId: '',
+    productId: this.route.snapshot.params.id,
     isPaid: false,
     isDelivered: false,
     paymentType: 'cod',
-    total: 30,
-    date: this.datePipe.transform(this.myDate, 'MM-dd-YYYY')
+    total: this.product.price,
+    isCancelled: false,
+    isPromotionApplied: false,
+    promotionCode: '',
+    walletUsed: 0,
+    walletPending: 0,
+    isAdvancePaid: false,
+    advanceCan: 0,
+    isCommissionPaid: false
   };
 
   productId: string;
@@ -50,63 +75,74 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   userAddress: any;
   showAddress = false;
   addressRef: any;
-  showOrders = false;
+  showOrders = true;
   orders: any;
   orderRef: any;
-  product: Products;
   products: any;
   orderId: string;
+  mywallet = 0;
+  invalidUser = false;
+  meetsCriteria = false;
+  promoQuantity: number;
 
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
     private apartmentDetailsService: ApartmentDetailsService,
     private addressService: AddressService,
-    private order: OrderService,
+    private orderService: OrderService,
     private router: Router,
     private alert: AlertService,
     private afs: AngularFirestore,
-    private datePipe: DatePipe
-  ) { }
+    private globals: ConstantsService,
+    private userService: UsersService
+  ) {
+    this.userService.getUserById(this.model.userId).subscribe(data => {
+      if (data.length) {
+        this.user = data[0].payload.doc.data() as Users;
+        this.mywallet = this.user.wallet;
+      }
+    });
+    this.products = this.productsService.getProductsById(this.route.snapshot.params.id);
+    this.products.subscribe(product => {
+      if (product.length) {
+        this.product = product[0].payload.doc.data() as Products;
+        this.model.total = (this.model.quantity * this.product.price);
+      }
+    });
+  }
 
   ngOnInit() {
     this.getApartmentDetails();
     this.getCurrentUserAddress();
-    this.getOrderDetails();
+    this.gpayNumber = this.globals.gpayNumber;
   }
 
   onSubmit() {
+    this.submitted = true;
     const address = this.model.address;
-    address.userId = JSON.parse(sessionStorage.getItem('currentUser')).id;
-    if (!this.addresses.length) {
+    address.userId = localStorage.getItem('userId');
+    if (!this.addresses) {
       this.addAddress(address);
     } else {
       this.updateAddress(address);
     }
-    if (!this.orders) {
-      this.order.newOrder(this.model);
-    } else {
-      this.updateOrder(this.model);
-    }
-
+    this.orderService.newOrder(this.model);
+    this.userService.setWalletAmount(this.model.userId, this.mywallet);
     this.alert.success('You have placed your successfully');
     setTimeout(() => {
-      this.router.navigate(['/']);
-   }, 2000);
+      this.router.navigate(['/my-orders']);
+    }, 2000);
   }
 
   editAdddress() {
-    this.model.address = this.addresses[0];
+    this.model.address = this.addresses;
     this.blockChange(this.model.address.block);
     this.showAddress = true;
   }
 
   updateAddress(address: Address) {
     return this.addressRef.update(address);
-  }
-
-  updateOrder(order: Order) {
-    return this.orderRef.update(order);
   }
 
   addAddress(address: Address) {
@@ -121,53 +157,17 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     this.model.paymentType = value;
   }
 
-  changeYourOrder() {
-    this.showOrders = true;
-  }
-
-  cancelYourOrder() {
-    this.order.cancelOrder(this.orderId);
-    this.alert.success('Order has cancelled successfully');
-    setTimeout(() => {
-      this.router.navigate(['/']);
-   }, 2000);
-  }
-
-  getOrderDetails() {
-    this.subscription = this.order.getUnDeliveredOrders().subscribe(order => {
-      if (order.length) {
-        this.orders = order[0].payload.doc.data() as Order;
-        this.orderRef = order[0].payload.doc.ref;
-        this.orderId = order[0].payload.doc.id;
-      }
-      if (!this.orders) {
-        this.showOrders = true;
-        this.model.productId = this.route.snapshot.params.id;
-      } else {
-        this.model = this.orders;
-        this.showOrders = false;
-      }
-      this.products = this.productsService.getProductsById(this.model.productId);
-      this.products.subscribe(product => {
-        if (product.length) {
-          this.product = product[0].payload.doc.data() as Products;
-        }
-      });
-    });
-  }
-
   getCurrentUserAddress() {
-    this.subscription = this.addressService.getAddresses().subscribe(data => {
-      this.addresses = data.map(a => {
-        const address = a.payload.doc.data() as Address;
-        this.addressRef = a.payload.doc.ref;
-        address.userId = JSON.parse(sessionStorage.getItem('currentUser')).id;
-        return address;
-      });
-      if (this.addresses.length === 0) {
+    const userId = localStorage.getItem('userId');
+    this.subscription = this.addressService.getAddresses(userId).subscribe(data => {
+      if (data.length) {
+        this.addresses = data[0].payload.doc.data() as Address;
+        this.addressRef = data[0].payload.doc.ref;
+      }
+      if (!this.addresses) {
         this.showAddress = true;
       } else {
-        this.model.address = this.addresses[0];
+        this.model.address = this.addresses;
         this.showAddress = false;
       }
     });
@@ -188,7 +188,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     if (!value) {
       return;
     }
-    this.aprtBlocks = this.apartment.filter(x => x.name === value);
+    this.aprtBlocks = this.apartment.filter(x => x.name === value)
+      .sort((a, b) => (a.block > b.block) ? 1 : ((b.block > a.block) ? -1 : 0));
     return true;
   }
 
@@ -202,20 +203,124 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  applyCoupon(promo) {
+    this.isCouponApplied = true;
+    if (promo) {
+      this.orderService.checkValidPromotion(promo).subscribe(coupon => {
+        if (!coupon.length) {
+          this.invalidCoupon = true;
+          setTimeout(() => {
+            this.invalidCoupon = false;
+            this.model.promotionCode = '';
+          }, 2000);
+        } else {
+          const promotion = coupon[0].payload.doc.data() as Coupon;
+          // this.promoQuantity = promotion.quantity;
+          // if (promotion.quantity <= this.model.quantity) {
+          switch (promotion.type) {
+            case 1:
+              this.model.walletPending = 0;
+              this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
+              break;
+            case 2:
+              this.model.walletPending = 0;
+              this.model.total = (this.model.total - promotion.discount);
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
+              break;
+            case 3:
+              this.model.walletPending = 0;
+              this.orderService.isAddressExists(this.model.address).subscribe(data => {
+                if (data.length === 0) {
+                  this.model.total = (this.model.quantity * (this.product.price - promotion.discount));
+                  this.invalidCoupon = false;
+                  this.model.isPromotionApplied = true;
+                } else {
+                  this.invalidUser = true;
+                  setTimeout(() => {
+                    this.invalidUser = false;
+                    this.model.promotionCode = '';
+                  }, 2000);
+                }
+              });
+              break;
+            default:
+              this.model.walletPending = promotion.discount;
+              this.invalidCoupon = false;
+              this.model.isPromotionApplied = true;
+          }
+          this.model.promotionCode = promotion.couponCode;
+          // } else {
+          //   this.meetsCriteria = true;
+          //   setTimeout(() => {
+          //     this.meetsCriteria = false;
+          //     this.model.promotionCode = '';
+          //   }, 2000);
+          // }
+        }
+      });
+    }
+    return this.model.total;
+  }
+
+  checkPromo(val) {
+    this.isWallet = false;
+    this.mywallet = this.user.wallet;
+    this.model.walletUsed = 0;
+    this.model.isWalletApplied = false;
+    this.model.total = (this.model.quantity * this.product.price);
+    this.isCoupon = !val;
+    if (!this.isCoupon) {
+      this.model.total = (this.model.quantity * this.product.price);
+      this.model.isPromotionApplied = false;
+      this.model.promotionCode = '';
+      this.model.walletPending = 0;
+    }
+  }
+
+  applyWallet(val) {
+    this.isCoupon = false;
+    if (!this.isCoupon) {
+      this.model.total = (this.model.quantity * this.product.price);
+      this.model.isPromotionApplied = false;
+      this.model.promotionCode = '';
+    }
+    this.mywallet = this.user.wallet;
+    this.isWallet = !val;
+    if (this.isWallet) {
+      if (this.model.total > this.mywallet) {
+        this.model.walletUsed = this.mywallet;
+        this.model.isWalletApplied = true;
+        this.model.total -= this.mywallet;
+        this.mywallet = 0;
+      } else {
+        this.model.walletUsed = this.model.total;
+        this.model.isWalletApplied = true;
+        this.mywallet -= this.model.total;
+        this.model.total = 0;
+      }
+    } else {
+      this.mywallet = this.user.wallet;
+      this.model.total = (this.model.quantity * this.product.price);
+      this.model.walletUsed = 0;
+      this.model.isWalletApplied = false;
+    }
+  }
+
   manageQuantity(type) {
     if (type) {
       this.model.quantity++;
     } else {
       this.model.quantity--;
     }
-    this.model.total = (this.model.quantity * 30);
-  }
-
-  manageReturn(type) {
-    if (type) {
-      this.model.return++;
+    if (this.model.promotionCode) {
+      this.model.total = this.applyCoupon(this.model.promotionCode);
+    } else if (this.model.isWalletApplied) {
+      this.applyWallet(false);
     } else {
-      this.model.return--;
+      this.model.total = (this.model.quantity * this.product.price);
     }
   }
 

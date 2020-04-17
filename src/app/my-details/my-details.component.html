@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row border-card">
+    <div class="col">
+      Name:
+    </div>
+    <div class="col">
+      {{ currentUser.name }}
+    </div>
+    <div class="w-100"></div>
+    <div class="col">Wallet Amount:</div>
+    <div class="col">{{ currentUser.wallet | currency : 'INR' }}</div>
+    <div class="w-100"></div>
+    <div class="col">Pending Amount:</div>
+    <div class="col">{{getTotalPendingAmount() | currency : 'INR' }}</div>
+    <div class="w-100"></div>
+    <div class="col">Pending Cans:</div>
+    <div class="col">{{getTotalPendingCan()}}</div>
+    <div class="w-100"></div>
+    <div class="col">Advance Paid Cans:</div>
+    <div class="col">{{ totalAdvanceCan }}</div>
+  </div>
+</div>
+<div class="table-responsive-sm mt-3">
+  <h6>Delivered Cans:</h6>
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Product</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Paid</th>
+        <th scope="col">Return Empty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+        <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
+        <td>{{ order.total | currency : 'INR' }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>
+          <ng-container *ngIf="(order.isPaid === true);else notPaid">Yes</ng-container>
+          <ng-template #notPaid>No</ng-template>
+        </td>
+        <td>{{ order.return }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="display_table_center" *ngIf="orders.length">
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="orders.length"></ngb-pagination>
+  </div>
+</div>

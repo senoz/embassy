@@ -1,0 +1,127 @@
+  <section>
+    <div class="card">
+      <div class="view overlay">
+        <img *ngIf="product.url" src="../../assets/images/{{product.url}}" class="card-img-top">
+        <a routerLink="/dashboard">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title text-center">{{product.name}}</h5>
+      </div>
+    </div>
+  </section>
+  <section class="margin-top-bottom">
+    <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col">Quantity</div>
+              <div class="col-7">
+                <div class="input-group w-75">
+                  <span class="input-group-btn">
+                    <button type="button" [disabled]="model.quantity <= 1" [ngClass]="{'disabled': model.quantity <= 1 }" (click)="manageQuantity(0)"
+                      class="btn btn-outline-primary btn-sm" data-type="minus" data-field="">
+                      <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                  </span>
+                  <input type="text" id="quantity" [readonly]=true [(ngModel)]="model.quantity" name="quantity" class="center increasebutton form-control disabled"
+                    value="1" min="1" max="10">
+                  <span class="input-group-btn">
+                    <button type="button" (click)="manageQuantity(1)" class="btn btn-outline-primary btn-sm" data-type="plus" data-field="">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="w-100 padding-10"></div>
+              <fieldset class="scheduler-border" *ngIf="showAddress; else existingAddress">
+                <legend class="scheduler-border">Address:</legend>
+                <div class="float-right">
+                  <button type="button" (click)="hideAddress()" class="btn btn-light pointer">Hide</button>
+                  <div class="w-100 padding-10"></div>
+                </div>
+                <div class="col input-group mb-3">
+                  <select class="form-control" name="apartmentName" #apartmentName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && apartmentName.invalid }"
+                    required [(ngModel)]="model.address.apartmentName" (change)="apartmentChange($event.target.value)">
+                    <option value="{{aprt.name}}" *ngFor="let aprt of apartment | unique; let i = index">{{aprt.name}}</option>
+                  </select>
+                </div>
+                <div class="w-100 padding-10"></div>
+                <div class="col input-group mb-3">
+                  <input name="door" placeholder="Door Number" #doorNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && doorNumber.invalid }"
+                    required [(ngModel)]="model.address.doorNumber" class="form-control" type="text">
+                </div>
+                <div class="w-100 padding-10"></div>
+                <div class="col input-group mb-3">
+                  <select class="form-control" name="block" #block="ngModel" [ngClass]="{ 'is-invalid': f.submitted && block.invalid }" required
+                    [(ngModel)]="model.address.block" (change)="blockChange($event.target.value)">
+                    <option value="">Select</option>
+                    <option value="{{aprt.block}}" *ngFor="let aprt of aprtBlocks; let i = index">{{aprt.block}}</option>
+                  </select>
+                </div>
+                <div class="w-100 padding-10"></div>
+                <div class="col input-group mb-3">
+                  <select class="form-control" name="floor" #floor="ngModel" [(ngModel)]="model.address.floor" [ngClass]="{ 'is-invalid': f.submitted && floor.invalid }"
+                    required>
+                    <option value="">Select</option>
+                    <option value="{{f}}" *ngFor="let f of aprtFloors;">{{f}}</option>
+                  </select>
+                </div>
+              </fieldset>
+              <ng-template #existingAddress>
+                <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">Address:</legend>
+                  <div class="float-right">
+                    <button type="button" (click)="editAdddress()" class="btn btn-link pointer">Edit</button>
+                  </div>
+                  <div class="input-group col">
+                    <div class="col input-group">
+                      {{model.address.doorNumber}}, {{model.address.block}} Block
+                    </div>
+                    <div class="w-100 padding-10"></div>
+                    <div class="col input-group">
+                      {{model.address.apartmentName}}
+                    </div>
+                  </div>
+                </fieldset>
+              </ng-template>
+
+              <div class="w-100 padding-10"></div>
+              <input type="hidden" name="productId" #productId="ngModel" [ngModel]="model.productId">
+              <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Payment Method</legend>
+                    <div class="row">
+                      <div class="col">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" value="cod" (click)="changePayment($event['target']['value'])" [checked]="model.paymentType === 'cod'"
+                            id="cod" checked name="payment" class="custom-control-input">
+                          <label class="custom-control-label" for="cod">COD</label>
+                        </div>
+                      </div>
+                      <div class="w-100 padding-10"></div>
+                      <div class="col">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" value="gpay" (click)="changePayment($event['target']['value'])" [checked]="model.paymentType === 'gpay'"
+                            id="gpay" name="payment" class="custom-control-input">
+                          <label class="custom-control-label" for="gpay">Google Pay - {{gpayNumber}}</label>
+                        </div>
+                      </div>
+                    </div>
+              </fieldset>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="w-100"></div>
+            <div class="col margin-15">
+                <label >Total: </label> <strong> {{ model.total | currency : 'INR' }}</strong>
+              </div>
+            <div class="col margin-15">
+              <button class="btn btn-outline-primary float-right pointer">Update</button>
+            </div>
+        </div>
+      </div>
+    </form>
+  </section>

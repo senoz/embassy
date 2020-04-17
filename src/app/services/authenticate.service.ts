@@ -4,6 +4,10 @@ import { Injectable } from '@angular/core';
 import { Users } from '../models/users.model';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { User } from '../../../node_modules/firebase';
+import { AlertService } from './alert.service';
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +15,14 @@ import { map } from 'rxjs/operators';
 export class AuthenticateService {
 
   isLoggedIn = false;
+  isAdminLoggedIn = false;
+  isSuperAdminLoggedIn = false;
   users: Users[];
-
-  private currentUserSubject: BehaviorSubject<Users> = new BehaviorSubject<Users>(JSON.parse(localStorage.getItem('currentUser')));
-  public currentUser: Observable<Users>;
 
   constructor(
     private userService: UsersService,
+    private alertService: AlertService,
+    public afAuth: AngularFireAuth,
     private router: Router
   ) {
     this.userService.getUsers().subscribe(data => {
@@ -28,42 +33,76 @@ export class AuthenticateService {
         } as Users;
       });
     });
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): Users {
-    return this.currentUserSubject.value;
+    // afAuth.authState.subscribe(x => {
+    //   this.isLoggedIn = true;
+    //   console.log(x);
+    //  // localStorage.setItem('userId', x);
+    //   this.router.navigate(['/dashboard']);
+    // });
   }
 
   validateLogin(data) {
-    let user;
-    for (const key in this.users) {
-      if (data.userName == this.users[key].userName
-        && data.password == this.users[key].password) {
-          sessionStorage.setItem('currentUser', JSON.stringify(this.users[key]));
+    let userData;
+    this.userService.checkValidUser(data.userName, data.password).subscribe(users => {
+      if (users.length) {
+        userData = users[0].payload.doc.data() as Users;
+        userData.id = users[0].payload.doc.id;
+        this.userService.user = userData;
+        if (!userData.isAdmin) {
           this.isLoggedIn = true;
-          this.currentUserSubject.next(this.users[key]);
-          user = this.users[key];
+          localStorage.setItem('userId', userData.id);
+          this.router.navigate(['/dashboard']);
+        } else if (userData.isSuperAdmin) {
+          this.isSuperAdminLoggedIn = true;
+          this.isAdminLoggedIn = true;
+          localStorage.setItem('adminUser', userData.id);
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.isAdminLoggedIn = true;
+          localStorage.setItem('adminUser', userData.id);
+          this.router.navigate(['/admin/dashboard']);
         }
-    }
-    return user;
+      } else {
+        this.isLoggedIn = false;
+        this.alertService.error('Login Failed');
+        setTimeout(() => {
+          this.alertService.blurMessage();
+        }, 2000);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   logout() {
     // remove user from local storage to log user out
-    sessionStorage.removeItem('currentUser');
     this.isLoggedIn = false;
-    this.currentUserSubject.next(null);
+    this.isAdminLoggedIn = false;
+    this.isSuperAdminLoggedIn = false;
+   // this.afAuth.auth.signOut();
+    localStorage.removeItem('userId');
+    localStorage.removeItem('adminUser');
     this.router.navigate(['/login']);
   }
 
   createUser(user: Users) {
-    const newUser = this.userService.addUser(user);
-    if (newUser) {
-      sessionStorage.setItem('currentUser', JSON.stringify(user));
+    user.wallet = 0;
+    user.isAdmin = false;
+    user.isSuperAdmin = false;
+    user.refferedBy = localStorage.getItem('refferedBy') ? localStorage.getItem('refferedBy') : '';
+    const userId = this.userService.addUser(user)
+    .then(docRef => {
+      this.userService.user = user;
+      localStorage.setItem('userId', docRef.id);
       this.isLoggedIn = true;
-    }
-    return newUser;
+      this.router.navigate(['/dashboard']);
+    });
   }
 
+  isUserExists(userName) {
+    return this.userService.isUserExists(userName);
+  }
+
+  async loginWithGoogle() {
+    const result = await this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
+  }
 }

@@ -1,9 +1,7 @@
-import {first} from 'rxjs/internal/operators';
-import {pipe, Subscription} from 'rxjs';
+import { mergeMap, switchMap, first } from 'rxjs/internal/operators';
+import { pipe, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Users } from '../models/users.model';
-import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/authenticate.service';
 import { AlertService } from '../services/alert.service';
@@ -16,17 +14,15 @@ import { AlertService } from '../services/alert.service';
 export class LoginComponent implements OnInit {
   submitted = false;
   loginForm;
-  failureMsg = false;
   private subscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UsersService,
     private authService: AuthenticateService,
     private alertService: AlertService,
     private router: Router
   ) {
-    if (this.authService.currentUserValue) {
+    if (this.authService.isLoggedIn) {
       this.router.navigate(['/']);
     }
   }
@@ -40,23 +36,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    this.failureMsg = false;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
-        return;
+      return;
     }
-    const validate = this.authService.validateLogin(this.loginForm.value);
-    this.subscription = this.authService.currentUser
-    .subscribe(
-        data => {
-            this.router.navigate(['/dashboard']);
-        },
-        error => {
-            this.alertService.error(error);
-            this.failureMsg = true;
-            this.submitted = false;
-            this.router.navigate(['/login']);
-        });
+    this.authService.validateLogin(this.loginForm.value);
   }
 
   // convenience getter for easy access to form fields

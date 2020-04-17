@@ -1,0 +1,31 @@
+<div class="table-responsive-sm">
+    <h6>Previous Orders</h6>
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Name</th>
+          <th scope="col">Product</th>
+          <th scope="col">Block</th>
+          <th scope="col">Door.No</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <td>{{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}</td>
+          <td>{{ genericService.getUserFirstNameById(order.userId) }}</td>
+          <td>{{ genericService.getProductById(order.productId, this.productsService.product) }}</td>
+          <td>{{ order.address.block }}</td>
+          <td>{{ order.address.doorNumber }}</td>
+          <td>{{ order.total | currency : 'INR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="display_table_center" *ngIf="orders.length">
+        <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="orders.length"></ngb-pagination>
+    </div>
+  </div>

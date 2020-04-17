@@ -1,13 +1,13 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +25,14 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { UniqueValuesPipe } from './_pipes/unique-values.pipe';
 import { ValidationsDirective } from './_directives/validations.directive';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EditOrderComponent } from './edit-order/edit-order.component';
+import { MyDetailsComponent } from './my-details/my-details.component';
 
+import {TableModule} from 'primeng/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -39,6 +46,9 @@ import { ValidationsDirective } from './_directives/validations.directive';
     OrderDetailsComponent,
     UniqueValuesPipe,
     ValidationsDirective,
+    MyOrdersComponent,
+    EditOrderComponent,
+    MyDetailsComponent,
   ],
   imports: [
     NgbModule.forRoot(),
@@ -49,13 +59,17 @@ import { ValidationsDirective } from './_directives/validations.directive';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
+    TableModule,
+    HttpClientModule
   ],
   providers: [
     AngularFirestore,
-    FakeBackendInterceptor,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // FakeBackendInterceptor,
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

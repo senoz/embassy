@@ -1,0 +1,44 @@
+<div class="table-responsive-sm">
+  <h6>My Orders</h6>
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Product</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Total</th>
+        <th scope="col">Mode</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <td>
+          <ng-container *ngIf="order.date">
+            {{ order.date.seconds * 1000 | date:'dd/MM/yyyy' }}
+          </ng-container>
+      </td>
+        <td>{{ genericService.getProductById(order.productId, productsService.product) }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.total | currency : 'INR' }}</td>
+        <td>{{ order.paymentType }}</td>
+        <td>{{ getOrderStatus(order) }}</td>
+        <td>
+          <a title="Edit Order" [routerLink]="['/edit-order', order.id]" *ngIf="!order.isDelivered && !order.isCancelled">
+            <i class="fa fa-edit icon-font"></i>
+          </a>
+        </td>
+        <td>
+          <a title="Cancel Order" (click)="genericService.cancelOrder(order.id)" *ngIf="!order.isDelivered && !order.isCancelled">
+            <i class="fa fa-times-circle icon-font"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="display_table_center" *ngIf="orders.length">
+    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="orders.length"></ngb-pagination>
+  </div>
+</div>

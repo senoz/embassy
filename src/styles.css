@@ -6,3 +6,16 @@ body{
 .pointer {
     cursor: pointer !important;
 }
+.clearfix{
+    clear: both;
+}
+.display_table_center {
+    display: table;
+    margin: 0 auto;
+}
+.pd-lr-5 {
+    padding: 0 5px !important;
+}
+.w-75 {
+    width: 80% !important;
+}
